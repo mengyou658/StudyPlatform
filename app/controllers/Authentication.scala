@@ -17,21 +17,27 @@ trait Authentication {
 //    var accessConditions: List[Conditions.Condition] = List.empty
 
     if(user.isEmpty)
-      Forbidden("Invalid username or password")
+      Redirect(routes.Application.login())
+//      Forbidden("Invalid username or password")
     else {
 //      accessConditions.map(condition => condition(user.get)).collectFirst[String]{case Left(error) => error}
       user match {
 //        case Some(error) => Forbidden(s"Conditions not met: $error")
 //        case Some(user) => f(user.get)
-        case _ => f(user.get)
+        case _ => f(user.get).withNewSession.addingToSession(
+//          "username" -> user.get.username
+        )
       }
     }
   }
 }
 
 object AuthUtils {
-  def parseUserFromCookie(implicit request: RequestHeader) =
+  def parseUserFromCookie(implicit request: RequestHeader) = {
+    println(request.session.get("username"))
+//    println(request.cookies.get("username"))
     request.session.get("username").flatMap(username => User.find(username))
+  }
 
   def parseUserFromQueryString(implicit request:RequestHeader) = {
     val query = request.queryString.map { case (k, v) => k -> v.mkString }

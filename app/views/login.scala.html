@@ -1,10 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-  <meta charset="UTF-8">
-  <title></title>
-</head>
-<body>
+@(userForm: Form[User])(implicit lang: Lang)
 
-</body>
-</html>
+
+@main(Messages("foods.form")) {
+  <h2>@Messages("foods.form")</h2>
+  @helper.form(action = routes.Application.authenticate()) {
+    <fieldset>
+      <legend>
+      Login
+      </legend>
+      @helper.inputText(userForm("username"))
+      @helper.inputText(userForm("password"))
+    </fieldset>
+    <p>
+      <input type="submit" class="btn primary" value='Login'>
+    </p>
+  }
+}

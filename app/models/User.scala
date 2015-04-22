@@ -10,7 +10,8 @@ object User {
     User("alice@tunnelbear.com", "password", isPremium = true, 0),
     User("jane@tunnelbear.com", "password", isPremium = false, 10)
   )
-  def find(username: String):Option[User] = users.find(_.username == username)
+  def find(username: String):Option[User] =
+    users.find(_.username == username)
 }
 
 case class User(username:String, password:String, isPremium:Boolean, balance:Int) {
