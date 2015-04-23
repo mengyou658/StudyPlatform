@@ -1,6 +1,6 @@
 package controllers
 
-import models.User
+import models.{Tables, User}
 import play.api.mvc.{Result, Action, Controller, RequestHeader}
 
 /**
@@ -11,7 +11,7 @@ import play.api.mvc.{Result, Action, Controller, RequestHeader}
 trait Authentication {
   self:Controller =>
 
-  def AuthenticateMe(f: User => Result) = Action { implicit request =>
+  def SecuredAction(f: User => Result) = Action { implicit request =>
     val user = AuthUtils.parseUserFromRequest
 
 //    var accessConditions: List[Conditions.Condition] = List.empty
@@ -25,7 +25,7 @@ trait Authentication {
 //        case Some(error) => Forbidden(s"Conditions not met: $error")
 //        case Some(user) => f(user.get)
         case _ => f(user.get).withNewSession.addingToSession(
-//          "username" -> user.get.username
+          "com.rema7.studyplatform.auth" -> user.get.email
         )
       }
     }
@@ -33,25 +33,27 @@ trait Authentication {
 }
 
 object AuthUtils {
-  def parseUserFromCookie(implicit request: RequestHeader) = {
-    println(request.session.get("username"))
-//    println(request.cookies.get("username"))
-    request.session.get("username").flatMap(username => User.find(username))
+  def parseTokenFromCookie(implicit request: RequestHeader) = {
+    println(request.session.get("com.rema7.studyplatform.token"))
+    request.session.get("com.rema7.studyplatform.token").flatMap {
+      token => Tables.users.findByToken(token)
+    }
   }
 
   def parseUserFromQueryString(implicit request:RequestHeader) = {
     val query = request.queryString.map { case (k, v) => k -> v.mkString }
-    val username = query get "username"
+    val email = query get "email"
     val password = query get "password"
 
-    (username, password) match {
-      case (Some(u), Some(p)) => User.find(u).filter(user => user.checkPassword(p))
+    (email, password) match {
+      case (Some(e), Some(p)) => Tables.users.findByEmailAndPassword(e,p)
+//      case (Some(u), Some(p)) => User.find(u).filter(user => user.checkPassword(p))
       case _ => None
     }
   }
 
   def parseUserFromRequest(implicit request:RequestHeader):Option[User] = {
-    parseUserFromQueryString orElse  parseUserFromCookie
+    parseUserFromQueryString orElse parseTokenFromCookie
   }
 
 }

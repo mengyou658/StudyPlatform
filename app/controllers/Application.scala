@@ -1,6 +1,6 @@
 package controllers
 
-import models.User
+import models.{Tables, LoginForm, User}
 import play.api.data._
 import play.api.data.Forms._
 import play.api.mvc._
@@ -12,34 +12,60 @@ object Application extends Controller with Authentication {
     Ok(views.html.index("Your new application is ready."))
   }
 
-  def helloUser = AuthenticateMe {
+  def helloUser = SecuredAction {
     user =>
-      Ok(s"hello ${user.username}").withCookies(
+      Ok(s"hello ${user.email}").withCookies(
         Cookie("token", "aaa")
       )
   }
 
-  val userForm = Form(
+  val loginForm = Form(
     mapping(
-      "username" -> text,
+      "email" -> text,
       "password" -> text
-    )((username, password) => User.apply(username, password, isPremium = false, 0))
-      ((user: User) => Option(user.username, user.password))
+    )(LoginForm.apply)(LoginForm.unapply)
   )
 
-  def login = Action { request =>
-      Ok(views.html.login(userForm))
+  def login = Action { implicit request =>
+      Ok(views.html.login(loginForm))
   }
 
-  def authenticate = Action { implicit request =>
-    val user = userForm.bindFromRequest()
+  def authenticate = SecuredAction { user =>
+//    val user = loginForm.bindFromRequest()
+//
+//    user.fold(
+//      hasErrors = { form =>
+//        Redirect(routes.Application.login())
+//      },
+//      success = { newFood =>
+//        Tables.foods.save(newFood)
+        Redirect(routes.Application.helloUser())
+//      }
+//    )
+  }
 
-    Ok(views.html.login(userForm))
+  def registration = Action { implicit request =>
+    Ok(views.html.register(loginForm))
+  }
+
+  def register = Action { implicit request =>
+    val user = loginForm.bindFromRequest()
+
+    user.fold(
+      hasErrors = { form =>
+        Redirect(routes.Application.login())
+      },
+      success = { user =>
+        Tables.users.register(user.email, user.password)
+        Redirect(routes.Application.helloUser())
+      }
+    )
   }
 
 
-  def logout = AuthenticateMe { implicit request =>
-    Ok(views.html.login(userForm)).discardingCookies(DiscardingCookie("token"))
+
+  def logout = SecuredAction { implicit request =>
+    Ok(views.html.login(loginForm)).discardingCookies(DiscardingCookie("token"))
   }
 
 }
