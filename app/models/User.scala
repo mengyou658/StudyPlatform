@@ -1,5 +1,6 @@
 package models
 
+import controllers.BearerTokenGenerator
 import org.joda.time.DateTime
 import play.api.db.DB
 import slick.lifted.{Rep, ProvenShape, Tag, TableQuery}
@@ -10,8 +11,6 @@ import com.github.tototoshi.slick.MySQLJodaSupport._
  * Created by m.cherkasov on 22.04.15.
  */
 
-case class LoginForm(email:String,
-                     password:String)
 
 case class User(id: Option[Long] = None,
                 email:String,
@@ -55,16 +54,60 @@ trait WithDefaultSession {
 }
 
 
-case class Token(uuid: Long, created:
-                DateTime = new DateTime(),
-                expirationTime: DateTime = new DateTime().plusDays(30)) {
+case class Token(uuid: Long,
+                 token: String,
+                 created: DateTime = new DateTime(),
+                 expirationTime: DateTime = new DateTime().plusDays(30)) {
 
 }
 
-object Tables extends WithDefaultSession {
+//class TokenTable(tag: Tag) extends Table[Token](tag, "tokens") {
+//  def uuid = column[Long]("id")
+//  def token = column[String]("token")
+//  def created = column[DateTime]("created")
+//  def expirationTime = column[DateTime]("expirationTime")
+//
+//  def * : ProvenShape[User] = {
+//    (uuid, token, created, expirationTime).shaped <> (Token.tupled, Token.unapply)
+//  }
+//}
+//
+//object Tokens extends TableQuery[TokenTable](new TokenTable(_)) with WithDefaultSession {
+//
+//  def findByUserId(uuid: Long): Option[Token] = withSession {
+//    implicit session =>
+//      val q = for {
+//        token <- this
+//        if token.uuid === uuid
+//      } yield token
+//
+//      q.firstOption
+//  }
+//
+//  def createForUser(user: User): Option[Token] = withSession {
+//    implicit session =>
+//      user.id match {
+//        case Some(uuid) =>
+//          findByUserId(uuid) match {
+//            case Some(token) =>
+//              Some(token)
+//            case None =>
+//              val token = Token(uuid,
+//                BearerTokenGenerator.generateSHAToken(user.email),
+//                new DateTime(), new DateTime().plusDays(30))
+//              this.insert(token)
+//              Some(token)
+//          }
+//        case None => None
+//      }
+//  }
+//
+//}
 
-  var tokens = new TableQuery[]()
-  var users = new TableQuery[UsersTable](new UsersTable(_)) {
+object Users extends TableQuery[UsersTable](new UsersTable(_)) with WithDefaultSession {
+//object Tables extends WithDefaultSession {
+//
+//  var users = new TableQuery[UsersTable](new UsersTable(_)) {
 
     def findByToken(token: String): Option[User] = withSession {
       implicit session =>
@@ -105,32 +148,45 @@ object Tables extends WithDefaultSession {
         q.firstOption
     }
 
+  def login(email: String, password: String): Option[User] = withSession {
+    implicit session =>
+      findByEmailAndPassword(email, password) match {
+        case Some(u) =>
+          val user = u.copy(accessToken = Some(BearerTokenGenerator.generateSHAToken(email)))
+
+          this.insertOrUpdate(user)
+          Some(user)
+        case None =>
+          None
+      }
+  }
+
     def register(email: String, password: String): Option[User] = withSession {
       implicit session =>
-              findByEmail(email) match {
-                case None =>
-                  println("Create new user")
-                  val user = User(
-                    email = email,
-                    password = password
-                  )
+        findByEmail(email) match {
+          case None =>
+            println("Register new user")
+            val user = User(
+              email = email,
+              password = password
+            )
 
-                  this.insert(user)
+            this.insert(user)
+            Some(user)
 
-                  Some(user)
-                case Some(existingUser) =>
-                  println("Update existing user")
-
-//                  val userRow = for {
-//                    u <- this
-//                    if u.id === existingUser.id
-//                  } yield u
-//
-//                  val updatedUser = user.copy(id = existingUser.id)
-//                  userRow.update(updatedUser)
-//                  user
-                  None
-              }
+          //            Tokens.createForUser(user) match {
+          //              case Some(t) =>
+          //                user.accessToken = t
+          //                BearerTokenGenerator.generateSHAToken(user.email)
+          //                this.insert(user)
+          //                Some(user)
+          //              case None =>
+          //                None
+          //        }
+          case Some(existingUser) =>
+            println("User already exists")
+            None
+        }
     }
 //    def save(user: User): User = withSession {
 //      implicit session =>
@@ -152,6 +208,6 @@ object Tables extends WithDefaultSession {
 //            user
 //        }
 //    }
-  }
+//  }
 }
 

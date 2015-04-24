@@ -1,59 +1,109 @@
 package controllers
 
-import models.{Tables, User}
-import play.api.mvc.{Result, Action, Controller, RequestHeader}
+import models.{Users}
+import play.api.data.Form
+import play.api.data.Forms._
+import play.api.mvc._
+import views.html.helper.form
+
 
 /**
- * Created by m.cherkasov on 22.04.15.
+ * Created by m.cherkasov on 24.04.15.
  */
 
-// https://github.com/TheTunnelBear/PlayAuthenticationSample
-trait Authentication {
-  self:Controller =>
+case class LoginForm(email:String,
+                     password:String)
 
-  def SecuredAction(f: User => Result) = Action { implicit request =>
-    val user = AuthUtils.parseUserFromRequest
+case class AuthForm(email:String,
+                     password:String,
+                     repeatedPassword: String)
 
-//    var accessConditions: List[Conditions.Condition] = List.empty
 
-    if(user.isEmpty)
-      Redirect(routes.Application.login())
-//      Forbidden("Invalid username or password")
-    else {
-//      accessConditions.map(condition => condition(user.get)).collectFirst[String]{case Left(error) => error}
-      user match {
-//        case Some(error) => Forbidden(s"Conditions not met: $error")
-//        case Some(user) => f(user.get)
-        case _ => f(user.get).withNewSession.addingToSession(
-          "com.rema7.studyplatform.auth" -> user.get.email
+object Authentication extends Controller with SecuredConnection {
+
+  val loginForm = Form(
+    mapping(
+      "email" -> nonEmptyText,
+      "password" -> nonEmptyText
+    )(LoginForm.apply)(LoginForm.unapply)
+  )
+
+  def login = Action { implicit request =>
+    Ok(views.html.login(loginForm))
+  }
+
+  def loginSubmit = Action { implicit request =>
+
+    val login = loginForm.bindFromRequest()
+
+    login.fold(
+      hasErrors = { form =>
+        Redirect(routes.Authentication.registration()).flashing(
+          Flash(form.data) + ("error" -> "Password mismatch")
         )
+      },
+      success = { user =>
+        Users.login(user.email, user.password) match {
+          case Some(u) =>
+            Redirect(routes.Application.helloUser()).withSession(
+              "rema7.platform.auth" -> u.accessToken.getOrElse("")
+            ).withCookies(Cookie("rema7.platform.token", u.accessToken.getOrElse("")))
+          case None =>
+            println("User not found.")
+            Redirect(routes.Authentication.registration()).flashing(
+              Flash(login.data) + ("error" -> "Login or password mismatch")
+            )
+        }
       }
-    }
-  }
-}
+    )
 
-object AuthUtils {
-  def parseTokenFromCookie(implicit request: RequestHeader) = {
-    println(request.session.get("com.rema7.studyplatform.token"))
-    request.session.get("com.rema7.studyplatform.token").flatMap {
-      token => Tables.users.findByToken(token)
-    }
+    Redirect(routes.Application.helloUser())
   }
 
-  def parseUserFromQueryString(implicit request:RequestHeader) = {
-    val query = request.queryString.map { case (k, v) => k -> v.mkString }
-    val email = query get "email"
-    val password = query get "password"
+  val authForm = Form(
+    mapping(
+      "email" -> nonEmptyText,
+      "password" -> nonEmptyText,
+      "repeatedPassword" -> nonEmptyText
+    )(AuthForm.apply)(AuthForm.unapply) verifying(
+      "Passwords must match",
+        f => f.password == f.repeatedPassword
+      )
+  )
 
-    (email, password) match {
-      case (Some(e), Some(p)) => Tables.users.findByEmailAndPassword(e,p)
-//      case (Some(u), Some(p)) => User.find(u).filter(user => user.checkPassword(p))
-      case _ => None
-    }
+
+  def registration = Action { implicit request =>
+     val form = if (request.flash.get("error").isDefined)
+       authForm.bind(request.flash.data)
+     else
+       authForm
+
+      Ok(views.html.register(form))
   }
 
-  def parseUserFromRequest(implicit request:RequestHeader):Option[User] = {
-    parseUserFromQueryString orElse parseTokenFromCookie
+  def registerSubmit = Action { implicit request =>
+    val auth = authForm.bindFromRequest()
+
+    auth.fold(
+      hasErrors = { form =>
+        Redirect(routes.Authentication.registration()).flashing(
+          Flash(form.data) + ("error" -> "Password mismatch")
+        )
+      },
+      success = { user =>
+        Users.register(user.email, user.password) match {
+          case Some(u) =>
+            Redirect(routes.Application.helloUser())
+          case None =>
+            Redirect(routes.Authentication.registration()).flashing(
+              Flash(auth.data) + ("error" -> "User already exists")
+            )
+        }
+      }
+    )
   }
 
+  def logout = SecuredAction { implicit request =>
+    Ok(views.html.login(loginForm)).discardingCookies(DiscardingCookie("token"))
+  }
 }

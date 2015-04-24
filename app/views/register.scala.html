@@ -1,15 +1,26 @@
-@(userForm: Form[LoginForm])(implicit lang: Lang)
+@(userForm: Form[AuthForm])(implicit flash: Flash, lang: Lang)
 
 
 @main(Messages("foods.form")) {
-  <h2>@Messages("foods.form")</h2>
-  @helper.form(action = routes.Application.register()) {
+  @*<h2>@Messages("foods.form")</h2>*@
+  <h2>Registration</h2>
+  @helper.form(action = routes.Authentication.registerSubmit()) {
     <fieldset>
       <legend>
       Registration
       </legend>
+      @if(flash.get("success").isDefined){
+        <div class="alert alert-success">
+           @flash.get("success")
+        </div> }
+      @if(flash.get("error").isDefined){
+        <div class="alert alert-error">
+           @flash.get("error")
+        </div>
+      }
       @helper.inputText(userForm("email"))
-      @helper.inputText(userForm("password"))
+      @helper.inputPassword(userForm("password"))
+      @helper.inputPassword(userForm("repeatedPassword"))
     </fieldset>
     <p>
       <input type="submit" class="btn primary" value='Register'>

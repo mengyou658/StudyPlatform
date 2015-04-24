@@ -3,7 +3,7 @@
 
 @main(Messages("foods.form")) {
   <h2>@Messages("foods.form")</h2>
-  @helper.form(action = routes.Application.authenticate()) {
+  @helper.form(action = routes.Authentication.loginSubmit()) {
     <fieldset>
       <legend>
       Login
@@ -14,6 +14,6 @@
     <p>
       <input type="submit" class="btn primary" value='Login'>
     </p>
-    <a href="@routes.Application.registration()">Registration</a>
+    <a href="@routes.Authentication.registration()">Registration</a>
   }
 }
