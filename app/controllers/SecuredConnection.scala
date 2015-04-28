@@ -1,12 +1,7 @@
 package controllers
 
-import controllers.Application._
 import models.{Users, User}
-import play.api.data.Form
-import play.api.data.Forms._
 import play.api.mvc._
-
-import scala.text
 
 /**
  * Created by m.cherkasov on 22.04.15.

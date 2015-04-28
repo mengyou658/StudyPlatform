@@ -2,10 +2,10 @@ package models
 
 import controllers.BearerTokenGenerator
 import org.joda.time.DateTime
-import play.api.db.DB
 import slick.lifted.{Rep, ProvenShape, Tag, TableQuery}
 import slick.driver.MySQLDriver.simple._
 import com.github.tototoshi.slick.MySQLJodaSupport._
+import securesocial.core._
 
 /**
  * Created by m.cherkasov on 22.04.15.
