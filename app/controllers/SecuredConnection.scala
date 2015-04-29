@@ -1,6 +1,6 @@
 package controllers
 
-import models.{Users, User}
+import models.{Users1, User1}
 import play.api.mvc._
 
 /**
@@ -13,7 +13,7 @@ import play.api.mvc._
 trait SecuredConnection {
   self:Controller =>
 
-  def SecuredAction(f: User => Result) = Action { implicit request =>
+  def SecuredAction(f: User1 => Result) = Action { implicit request =>
     val user = SecuredUtils.parseUserFromRequest
 
 //    var accessConditions: List[Conditions.Condition] = List.empty
@@ -39,7 +39,7 @@ object SecuredUtils {
 
     request.session.get("rema7.platform.auth").flatMap {
 //      token => Tables.users.findByToken(token)
-        token => Users.findByToken(token)
+        token => Users1.findByToken(token)
     }
   }
 
@@ -55,7 +55,7 @@ object SecuredUtils {
 //    }
 //  }
 
-  def parseUserFromRequest(implicit request:RequestHeader):Option[User] = {
+  def parseUserFromRequest(implicit request:RequestHeader):Option[User1] = {
 //    parseUserFromQueryString orElse
       parseTokenFromCookie
   }

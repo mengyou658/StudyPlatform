@@ -12,22 +12,22 @@ import securesocial.core._
  */
 
 
-case class User(id: Option[Long] = None,
+case class User1(id: Option[Long] = None,
                 email:String,
                 password:String, accessToken: Option[String] = None,
                 created: DateTime = new DateTime()) {
 //  def checkPassword(password: String): Boolean = this.password == password
 }
 
-class UsersTable(tag: Tag) extends Table[User](tag, "users") {
+class UsersTable(tag: Tag) extends Table[User1](tag, "users") {
   def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
   def email = column[String]("email")
   def password = column[String]("password")
   def accessToken = column[String]("accessToken")
   def created = column[DateTime]("created")
 
-  def * : ProvenShape[User] = {
-    (id.?, email, password, accessToken.?, created).shaped <> (User.tupled, User.unapply)
+  def * : ProvenShape[User1] = {
+    (id.?, email, password, accessToken.?, created).shaped <> (User1.tupled, User1.unapply)
   }
 }
 
@@ -51,65 +51,17 @@ trait WithDefaultSession {
         block(session)
     }
   }
+
+
 }
 
 
-case class Token(uuid: Long,
-                 token: String,
-                 created: DateTime = new DateTime(),
-                 expirationTime: DateTime = new DateTime().plusDays(30)) {
-
-}
-
-//class TokenTable(tag: Tag) extends Table[Token](tag, "tokens") {
-//  def uuid = column[Long]("id")
-//  def token = column[String]("token")
-//  def created = column[DateTime]("created")
-//  def expirationTime = column[DateTime]("expirationTime")
-//
-//  def * : ProvenShape[User] = {
-//    (uuid, token, created, expirationTime).shaped <> (Token.tupled, Token.unapply)
-//  }
-//}
-//
-//object Tokens extends TableQuery[TokenTable](new TokenTable(_)) with WithDefaultSession {
-//
-//  def findByUserId(uuid: Long): Option[Token] = withSession {
-//    implicit session =>
-//      val q = for {
-//        token <- this
-//        if token.uuid === uuid
-//      } yield token
-//
-//      q.firstOption
-//  }
-//
-//  def createForUser(user: User): Option[Token] = withSession {
-//    implicit session =>
-//      user.id match {
-//        case Some(uuid) =>
-//          findByUserId(uuid) match {
-//            case Some(token) =>
-//              Some(token)
-//            case None =>
-//              val token = Token(uuid,
-//                BearerTokenGenerator.generateSHAToken(user.email),
-//                new DateTime(), new DateTime().plusDays(30))
-//              this.insert(token)
-//              Some(token)
-//          }
-//        case None => None
-//      }
-//  }
-//
-//}
-
-object Users extends TableQuery[UsersTable](new UsersTable(_)) with WithDefaultSession {
+object Users1 extends TableQuery[UsersTable](new UsersTable(_)) with WithDefaultSession {
 //object Tables extends WithDefaultSession {
 //
 //  var users = new TableQuery[UsersTable](new UsersTable(_)) {
 
-    def findByToken(token: String): Option[User] = withSession {
+    def findByToken(token: String): Option[User1] = withSession {
       implicit session =>
         val q = for {
           user <- this
@@ -128,7 +80,7 @@ object Users extends TableQuery[UsersTable](new UsersTable(_)) with WithDefaultS
 //        q.list
 //    }
 
-    def findByEmailAndPassword(email: String, password: String): Option[User] = withSession {
+    def findByEmailAndPassword(email: String, password: String): Option[User1] = withSession {
       implicit session =>
         val q = for {
           user <- this
@@ -138,7 +90,7 @@ object Users extends TableQuery[UsersTable](new UsersTable(_)) with WithDefaultS
         q.firstOption
     }
 
-    def findByEmail(email: String): Option[User] = withSession {
+    def findByEmail(email: String): Option[User1] = withSession {
       implicit session =>
         val q = for {
           user <- this
@@ -148,7 +100,7 @@ object Users extends TableQuery[UsersTable](new UsersTable(_)) with WithDefaultS
         q.firstOption
     }
 
-  def login(email: String, password: String): Option[User] = withSession {
+  def login(email: String, password: String): Option[User1] = withSession {
     implicit session =>
       findByEmailAndPassword(email, password) match {
         case Some(u) =>
@@ -161,12 +113,12 @@ object Users extends TableQuery[UsersTable](new UsersTable(_)) with WithDefaultS
       }
   }
 
-    def register(email: String, password: String): Option[User] = withSession {
+    def register(email: String, password: String): Option[User1] = withSession {
       implicit session =>
         findByEmail(email) match {
           case None =>
             println("Register new user")
-            val user = User(
+            val user = User1(
               email = email,
               password = password
             )

@@ -6,7 +6,7 @@ import java.lang.reflect.Constructor
 import models.{InMemoryUserService, MyEventListener, MyUser}
 import play.api.{GlobalSettings, Logger}
 import securesocial.core.RuntimeEnvironment
-import securesocial.core.providers.UsernamePasswordProvider
+import securesocial.core.providers.{FacebookProvider, UsernamePasswordProvider}
 
 import scala.collection.immutable.ListMap
 
@@ -21,6 +21,7 @@ object Global extends GlobalSettings {
     override lazy val providers = ListMap(
       include(new UsernamePasswordProvider[MyUser](userService, avatarService, viewTemplates, passwordHashers))
       // ... other providers
+     ,include(new FacebookProvider(routes, cacheService, oauth2ClientFor(FacebookProvider.Facebook) ))
     )
   }
 

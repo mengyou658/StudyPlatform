@@ -10,7 +10,11 @@ class Application(override implicit val env: RuntimeEnvironment[MyUser]) extends
 
   def helloUser = SecuredAction {
     implicit request =>
-      Ok(s"hello ${request.user.main}")
+      Ok(views.html.index(request.user.main))
+  }
+
+  def linkResult = SecuredAction { implicit request =>
+    Ok(views.html.linkResult(request.user))
   }
 
   def currentUser = Action.async { implicit request =>

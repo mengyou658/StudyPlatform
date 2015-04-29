@@ -4,8 +4,12 @@
 
 # Home page
 GET         /                    @controllers.Application.helloUser
-GET         /helloUser           @controllers.Application.helloUser
+GET        /link-result        @controllers.Application.linkResult
+GET        /helloUser           @controllers.Application.helloUser
 GET        /current-user        @controllers.Application.currentUser
+
+GET        /custom/login        @controllers.CustomLoginController.login
+GET        /custom/logout       @controllers.CustomLoginController.logout
 
 # Registration authentication
 GET         /login               controllers.Authentication.login

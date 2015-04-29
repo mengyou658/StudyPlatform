@@ -1,6 +1,6 @@
 package controllers
 
-import models.{Users}
+import models.Users1
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc._
@@ -43,7 +43,7 @@ object Authentication extends Controller with SecuredConnection {
         )
       },
       success = { user =>
-        Users.login(user.email, user.password) match {
+        Users1.login(user.email, user.password) match {
           case Some(u) =>
             Redirect(routes.Application.helloUser()).withSession(
               "rema7.platform.auth" -> u.accessToken.getOrElse("")
@@ -91,7 +91,7 @@ object Authentication extends Controller with SecuredConnection {
         )
       },
       success = { user =>
-        Users.register(user.email, user.password) match {
+        Users1.register(user.email, user.password) match {
           case Some(u) =>
             Redirect(routes.Application.helloUser())
           case None =>
