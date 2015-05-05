@@ -10,8 +10,8 @@ import play.api.Logger
 /**
  * A sample event listener
  */
-class MyEventListener extends EventListener[MyUser] {
-  def onEvent(event: Event[MyUser], request: RequestHeader, session: Session): Option[Session] = {
+class MyEventListener extends EventListener[BasicUser] {
+  def onEvent(event: Event[BasicUser], request: RequestHeader, session: Session): Option[Session] = {
     val eventName = event match {
       case LoginEvent(u) => "login"
       case LogoutEvent(u) => "logout"

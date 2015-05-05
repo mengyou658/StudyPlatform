@@ -25,7 +25,7 @@ create table `token` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
-create table `user` (
+create table `profile` (
   `id` INT(10) AUTO_INCREMENT NOT NULL,
     `userId` TEXT NOT NULL,
     `providerId` TEXT NOT NULL,
@@ -35,23 +35,57 @@ create table `user` (
     `email` TEXT,
     `avatarUrl` TEXT,
     `authMethod` TEXT NOT NULL,
-    `token` TEXT,
-    `secret` TEXT,
-    `accessToken` TEXT,
-    `tokenType` TEXT,
-    `expiresIn` INTEGER,
-    `refreshToken` TEXT,
-    `hasher` TEXT,
-    `password` TEXT,
-    `salt` TEXT,
+    `oauth1Id` LONG,
+    `oauth2Id` LONG,
+    `passwordId` LONG,
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+create table `authenticator` (
+  `id` TEXT NOT NULL,
+  `userId` TEXT NOT NULL,
+  `expirationDate` TIMESTAMP NOT NULL,
+  `lastUsed` TIMESTAMP NOT NULL,
+  `creationDate` TIMESTAMP NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table `user` (
+  `id` TEXT NOT NULL,
+  `mainId` TEXT NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table `oauth1` (
+  `id` INT(10) AUTO_INCREMENT NOT NULL,
+  `token` TEXT,
+  `secret` TEXT,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table `oauth2` (
+  `id` INT(10) AUTO_INCREMENT NOT NULL,
+  `accessToken` TEXT,
+  `tokenType` TEXT,
+  `expiresIn` INTEGER,
+  `refreshToken` TEXT,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table `password` (
+  `id` INT(10) AUTO_INCREMENT NOT NULL,
+  `hasher` TEXT,
+  `password` TEXT,
+  `salt` TEXT,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 # --- !Downs
 
 DROP TABLE `users`;
 DROP TABLE `tokens`;
 drop table `token`;
-drop table `user`;
+drop table `profile`;
+drop table `oauth1`;
+drop TABLE `oauth2`;
+drop TABLE `password`;
+drop table `authenticator`;
 

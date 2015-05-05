@@ -1,12 +1,12 @@
 package controllers
 
-import models.MyUser
+import models.BasicUser
 import securesocial.core.{SecureSocial, RuntimeEnvironment}
 import play.api.mvc.{ Action, RequestHeader }
 import scala.concurrent.ExecutionContext.Implicits.global
 
 //object Application extends Controller with SecuredConnection {
-class Application(override implicit val env: RuntimeEnvironment[MyUser]) extends securesocial.core.SecureSocial[MyUser] {
+class Application(override implicit val env: RuntimeEnvironment[BasicUser]) extends securesocial.core.SecureSocial[BasicUser] {
 
   def helloUser = SecuredAction {
     implicit request =>
@@ -18,7 +18,7 @@ class Application(override implicit val env: RuntimeEnvironment[MyUser]) extends
   }
 
   def currentUser = Action.async { implicit request =>
-    SecureSocial.currentUser[MyUser].map { maybeUser =>
+    SecureSocial.currentUser[BasicUser].map { maybeUser =>
       val userId = maybeUser.map(_.main.userId).getOrElse("unknown")
       Ok(s"Your id is $userId")
     }

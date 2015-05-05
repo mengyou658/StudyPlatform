@@ -1,4 +1,4 @@
-@(user: securesocial.core.BasicProfile)(implicit request: RequestHeader, env: securesocial.core.RuntimeEnvironment[models.MyUser])
+@(user: securesocial.core.BasicProfile)(implicit request: RequestHeader, env: securesocial.core.RuntimeEnvironment[models.BasicUser])
 @import securesocial.core.IdentityProvider
 
 @import securesocial.core.IdentityProvider
@@ -46,9 +46,6 @@
             </ul>
         }
         <hr>
-        @user.passwordInfo.map { info =>
-            <a class="btn" href="@env.routes.resetPasswordUrl">Change Password</a>
-        }
 
         <span>Link this account to
 

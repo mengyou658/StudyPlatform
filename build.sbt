@@ -19,7 +19,7 @@ libraryDependencies ++= Seq( jdbc , anorm , cache , ws
   , "joda-time" % "joda-time" % "2.7"
   , "org.joda" % "joda-convert" % "1.7"
   , "com.github.tototoshi" %% "slick-joda-mapper" % "1.2.0"
-  , "ws.securesocial" %% "securesocial" % "3.0-M1"
+  , "ws.securesocial" %% "securesocial" % "3.0-M3"
   , "com.typesafe.scala-logging" %% "scala-logging" % "3.1.0"
   , "org.json4s" %% "json4s-native" % "3.2.11"
 //  , "org.webjars" % "bootstrap" % "3.3.4"
@@ -28,4 +28,18 @@ libraryDependencies ++= Seq( jdbc , anorm , cache , ws
   , "com.typesafe.play.plugins" %% "play-plugins-mailer" % "2.3.1"
 )
 
-unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )  
+unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )
+
+scalacOptions in ThisBuild ++= Seq(
+  "-target:jvm-1.7",
+  "-encoding", "UTF-8",
+  //"-deprecation", // warning and location for usages of deprecated APIs
+  "-feature", // warning and location for usages of features that should be imported explicitly
+  "-unchecked", // additional warnings where generated code depends on assumptions
+  "-Xlint", // recommended additional warnings
+  "-Ywarn-adapted-args", // Warn if an argument list is modified to match the receiver
+  "-Ywarn-value-discard", // Warn when non-Unit expression results are unused
+  "-Ywarn-inaccessible",
+  "-Ywarn-dead-code",
+  "-language:reflectiveCalls"
+)
