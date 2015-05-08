@@ -22,10 +22,12 @@ libraryDependencies ++= Seq( jdbc , anorm , cache , ws
   , "ws.securesocial" %% "securesocial" % "3.0-M3"
   , "com.typesafe.scala-logging" %% "scala-logging" % "3.1.0"
   , "org.json4s" %% "json4s-native" % "3.2.11"
-//  , "org.webjars" % "bootstrap" % "3.3.4"
-//  , "org.webjars" % "angularjs" % "1.3.15"
-//  , "org.webjars" % "angular-ui-bootstrap" % "0.12.0"
+  , "org.webjars" %% "webjars-play" % "2.3.0-2"
+  , "org.webjars" % "bootstrap" % "3.3.4"
+  , "org.webjars" % "angularjs" % "1.3.15"
+  , "org.webjars" % "angular-ui-bootstrap" % "0.12.0"
   , "com.typesafe.play.plugins" %% "play-plugins-mailer" % "2.3.1"
+  , "org.webjars.bower" % "jquery" % "2.1.3"
 )
 
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )

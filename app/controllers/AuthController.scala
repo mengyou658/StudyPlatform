@@ -1,17 +1,46 @@
 package controllers
 
-import play.api.libs.json.Json
+import play.api.data.Forms._
+import play.api.data._
+import play.api.i18n.Messages
 import play.api.mvc.{Action, Controller}
-import securesocial.core._
-import securesocial.core.providers.FacebookProvider
+
+import scala.concurrent.Await
+
 
 //import securesocial.core.providers.R
 
 /**
  * Created by maximcherkasov on 04.05.15.
  */
-class AuthController  extends Controller {
-  private implicit val readsOAuth2Info = Json.reads[OAuth2Info]
+class AuthController extends Controller {
+//  private implicit val readsOAuth2Info = Json.reads[OAuth2Info]
+  val Company = "userName"
+  val Email = "firstName"
+
+//  val form = Form[CompanyRegistrationInfo](
+//    mapping(
+//      Company -> nonEmptyText.verifying(Messages("aa"), company => {
+//        // todo: see if there's a way to avoid waiting here :-\
+//        import scala.concurrent.duration._
+//        Await.result(env.userService.find(providerId, userName), 20.seconds).isEmpty
+//      }),
+//      FirstName -> nonEmptyText,
+//      LastName -> nonEmptyText,
+//      Password ->
+//        tuple(
+//          Password1 -> nonEmptyText.verifying(PasswordValidator.constraint),
+//          Password2 -> nonEmptyText
+//        ).verifying(Messages(PasswordsDoNotMatch), passwords => passwords._1 == passwords._2)
+//    ) // binding
+//      ((userName, firstName, lastName, password) => RegistrationInfo(Some(userName), firstName, lastName, password._1)) // unbinding
+//      (info => Some((info.userName.getOrElse(""), info.firstName, info.lastName, ("", ""))))
+//  )
+
+  def login = Action {
+    implicit request =>
+      Ok(views.html.login())
+  }
 
 //  def authenticateMobile(providerName: String) = Action(parse.json) { implicit request =>
 //    // format: { "accessToken": "..." }
@@ -30,3 +59,5 @@ class AuthController  extends Controller {
 ////    } getOrElse NotFound(Json.obj("error" -> "user not found"))
 //  }
 }
+
+case class CompanyRegistrationInfo(email:String, companyName: String, password: String)

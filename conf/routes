@@ -3,8 +3,9 @@
 # ~~~~
 
 # Home page
-GET         /                    @controllers.Application.helloUser
-GET        /link-result        @controllers.Application.linkResult
+GET        /                    @controllers.Application.helloUser
+GET        /test-login          @controllers.AuthController.login
+GET        /link-result         @controllers.Application.linkResult
 GET        /helloUser           @controllers.Application.helloUser
 GET        /current-user        @controllers.Application.currentUser
 

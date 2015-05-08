@@ -3,12 +3,13 @@
  */
 import java.lang.reflect.Constructor
 
-import models.{SlickAuthenticatorStore, SlickUserService, MyEventListener, BasicUser}
+import models.{MyEventListener, BasicUser}
 import play.api.{GlobalSettings, Logger}
 import securesocial.core.RuntimeEnvironment
 import securesocial.core.authenticator.{HttpHeaderAuthenticatorBuilder, CookieAuthenticatorBuilder}
 import securesocial.core.providers.{FacebookProvider, UsernamePasswordProvider}
 import securesocial.core.services.AuthenticatorService
+import services.{SlickAuthenticatorStore, SlickUserService}
 
 import scala.collection.immutable.ListMap
 

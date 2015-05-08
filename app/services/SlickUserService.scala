@@ -1,17 +1,18 @@
-package models
+package services
 
 //import models.UserTableQueries.profiles
 
-import models.UserTableQueries._
-import org.joda.time.DateTime
 import com.github.tototoshi.slick.MySQLJodaSupport._
+import models.UserTableQueries._
+import models._
+import org.joda.time.DateTime
 import play.api.Logger
 import securesocial.core._
 import securesocial.core.providers.{MailToken, UsernamePasswordProvider => UserPass}
 import securesocial.core.services.{SaveMode, UserService}
-import slick.driver.MySQLDriver.simple._
 
 import scala.concurrent.Future
+import scala.slick.driver.MySQLDriver.simple._
 
 
 /**

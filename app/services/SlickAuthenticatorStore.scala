@@ -1,16 +1,18 @@
-package models
+package services
 
 /**
  * Created by maximcherkasov on 30.04.15.
  */
 
-import models.UserTableQueries.{users, userAuthenticators}
+import models.UserTableQueries.{userAuthenticators, users}
+import models.{BasicUser, UserAuthenticator, WithDefaultSession}
 import play.api.Logger
 import securesocial.core.authenticator.{Authenticator, CookieAuthenticator, HttpHeaderAuthenticator}
+
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.reflect.ClassTag
-import slick.driver.MySQLDriver.simple._
-import scala.concurrent.ExecutionContext.Implicits.global
+import scala.slick.driver.MySQLDriver.simple._
 
 class SlickAuthenticatorStore[A <: Authenticator[BasicUser]] extends securesocial.core.authenticator.AuthenticatorStore[A]
 with WithDefaultSession {

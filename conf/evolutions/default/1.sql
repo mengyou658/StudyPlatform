@@ -78,6 +78,17 @@ create table `password` (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+create table `business_profile` (
+  `id` INT(10) AUTO_INCREMENT NOT NULL,
+  `email` TEXT,
+  `hasher` TEXT,
+  `password` TEXT,
+  `salt` TEXT,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 # --- !Downs
 
 DROP TABLE `users`;
@@ -88,4 +99,4 @@ drop table `oauth1`;
 drop TABLE `oauth2`;
 drop TABLE `password`;
 drop table `authenticator`;
-
+drop table `business_profile`;
