@@ -3,14 +3,19 @@
 # ~~~~
 
 # Home page
-GET        /                    @controllers.Application.helloUser
-GET        /test-login          @controllers.AuthController.login
-GET        /link-result         @controllers.Application.linkResult
-GET        /helloUser           @controllers.Application.helloUser
-GET        /current-user        @controllers.Application.currentUser
+GET        /                     @controllers.Application.helloUser
+GET        /test-login           @controllers.AuthController.login
+GET        /link-result          @controllers.Application.linkResult
+GET        /helloUser            @controllers.Application.helloUser
+GET        /current-user         @controllers.Application.currentUser
 
-GET        /custom/login        @controllers.CustomLoginController.login
-GET        /custom/logout       @controllers.CustomLoginController.logout
+GET        /custom/login         @controllers.CustomLoginController.login
+GET        /custom/logout        @controllers.CustomLoginController.logout
+
+# JavaScript routes object
+GET        /jsroutes.js          controllers.JavascriptRouters.jsRoutes()
+
+GET         /api/profile             @controllers.Profile.list
 
 # Registration authentication
 #GET         /login               controllers.Authentication.login
@@ -20,8 +25,8 @@ GET        /custom/logout       @controllers.CustomLoginController.logout
 #GET         /logout              controllers.Authentication.logout
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file        controllers.Assets.at(path="/public", file)
+GET        /assets/*file         controllers.Assets.at(path="/public", file)
 
-->          /auth                securesocial.Routes
+->         /auth                 securesocial.Routes
 
     

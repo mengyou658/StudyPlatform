@@ -4,7 +4,9 @@
 import java.lang.reflect.Constructor
 
 import models.{MyEventListener, BasicUser}
+import play.api.mvc.WithFilters
 import play.api.{GlobalSettings, Logger}
+import play.filters.gzip.GzipFilter
 import securesocial.core.RuntimeEnvironment
 import securesocial.core.authenticator.{HttpHeaderAuthenticatorBuilder, CookieAuthenticatorBuilder}
 import securesocial.core.providers.{FacebookProvider, UsernamePasswordProvider}
@@ -13,7 +15,12 @@ import services.{SlickAuthenticatorStore, SlickUserService}
 
 import scala.collection.immutable.ListMap
 
-object Global extends GlobalSettings {
+object Global extends WithFilters(new GzipFilter(shouldGzip =
+  (request, response) => {
+    val contentType = response.headers.get("Content-Type")
+    contentType.exists(_.startsWith("text/html")) || request.path.endsWith("jsroutes.js")
+  }
+)) with GlobalSettings {
   /**
    * The runtime environment
    */

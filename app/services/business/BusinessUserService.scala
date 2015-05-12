@@ -11,7 +11,7 @@ import scala.concurrent.Future
 /**
  * Created by m.cherkasov on 08.05.15.
  */
-class BusinessUserService  with  WithDefaultSession{
+class BusinessUserService {
 //  override def find(providerId: String, userId: String): Future[Option[BasicProfile]] = ???
 //
 //  override def findByEmailAndProvider(email: String, providerId: String): Future[Option[BasicProfile]] = ???

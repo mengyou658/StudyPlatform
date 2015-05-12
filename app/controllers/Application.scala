@@ -1,9 +1,13 @@
 package controllers
 
 import models.BasicUser
+import play.api._
+import play.api.Play.current
+import play.api.cache._
 import securesocial.core.{SecureSocial, RuntimeEnvironment}
 import play.api.mvc.{ Action, RequestHeader }
 import scala.concurrent.ExecutionContext.Implicits.global
+
 
 //object Application extends Controller with SecuredConnection {
 class Application(override implicit val env: RuntimeEnvironment[BasicUser]) extends securesocial.core.SecureSocial[BasicUser] {
@@ -24,4 +28,24 @@ class Application(override implicit val env: RuntimeEnvironment[BasicUser]) exte
     }
   }
 
+
+
+  /*
+
+  val routeCache = {
+    val jsRoutesClass = classOf[routes.javascript]
+    val controllers = jsRoutesClass.getFields.map(_.get(null))
+    controllers.flatMap { controller =>
+      controller.getClass.getDeclaredMethods.map { action =>
+        action.invoke(controller).asInstanceOf[play.core.Router.JavascriptReverseRoute]
+      }
+    }
+  }
+
+  def jsRoutes(varName: String = "jsRoutes") = Cached(_ => "jsRoutes", duration = 86400) {
+    Action { implicit request =>
+      Ok(Routes.javascriptRouter(varName)(routeCache: _*)).as(JAVASCRIPT)
+    }
+  }
+   */
 }
