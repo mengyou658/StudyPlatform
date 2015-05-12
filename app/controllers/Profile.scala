@@ -23,7 +23,8 @@ class Profile(override implicit val env: RuntimeEnvironment[BasicUser]) extends 
     SecuredAction(Ok)(request).run.map {
       case Ok =>
         Right(MyWebSocketActor.props _)
-      case r => Left(r)
+      case r =>
+        Left(r)
     }
   }
 

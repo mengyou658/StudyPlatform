@@ -4,7 +4,7 @@
 define([  ], function() {
     'use strict';
 
-    var ProfileCtrl = function($scope, playRoutes, $http) {
+    var ProfileCtrl = function($scope, playRoutes, $window) {
         $scope.user = { name: 'ddd'};
 
         var profileUrl = playRoutes.controllers.Profile.list();
@@ -29,6 +29,12 @@ define([  ], function() {
             //$scope.$apply(function() {
             //    $scope.nodes = _.values(nodes);
             //});
+        };
+
+        clusterNodesWS.onerror = function(msg) {
+
+            console.log(msg);
+            $window.location = '/';
         };
         $scope.user.name = "zzz";
 
@@ -55,7 +61,7 @@ define([  ], function() {
         //    });
     };
 
-    ProfileCtrl.$inject = [ '$scope', 'playRoutes', '$http' ];
+    ProfileCtrl.$inject = [ '$scope', 'playRoutes', '$window' ];
 
     return {
         ProfileCtrl : ProfileCtrl
