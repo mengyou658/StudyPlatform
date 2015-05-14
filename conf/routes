@@ -15,7 +15,7 @@ GET        /custom/logout        @controllers.CustomLoginController.logout
 # JavaScript routes object
 GET        /jsroutes.js          controllers.JavascriptRouters.jsRoutes()
 
-GET         /api/profile             @controllers.Profile.list
+POST         /api/profile             @controllers.Profile.list
 
 # Registration authentication
 #GET         /login               controllers.Authentication.login

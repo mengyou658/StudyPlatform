@@ -13,12 +13,47 @@ import play.api.Play.current
  */
 class Profile(override implicit val env: RuntimeEnvironment[BasicUser]) extends securesocial.core.SecureSocial[BasicUser] {
 
-  def list1 = SecuredAction {
+  def list = SecuredAction(parse.json) {
     implicit request =>
-      Ok(Json.toJson(request.user.main.email))
+      (request.body \ "method").asOpt[String].map {
+        case "testRpc" =>
+          Ok(Json.toJson("Test RPC called"))
+        case _ =>
+          Ok(Json.toJson(
+            JsObject(
+              Seq(
+                "jsonrpc" -> JsString("2.0"),
+                "id" -> JsString((request.body \ "id").asOpt[String].getOrElse("")),
+                "error" -> JsObject(
+                  Seq(
+                    "code" -> JsString("-32601"),
+                    "message" -> JsString("Method not found")
+                  )
+                )
+              )
+            )
+          )
+          )
+      }.getOrElse{
+        Ok(Json.toJson(
+          JsObject(
+            Seq(
+              "jsonrpc" -> JsString("2.0"),
+              "id" -> JsString((request.body \ "id").asOpt[String].getOrElse("")),
+              "error" -> JsObject(
+                Seq(
+                  "code" -> JsString("-32601"),
+                  "message" -> JsString("Method not found")
+                )
+              )
+            )
+          )
+        )
+        )
+      }
   }
 
-  def list = WebSocket.tryAcceptWithActor[JsValue, JsValue] {
+  def list1 = WebSocket.tryAcceptWithActor[JsValue, JsValue] {
     implicit request =>
     SecuredAction(Ok)(request).run.map {
       case Ok =>
