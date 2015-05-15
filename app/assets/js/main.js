@@ -8,7 +8,12 @@
     // -- RequireJS config --
     requirejs.config({
         // Packages = top-level folders; loads a contained file named 'main.js"
-        packages: ['home', 'dashboard', 'common', 'profile'],
+        packages: ['home'
+                ,'dashboard'
+                ,'common'
+                ,'profile'
+                ,'services'
+                ,'auth'],
         shim: {
             'jsRoutes': {
                 deps: [],
@@ -18,6 +23,9 @@
             'angular': {
                 deps: ['jquery'],
                 exports: 'angular'
+            },
+            'flat-ui' : {
+                deps: ['jquery']
             },
             'angular-route': ['angular'],
             'bootstrap': ['jquery']
@@ -30,7 +38,8 @@
             'bootstrap': ['../lib/bootstrap/js/bootstrap'],
             'domReady': '../lib/requirejs-domready/domReady',
             'uiRouter': ['../lib/angular/angular-ui-router'],
-            'jsRoutes': ['/jsroutes']
+            'jsRoutes': ['/jsroutes'],
+            'flat-ui': ['../bower_components/flat-ui/dist/js/flat-ui']
         }
     });
 
@@ -39,7 +48,7 @@
     };
 
     // Load the app. This is kept minimal so it doesn't need much updating.
-    require(['angular', 'angular-route', 'jquery', 'bootstrap', './app'],
+    require(['angular', 'angular-route', 'jquery', 'bootstrap', 'flat-ui', './app'],
         function (angular) {
             angular.bootstrap(document, ['app']);
         }

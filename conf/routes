@@ -3,11 +3,11 @@
 # ~~~~
 
 # Home page
-GET        /                     @controllers.Application.helloUser
-GET        /test-login           @controllers.AuthController.login
-GET        /link-result          @controllers.Application.linkResult
-GET        /helloUser            @controllers.Application.helloUser
-GET        /current-user         @controllers.Application.currentUser
+GET        /login                @controllers.Application.login
+#GET        /test-login           @controllers.AuthController.login
+#GET        /link-result          @controllers.Application.linkResult
+GET        /                     @controllers.Application.index
+#GET        /current-user         @controllers.Application.currentUser
 
 GET        /custom/login         @controllers.CustomLoginController.login
 GET        /custom/logout        @controllers.CustomLoginController.logout

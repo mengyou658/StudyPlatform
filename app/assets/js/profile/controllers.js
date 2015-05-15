@@ -4,22 +4,17 @@
 define([  ], function() {
     'use strict';
 
-    var ProfileCtrl = function($scope, playRoutes, $window) {
-        $scope.user = { name: 'ddd'};
+    var ProfileCtrl = function($scope, playRoutes, rpcService) {
+        $scope.user = {};
+
+        console.log(rpcService.getRequest);
 
         var profileUrl = playRoutes.controllers.Profile.list();
-        profileUrl.post(
-            JSON.stringify({
-                id: 1,
-                jsonrpc: "2.0",
-                method: "testRpc1",
-                params: {
-                    input: "TestParam1"
-                }
-            })
-        ).
+
+        profileUrl.post(rpcService.getRequest(1, "testRpc")
+           ).
             success(function(data, status, headers, config) {
-                $scope.user.name = data
+                $scope.user.name = data;
                 console.log(data);
             }).
             error(function(data, status, headers, config) {
@@ -28,7 +23,7 @@ define([  ], function() {
             });
     };
 
-    ProfileCtrl.$inject = [ '$scope', 'playRoutes', '$window' ];
+    ProfileCtrl.$inject = [ '$scope', 'playRoutes', 'rpcService' ];
 
     return {
         ProfileCtrl : ProfileCtrl

@@ -2,7 +2,7 @@
  * Created by maximcherkasov on 09.05.15.
  */
 
-define(['angular', 'home', 'dashboard', 'common', 'profile'], function(angular) {
+define(['angular', 'home', 'dashboard', 'common', 'profile', 'services', 'auth'], function(angular) {
     'use strict';
 
     // We must already declare most dependencies here (except for common), or the submodules' routes
@@ -11,9 +11,11 @@ define(['angular', 'home', 'dashboard', 'common', 'profile'], function(angular) 
         'rema7.home'
         ,'rema7.profile'
         ,'rema7.dashboard'
-        ,'rema7.common']);
+        ,'rema7.common'
+        ,'rema7.services'
+        ,'rema7.auth']);
 
-    app.config(function ($routeProvider, $httpProvider) {
+    app.config(function ($locationProvider, $routeProvider, $httpProvider) {
         $httpProvider.interceptors.push(function($q, $window) {
             return {
                 request: function(request) {
@@ -25,7 +27,7 @@ define(['angular', 'home', 'dashboard', 'common', 'profile'], function(angular) 
                 responseError: function(rejection) {
                     if (rejection.status === 401) {
                         // Return a new promise
-                        console.log('zzzz');
+
                         $window.location = '/login';
                         //return userService.authenticate().then(function() {
                         //    return $injector.get('$http')(rejection.config);
@@ -38,10 +40,30 @@ define(['angular', 'home', 'dashboard', 'common', 'profile'], function(angular) 
                     return $q.reject(rejection);
                 }
             };
+
+
         });
+
+        //$routeProvider.otherwise({
+        //    redirectTo: '/'
+        //});
+
+        $locationProvider.html5Mode(true);
+        $locationProvider.hashPrefix('!');
         //'responseObserver');
         /* other configuration, like routing */
     });
+
+    //app.service('rpcService', function() {
+    //    this.getRequest = function(id, method, params) {
+    //        return JSON.stringify({
+    //            id: id,
+    //            jsonrpc: "2.0",
+    //            method: method,
+    //            params: params === undefined ? {} : params
+    //        })
+    //    };
+    //});
 
     return app;
     //angular.module('app', [

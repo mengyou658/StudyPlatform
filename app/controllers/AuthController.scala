@@ -1,12 +1,10 @@
 package controllers
 
-import play.api.data.Forms._
-import play.api.data._
-import play.api.i18n.Messages
+
 import play.api.mvc.{Action, Controller}
-
-import scala.concurrent.Await
-
+import play.filters.csrf.CSRFAddToken
+import securesocial.core._
+import securesocial.core.utils._
 
 //import securesocial.core.providers.R
 
@@ -15,8 +13,8 @@ import scala.concurrent.Await
  */
 class AuthController extends Controller {
 //  private implicit val readsOAuth2Info = Json.reads[OAuth2Info]
-  val Company = "userName"
-  val Email = "firstName"
+//  val Company = "userName"
+//  val Email = "firstName"
 
 //  val form = Form[CompanyRegistrationInfo](
 //    mapping(
@@ -37,10 +35,10 @@ class AuthController extends Controller {
 //      (info => Some((info.userName.getOrElse(""), info.firstName, info.lastName, ("", ""))))
 //  )
 
-  def login = Action {
-    implicit request =>
-      Ok(views.html.login())
-  }
+//  def login = Action {
+//      implicit request =>
+//        Ok(views.html.login())
+//  }
 
 //  def authenticateMobile(providerName: String) = Action(parse.json) { implicit request =>
 //    // format: { "accessToken": "..." }
@@ -60,4 +58,4 @@ class AuthController extends Controller {
 //  }
 }
 
-case class CompanyRegistrationInfo(email:String, companyName: String, password: String)
+

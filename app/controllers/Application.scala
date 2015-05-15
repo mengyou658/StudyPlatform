@@ -12,22 +12,25 @@ import scala.concurrent.ExecutionContext.Implicits.global
 //object Application extends Controller with SecuredConnection {
 class Application(override implicit val env: RuntimeEnvironment[BasicUser]) extends securesocial.core.SecureSocial[BasicUser] {
 
-  def helloUser = SecuredAction {
+  def index = SecuredAction {
     implicit request =>
-      Ok(views.html.index(request.user.main))
+      Ok(views.html.main())
   }
 
-  def linkResult = SecuredAction { implicit request =>
-    Ok(views.html.linkResult(request.user))
-  }
+//  def linkResult = SecuredAction { implicit request =>
+//    Ok(views.html.linkResult(request.user))
+//  }
+//
+//  def currentUser = Action.async { implicit request =>
+//    SecureSocial.currentUser[BasicUser].map { maybeUser =>
+//      val userId = maybeUser.map(_.main.userId).getOrElse("unknown")
+//      Ok(s"Your id is $userId")
+//    }
+//  }
 
-  def currentUser = Action.async { implicit request =>
-    SecureSocial.currentUser[BasicUser].map { maybeUser =>
-      val userId = maybeUser.map(_.main.userId).getOrElse("unknown")
-      Ok(s"Your id is $userId")
-    }
+  def login = Action { implicit request =>
+      Ok(views.html.login())
   }
-
 
 
   /*

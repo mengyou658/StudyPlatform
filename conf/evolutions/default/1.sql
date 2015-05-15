@@ -1,20 +1,5 @@
 # --- !Ups
 
-CREATE TABLE `users` (
-  `id` INT(10) AUTO_INCREMENT NOT NULL,
-  `email` TEXT NOT NULL,
-  `password` TEXT NULL,
-  `accessToken` TEXT NULL,
-  `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-create table `tokens` (
-  `uuid` INT(10) NOT NULL,
-  `created` TIMESTAMP NOT NULL,
-  `expirationTime` TIMESTAMP NOT NULL,
-  `isSignUp` BOOLEAN NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table `token` (
   `uuid` TEXT NOT NULL,
@@ -91,8 +76,7 @@ create table `business_profile` (
 
 # --- !Downs
 
-DROP TABLE `users`;
-DROP TABLE `tokens`;
+
 drop table `token`;
 drop table `profile`;
 drop table `oauth1`;
