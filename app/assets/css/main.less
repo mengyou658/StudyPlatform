@@ -1,3 +1,4 @@
+@import "../../../public/bower_components/flat-ui/less/variables";
 
 .login-screen {
   min-height: 0;
@@ -7,6 +8,22 @@
   -moz-transform-style: preserve-3d;
   transform-style: preserve-3d;
 
+  .login-title {
+    font-size: 29px;
+    margin-bottom: 15px;
+  }
+
+  .link-cancel {
+    padding: 0;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    &:hover {
+      color: @turquoise;
+    }
+
+  }
+
   .login-form {
     //width: 40%;
     margin: 0 auto;
@@ -15,8 +32,23 @@
     transform: translateY(-50%);
     width: 420px;
 
+    .form-label {
+      font-size: 16px;
+      margin: 0;
+    }
+
     .login-link {
       text-align: right;
+    }
+
+    .registration-link {
+      color: @green-sea;
+      text-align: center;
+      font-size: 16px;
+
+      &:hover {
+        color: @turquoise;
+      }
     }
   }
 }

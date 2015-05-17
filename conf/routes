@@ -3,14 +3,14 @@
 # ~~~~
 
 # Home page
-GET        /login                @controllers.Application.login
+#GET        /login                @controllers.Application.login
 #GET        /test-login           @controllers.AuthController.login
 #GET        /link-result          @controllers.Application.linkResult
 GET        /                     @controllers.Application.index
 #GET        /current-user         @controllers.Application.currentUser
 
-GET        /custom/login         @controllers.CustomLoginController.login
-GET        /custom/logout        @controllers.CustomLoginController.logout
+#GET        /custom/login         @controllers.CustomLoginController.login
+#GET        /custom/logout        @controllers.CustomLoginController.logout
 
 # JavaScript routes object
 GET        /jsroutes.js          controllers.JavascriptRouters.jsRoutes()

@@ -28,7 +28,7 @@ define(['angular', 'home', 'dashboard', 'common', 'profile', 'services', 'auth']
                     if (rejection.status === 401) {
                         // Return a new promise
 
-                        $window.location = '/login';
+                        $window.location = '/';
                         //return userService.authenticate().then(function() {
                         //    return $injector.get('$http')(rejection.config);
                         //});
@@ -48,8 +48,8 @@ define(['angular', 'home', 'dashboard', 'common', 'profile', 'services', 'auth']
         //    redirectTo: '/'
         //});
 
-        $locationProvider.html5Mode(true);
-        $locationProvider.hashPrefix('!');
+        //$locationProvider.html5Mode(true);
+        //$locationProvider.hashPrefix('!');
         //'responseObserver');
         /* other configuration, like routing */
     });

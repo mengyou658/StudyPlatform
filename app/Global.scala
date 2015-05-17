@@ -3,6 +3,7 @@
  */
 import java.lang.reflect.Constructor
 
+import controllers.MyViews
 import models.{MyEventListener, BasicUser}
 import play.api.mvc.WithFilters
 import play.api.{GlobalSettings, Logger}
@@ -32,6 +33,9 @@ object Global extends WithFilters(new GzipFilter(shouldGzip =
       new CookieAuthenticatorBuilder[BasicUser](new SlickAuthenticatorStore, idGenerator),
       new HttpHeaderAuthenticatorBuilder[BasicUser](new SlickAuthenticatorStore, idGenerator)
     )
+
+    override lazy val viewTemplates = new MyViews(this)
+
     override lazy val providers = ListMap(
       include(new UsernamePasswordProvider[BasicUser](userService, avatarService, viewTemplates, passwordHashers))
       // ... other providers
@@ -39,10 +43,6 @@ object Global extends WithFilters(new GzipFilter(shouldGzip =
     )
   }
 
-  /**
-   * An implementation that checks if the controller expects a RuntimeEnvironment and
-   * passes the instance to it if required.
-   */
   override def getControllerInstance[A](controllerClass: Class[A]): A = {
 
     val instance  = controllerClass.getConstructors.find { c =>
