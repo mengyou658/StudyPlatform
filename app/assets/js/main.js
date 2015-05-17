@@ -24,9 +24,7 @@
                 deps: ['jquery'],
                 exports: 'angular'
             },
-            'flat-ui' : {
-                deps: ['jquery']
-            },
+            'flat-ui' : ['jquery'],
             'angular-route': ['angular'],
             'bootstrap': ['jquery']
         },
@@ -38,8 +36,8 @@
             'bootstrap': ['../lib/bootstrap/js/bootstrap'],
             'domReady': '../lib/requirejs-domready/domReady',
             'uiRouter': ['../lib/angular/angular-ui-router'],
-            'jsRoutes': ['/jsroutes'],
-            'flat-ui': ['../bower_components/flat-ui/dist/js/flat-ui']
+            'jsRoutes': ['/jsroutes']
+            , 'flat-ui': ['../bower_components/flat-ui/dist/js/flat-ui']
         }
     });
 
@@ -48,7 +46,7 @@
     };
 
     // Load the app. This is kept minimal so it doesn't need much updating.
-    require(['angular', 'angular-route', 'jquery', 'bootstrap', 'flat-ui', './app'],
+    require(['angular', 'angular-route', 'jquery', 'flat-ui', './app'],
         function (angular) {
             angular.bootstrap(document, ['app']);
         }

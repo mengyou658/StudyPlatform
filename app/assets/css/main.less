@@ -1,12 +1,24 @@
 @import "../../../public/bower_components/flat-ui/less/variables";
 
+body {
+  font-size: 14px;
+}
+.main-body {
+  padding-top: 50px;
+}
+
+.nav-sidebar > li > a {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
 .login-screen {
   min-height: 0;
   padding: 0;
   height: 100%;
-  -webkit-transform-style: preserve-3d;
-  -moz-transform-style: preserve-3d;
-  transform-style: preserve-3d;
+  //-webkit-transform-style: preserve-3d;
+  //-moz-transform-style: preserve-3d;
+  //transform-style: preserve-3d;
 
   .login-title {
     font-size: 29px;
@@ -51,4 +63,28 @@
       }
     }
   }
+}
+
+.sidebar {
+  position: fixed;
+  top: 51px;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  display: block;
+  padding: 20px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #f5f5f5;
+  border-right: 1px solid #eee;
+}
+
+.main {
+  padding: 20px;
+}
+
+.nav-sidebar {
+  margin-right: -21px;
+  margin-bottom: 20px;
+  margin-left: -20px;
 }
