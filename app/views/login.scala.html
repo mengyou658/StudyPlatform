@@ -38,14 +38,18 @@
                         <a class="login-link" href="@env.routes.startResetPasswordUrl">Forgot password?</a>
                     </div>
 
-                    <button class="btn btn-primary btn-lg btn-block" type="submit"">Log in</button>
+                    <div class="form-group">
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Log in</button>
                     <a class="login-link registration-link" href="@env.routes.startSignUpUrl">Don't have account ?</a>
+                    </div>
+
+                    <div class="form-group">
+                        <a class="btn btn-info btn-lg btn-block" href="@env.routes.authenticationUrl("facebook")">
+                            <i class="fui-facebook" aria-hidden="true"></i> Facebook</a>
+                    </div>
 
 
                 </form>
-                @*<div class="form-group">*@
-                    @*<a class="btn btn-info btn-lg btn-block" href="@env.routes.authenticationUrl("facebook")">Facebook</a>*@
-                @*</div>*@
             </div>
         </div>
 
