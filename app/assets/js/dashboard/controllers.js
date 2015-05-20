@@ -2,10 +2,10 @@
  * Created by maximcherkasov on 09.05.15.
  */
 
-define([  ], function() {
+define([], function() {
     'use strict';
 
-    var DashboardCtrl = function($scope, playRoutes) {
+    var DashboardCtrl = function($scope, $http) {
         $scope.metrics = [];
         $scope.nodes = [];
 
@@ -13,6 +13,17 @@ define([  ], function() {
         //var clusterNodesSocketUrl = playRoutes.controllers.Application.pr();
         //var clusterNodesWS = new WebSocket(clusterNodesSocketUrl);
 
+        var callbackName = 'instajam' + Math.round(new Date().getTime() / 1000) + Math.floor(Math.random() * 100);
+        var authUrl = 'https://instagram.com/oauth/authorize/?client_id='
+            + '19dd284d24b04e7182b142ede16324b8' + '&redirect_uri='
+            + 'http://localhost:9000' + '&response_type=token&callback='+callbackName;
+        //authUrl = 'https://api.instagram.com/v1/media/popular?client_id=642176ece1e7445e99244cec26f4de1f&callback=JSON_CALLBACK';
+        console.log(authUrl);
+
+        $http.jsonp(authUrl).success(function(response) {
+            //console.log(response.data)
+        });
+        //+ (this.scope || '');
         /** Contains all the nodes */
         var nodes = {};
 
@@ -65,7 +76,7 @@ define([  ], function() {
         //    });
         //};
     };
-    DashboardCtrl.$inject = [ '$scope', 'playRoutes' ];
+    DashboardCtrl.$inject = [ '$scope', '$http' ];
 
     return {
         DashboardCtrl : DashboardCtrl

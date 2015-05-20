@@ -22,34 +22,45 @@
         <div class="container-fluid">
             <div class="login-screen">
 
-                <form action="@env.routes.authenticationUrl("userpass")" class="login-form" autocomplete="off" method="post">
-                    <div class="form-group">
-                        <h4 style="margin-top: 0">SignIn</h4>
-                    </div>
+                    <form action="@env.routes.authenticationUrl("userpass")" class="login-form" autocomplete="off" method="post">
+                        <div class="form-group">
+                            <h4 style="margin-top: 0">SignIn</h4>
+                        </div>
 
-                    <div class="form-group">
-                        <input type="email" class="form-control login-field" value="" placeholder="Enter your email" name="username" id="login-name">
-                        <label class="login-field-icon fui-mail" for="login-name"></label>
-                    </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control login-field" value="" placeholder="Enter your email" name="username" id="login-name">
+                            <label class="login-field-icon fui-mail" for="login-name"></label>
+                        </div>
 
-                    <div class="form-group">
-                        <input type="password" class="form-control login-field" value="" placeholder="Password" name="password" id="login-pass">
-                        <label class="login-field-icon fui-lock" for="login-pass"></label>
-                        <a class="login-link" href="@env.routes.startResetPasswordUrl">Forgot password?</a>
-                    </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control login-field" value="" placeholder="Password" name="password" id="login-pass">
+                            <label class="login-field-icon fui-lock" for="login-pass"></label>
 
-                    <div class="form-group">
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">Log in</button>
-                    <a class="login-link registration-link" href="@env.routes.startSignUpUrl">Don't have account ?</a>
-                    </div>
+                        </div>
 
-                    <div class="form-group">
-                        <a class="btn btn-info btn-lg btn-block" href="@env.routes.authenticationUrl("facebook")">
-                            <i class="fui-facebook" aria-hidden="true"></i> Facebook</a>
-                    </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-lg btn-block" type="submit">Log in</button>
+                        </div>
+
+                        @*<div class="signup-or-separator">*@
+                            @*<h6 class="text">or</h6>*@
+                            @*<hr>*@
+                        @*</div>*@
+
+                        <div class="form-group">
+                            <a class="btn btn-info btn-lg btn-block" href="@env.routes.authenticationUrl("facebook")">
+                                <i class="fui-facebook" aria-hidden="true"></i> Facebook</a>
+                        </div>
+
+                        <div class="actions">
+                            <span><a class="" href="@env.routes.startResetPasswordUrl">Forgot password?</a></span>
+                            <span style="float: right">Don't have an account ? &nbsp;<a class="register-link" href="@env.routes.startSignUpUrl">Get Started</a></span>
+                        </div>
+                    </form>
 
 
-                </form>
+
+
             </div>
         </div>
 

@@ -24,9 +24,10 @@
                 deps: ['jquery'],
                 exports: 'angular'
             },
-            'flat-ui' : ['jquery'],
+            'flat-ui': ['jquery'],
             'angular-route': ['angular'],
-            'bootstrap': ['jquery']
+            'bootstrap': ['jquery'],
+            'instajam': []
         },
         paths: {
             'requirejs': ['../lib/requirejs/require'],
@@ -37,7 +38,8 @@
             'domReady': '../lib/requirejs-domready/domReady',
             'uiRouter': ['../lib/angular/angular-ui-router'],
             'jsRoutes': ['/jsroutes']
-            , 'flat-ui': ['../bower_components/flat-ui/dist/js/flat-ui']
+            ,'flat-ui': ['../bower_components/flat-ui/dist/js/flat-ui']
+            ,'instajam': ['../bower_components/instajam/dist/instajam']
         }
     });
 
@@ -46,7 +48,7 @@
     };
 
     // Load the app. This is kept minimal so it doesn't need much updating.
-    require(['angular', 'angular-route', 'jquery', 'flat-ui', './app'],
+    require(['angular', 'angular-route', 'jquery', 'flat-ui', 'instajam', './app'],
         function (angular) {
             angular.bootstrap(document, ['app']);
         }

@@ -44,6 +44,9 @@ define(['angular', 'home', 'dashboard', 'common', 'profile', 'services', 'auth']
 
         });
 
+        $httpProvider.defaults.useXDomain = true;
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+
         //$routeProvider.otherwise({
         //    redirectTo: '/'
         //});
