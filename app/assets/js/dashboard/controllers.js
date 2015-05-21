@@ -16,6 +16,7 @@ define([], function() {
                     //$scope.user = JSON.stringify(response.data.user);
                     //$window.localStorage.currentUser = JSON.stringify(response.data.user);
                     //$rootScope.currentUser = JSON.parse($window.localStorage.currentUser);
+                    //$http.jsonp('https://instagram.com/accounts/logout/')
                 });
         };
     };

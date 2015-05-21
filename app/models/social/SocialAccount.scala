@@ -20,8 +20,8 @@ class SocialAccounts(tag: Tag) extends Table[SocialAccount](tag, "social_account
   def provider = column[String]("provider")
   def accountId = column[String]("accountId")
   def accessToken = column[String]("accessToken")
-  def username = column[String]("username")
-  def profilePicture = column[String]("profilePicture")
+  def username = column[Option[String]]("username")
+  def profilePicture = column[Option[String]]("profilePicture")
 
-  def * = (id, uid, provider, accountId, accessToken, username, profilePicture) <> (SocialAccount.tupled, SocialAccount.unapply)
+  def * = (id.?, uid, provider, accountId, accessToken, username, profilePicture) <> (SocialAccount.tupled, SocialAccount.unapply)
 }

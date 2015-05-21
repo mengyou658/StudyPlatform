@@ -79,7 +79,9 @@ create table social_account (
 
 drop table `token`;
 drop table `profile`;
+drop table `user`;
 drop table `oauth1`;
 drop TABLE `oauth2`;
 drop TABLE `password`;
 drop table `authenticator`;
+drop table `social_account`;

@@ -27,7 +27,6 @@
             'flat-ui': ['jquery'],
             'angular-route': ['angular'],
             'bootstrap': ['jquery']
-            , 'instajam': []
             , 'satellizer': ['angular']
         },
         paths: {
@@ -40,8 +39,7 @@
             'uiRouter': ['../lib/angular/angular-ui-router'],
             'jsRoutes': ['/jsroutes']
             ,'flat-ui': ['../bower_components/flat-ui/dist/js/flat-ui']
-            ,'instajam': ['../bower_components/instajam/dist/instajam']
-            ,'satellizer': ['../bower_components/satellizer/satellizer']
+            ,'satellizer': ['../lib/satellizer/satellizer']
         }
     });
 
@@ -50,7 +48,7 @@
     };
 
     // Load the app. This is kept minimal so it doesn't need much updating.
-    require(['angular', 'angular-route', 'jquery', 'flat-ui', 'instajam', './app', 'satellizer'],
+    require(['angular', 'angular-route', 'jquery', 'flat-ui', './app', 'satellizer'],
         function (angular) {
             angular.bootstrap(document, ['app']);
         }
