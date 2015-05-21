@@ -63,6 +63,16 @@ create table `password` (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+create table social_account (
+  `id` INT(10) AUTO_INCREMENT NOT NULL,
+  `userId` INT(10) NOT NULL,
+  `provider` TEXT NOT NULL,
+  `accountId` TEXT NOT NULL,
+  `accessToken` TEXT,
+  `username` TEXT,
+  `profilePicture` TEXT,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
 # --- !Downs
 

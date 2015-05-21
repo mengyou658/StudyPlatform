@@ -2,7 +2,7 @@
  * Created by maximcherkasov on 09.05.15.
  */
 
-define(['angular', 'home', 'dashboard', 'common', 'profile', 'services', 'auth'], function(angular) {
+define(['angular', 'home', 'dashboard', 'common', 'profile', 'services', 'auth', 'satellizer'], function(angular) {
     'use strict';
 
     // We must already declare most dependencies here (except for common), or the submodules' routes
@@ -13,9 +13,10 @@ define(['angular', 'home', 'dashboard', 'common', 'profile', 'services', 'auth']
         ,'rema7.dashboard'
         ,'rema7.common'
         ,'rema7.services'
-        ,'rema7.auth']);
+        ,'rema7.auth'
+        ,'satellizer']);
 
-    app.config(function ($locationProvider, $routeProvider, $httpProvider) {
+    app.config(function ($locationProvider, $routeProvider, $httpProvider, $authProvider) {
         $httpProvider.interceptors.push(function($q, $window) {
             return {
                 request: function(request) {
@@ -44,9 +45,19 @@ define(['angular', 'home', 'dashboard', 'common', 'profile', 'services', 'auth']
 
         });
 
-        $httpProvider.defaults.useXDomain = true;
-        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+        //$httpProvider.defaults.useXDomain = true;
+        //delete $httpProvider.defaults.headers.common['X-Requested-With'];
 
+        $authProvider.oauth2({
+            name: 'instagram',
+            url: '/auth/instagram',
+            redirectUri: 'http://localhost:9000/',
+            clientId: '19dd284d24b04e7182b142ede16324b8',
+            requiredUrlParams: ['scope'],
+            scope: ['likes'],
+            scopeDelimiter: '+',
+            authorizationEndpoint: 'https://api.instagram.com/oauth/authorize'
+        });
         //$routeProvider.otherwise({
         //    redirectTo: '/'
         //});
@@ -56,6 +67,8 @@ define(['angular', 'home', 'dashboard', 'common', 'profile', 'services', 'auth']
         //'responseObserver');
         /* other configuration, like routing */
     });
+
+
 
     //app.service('rpcService', function() {
     //    this.getRequest = function(id, method, params) {

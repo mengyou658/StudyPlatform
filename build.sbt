@@ -33,6 +33,7 @@ libraryDependencies ++= Seq( jdbc , anorm , cache , ws
   , "org.webjars" % "requirejs" % "2.1.17"
   , "org.webjars" % "requirejs-domready" % "2.0.1-2"
   , "org.webjars.bower" % "angular-route" % "1.3.15"
+  , "io.really" %% "jwt-scala" % "1.2.2"
 )
 
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )

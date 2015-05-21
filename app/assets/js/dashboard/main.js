@@ -5,5 +5,5 @@
 define(['angular', './routes'], function(angular) {
     'use strict';
 
-    return angular.module('rema7.dashboard', ['ngRoute', 'dashboard.routes']);
+    return angular.module('rema7.dashboard', ['ngRoute', 'dashboard.routes', 'satellizer']);
 });
