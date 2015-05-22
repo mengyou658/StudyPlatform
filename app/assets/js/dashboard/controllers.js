@@ -12,24 +12,25 @@ define([], function() {
 
         $http.get('/social')
             .success(function(data) {
-                $scope.accounts = data
-            });
+                $scope.accounts = data;
+                $scope.accounts.info = {};
 
-        $scope.linkInstagram = function() {
-            $auth.link('instagram')
-                .then(function(response) {
-                    console.log(JSON.stringify(response.data));
-                    //$scope.user = JSON.stringify(response.data.user);
-                    //$window.localStorage.currentUser = JSON.stringify(response.data.user);
-                    //$rootScope.currentUser = JSON.parse($window.localStorage.currentUser);
-                    //$http.jsonp('https://instagram.com/accounts/logout/')
+                $scope.accounts.forEach(function(entry) {
+                    //console.log(entry);
+                    var url = 'https://api.instagram.com/v1/users/'+entry.accountId+'/?access_token='+entry.accessToken+'&callback=JSON_CALLBACK';
+                    $http.jsonp(url).success(function(response) {
+                        //console.log(response.data);
+                        entry.info = response.data.counts;
+                    })
                 });
-        };
+
+
+            });
 
         $scope.feed = function(accessToken) {
             var url = "https://api.instagram.com/v1/users/self/feed?access_token="+accessToken+"&callback=JSON_CALLBACK";
             $http.jsonp(url).success(function(response) {
-                console.log(response.data);
+                //console.log(response.data);
                 $scope.feed = response.data;
                 //callback(response.data);
             })

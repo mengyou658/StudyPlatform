@@ -11,11 +11,18 @@
     <div ng-repeat="account in accounts">
         <a href="" class="account-block">
             <div class="wrapper">
-                <img src="{{account.profilePicture}}">
-                <div class="account-name">{{account.username}}</div>
+                <div class="img-block">
+                    <img ng-src="{{account.profilePicture}}">
+                    <div class="account-name">{{account.username}}</div>
+                </div>
+                <div class="account-info">
+                    <div><span>Followed by: </span>{{account.info.followed_by}}</div>
+                    <div><span>Follows: </span>{{account.info.follows}}</div>
+                    <div><span>Media: </span>{{account.info.media}}</div>
+                </div>
                 <div class="fui-instagram account-icon" ng-if="account.provider === 'instagram'"></div>
-                <button ng-click="feed(account.accessToken)">feed</button>
             </div>
+            <button href="" ng-click="feed(account.accessToken)">feed</button>
         </a>
         <!--{{account}}-->
     </div>
@@ -23,7 +30,7 @@
 <div>
     <h5>Feed</h5>
     <div ng-repeat="image in feed">
-        <img style="float: left;" src="{{image.images.low_resolution.url}}" height="100px" width="100px">
+        <img style="float: left;" ng-src="{{image.images.low_resolution.url}}" height="100px" width="100px">
     </div>
 </div>
 
