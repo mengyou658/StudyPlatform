@@ -1,10 +1,9 @@
-package models
-
+package models.user
 
 import securesocial.core.PasswordInfo
 
-import scala.slick.driver.MySQLDriver.simple._
 import scala.language.implicitConversions
+import scala.slick.driver.MySQLDriver.simple._
 
 /**
  * Created by maximcherkasov on 01.05.15.

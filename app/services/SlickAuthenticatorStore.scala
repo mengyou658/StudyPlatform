@@ -4,8 +4,9 @@ package services
  * Created by maximcherkasov on 30.04.15.
  */
 
-import models.UserTableQueries.{userAuthenticators, users}
-import models.{BasicUser, UserAuthenticator, WithDefaultSession}
+import models.user.{UserAuthenticator, BasicUser, UserTableQueries}
+import UserTableQueries.{userAuthenticators, users}
+import models.WithDefaultSession
 import play.api.Logger
 import securesocial.core.authenticator.{Authenticator, CookieAuthenticator, HttpHeaderAuthenticator}
 

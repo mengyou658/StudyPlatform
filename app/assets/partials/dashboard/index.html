@@ -8,6 +8,15 @@
 </div>
 
 <div>
-    {{user}}
+    <div ng-repeat="account in accounts">
+        <a href="" class="account-block">
+            <div class="wrapper">
+                <img src="{{account.profilePicture}}">
+                <div class="account-name">{{account.username}}</div>
+                <div class="fui-instagram account-icon" ng-if="account.provider === 'instagram'"></div>
+            </div>
+        </a>
+        <!--{{account}}-->
+    </div>
 </div>
 

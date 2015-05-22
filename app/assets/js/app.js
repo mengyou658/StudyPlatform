@@ -50,7 +50,7 @@ define(['angular', 'home', 'dashboard', 'common', 'profile', 'services', 'auth',
 
         $authProvider.oauth2({
             name: 'instagram',
-            url: '/auth/instagram',
+            url: '/social/instagram',
             redirectUri: 'http://localhost:9000/',
             clientId: '19dd284d24b04e7182b142ede16324b8',
             requiredUrlParams: ['scope'],

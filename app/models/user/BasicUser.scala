@@ -1,7 +1,7 @@
-package models
+package models.user
 
-import models.UserTableQueries.{passwords, oauth1s, oauth2s}
 import securesocial.core._
+
 import scala.language.implicitConversions
 
 /**

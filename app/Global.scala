@@ -4,7 +4,7 @@
 import java.lang.reflect.Constructor
 
 import controllers.MyViews
-import models.{MyEventListener, BasicUser}
+import models.user.{MyEventListener, BasicUser}
 import play.api.mvc.WithFilters
 import play.api.{GlobalSettings, Logger}
 import play.filters.gzip.GzipFilter

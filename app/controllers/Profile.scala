@@ -2,7 +2,7 @@ package controllers
 
 import akka.actor.{Actor, Props, ActorRef}
 import com.fasterxml.jackson.annotation.JsonValue
-import models.BasicUser
+import models.user.BasicUser
 import play.api.libs.json.{JsString, JsObject, Json, JsValue}
 import play.api.mvc.{WebSocket, Controller}
 import securesocial.core.RuntimeEnvironment

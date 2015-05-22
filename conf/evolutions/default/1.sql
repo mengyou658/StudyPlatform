@@ -65,18 +65,17 @@ create table `password` (
 
 create table social_account (
   `id` INT(10) AUTO_INCREMENT NOT NULL,
-  `userId` INT(10) NOT NULL,
+  `userId` LONGTEXT NOT NULL,
   `provider` TEXT NOT NULL,
   `accountId` TEXT NOT NULL,
   `accessToken` TEXT,
   `username` TEXT,
   `profilePicture` TEXT,
   PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 # --- !Downs
-
-
 drop table `token`;
 drop table `profile`;
 drop table `user`;

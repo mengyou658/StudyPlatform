@@ -1,12 +1,11 @@
-package models
+package models.user
 
+import com.github.tototoshi.slick.MySQLJodaSupport._
 import org.joda.time.DateTime
 import securesocial.core.providers.MailToken
 
+import scala.slick.driver.MySQLDriver.simple._
 import scala.slick.lifted.ProvenShape
-import com.github.tototoshi.slick.MySQLJodaSupport._
-
-import slick.driver.MySQLDriver.simple._
 
 /**
  * Created by maximcherkasov on 01.05.15.

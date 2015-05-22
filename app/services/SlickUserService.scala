@@ -3,7 +3,8 @@ package services
 //import models.UserTableQueries.profiles
 
 import com.github.tototoshi.slick.MySQLJodaSupport._
-import models.UserTableQueries._
+import models.user._
+import UserTableQueries._
 import models._
 import org.joda.time.DateTime
 import play.api.Logger

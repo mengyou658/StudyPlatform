@@ -8,7 +8,8 @@
 #GET        /link-result          @controllers.Application.linkResult
 GET        /                     @controllers.Application.index
 #GET        /current-user         @controllers.Application.currentUser
-POST        /auth/:provider         @controllers.Application.addSocialAccount(provider)
+POST       /social/:provider         @controllers.SocialAccountController.addSocialAccount(provider)
+GET        /social                  @controllers.SocialAccountController.list()
 
 #GET        /custom/login         @controllers.CustomLoginController.login
 #GET        /custom/logout        @controllers.CustomLoginController.logout

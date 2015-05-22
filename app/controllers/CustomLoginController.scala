@@ -4,7 +4,7 @@ package controllers
  * Created by maximcherkasov on 29.04.15.
  */
 
-import models.BasicUser
+import models.user.BasicUser
 import securesocial.controllers.BaseLoginPage
 import play.api.mvc.{ RequestHeader, AnyContent, Action }
 import play.api.Logger

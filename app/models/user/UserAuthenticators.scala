@@ -1,7 +1,8 @@
-package models
+package models.user
 
-import org.joda.time.DateTime
 import com.github.tototoshi.slick.MySQLJodaSupport._
+import org.joda.time.DateTime
+
 import scala.slick.driver.MySQLDriver.simple._
 
 /**

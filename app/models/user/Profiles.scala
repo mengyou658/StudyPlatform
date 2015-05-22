@@ -1,9 +1,9 @@
-package models
+package models.user
 
-import models.UserTableQueries.{passwords, oauth2s, oauth1s}
+import models.user.UserTableQueries.{passwords, oauth2s, oauth1s}
 import securesocial.core.{AuthenticationMethod, BasicProfile, UserProfile}
 
-import slick.driver.MySQLDriver.simple._
+import scala.slick.driver.MySQLDriver.simple._
 /**
  * Created by maximcherkasov on 01.05.15.
  */

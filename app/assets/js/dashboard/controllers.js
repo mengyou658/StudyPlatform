@@ -7,7 +7,12 @@ define([], function() {
 
     var DashboardCtrl = function($scope, $http, $auth) {
         $scope.user = "";
-        $scope.nodes = [];
+        $scope.accounts = [];
+
+        $http.get('/social')
+            .success(function(data) {
+                $scope.accounts = data
+            });
 
         $scope.linkInstagram = function() {
             $auth.link('instagram')
