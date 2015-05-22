@@ -8,6 +8,7 @@ define([], function() {
     var DashboardCtrl = function($scope, $http, $auth) {
         $scope.user = "";
         $scope.accounts = [];
+        $scope.feed = [];
 
         $http.get('/social')
             .success(function(data) {
@@ -24,6 +25,15 @@ define([], function() {
                     //$http.jsonp('https://instagram.com/accounts/logout/')
                 });
         };
+
+        $scope.feed = function(accessToken) {
+            var url = "https://api.instagram.com/v1/users/self/feed?access_token="+accessToken+"&callback=JSON_CALLBACK";
+            $http.jsonp(url).success(function(response) {
+                console.log(response.data);
+                $scope.feed = response.data;
+                //callback(response.data);
+            })
+        }
     };
     DashboardCtrl.$inject = [ '$scope', '$http', '$auth' ];
 

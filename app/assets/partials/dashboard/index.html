@@ -14,9 +14,16 @@
                 <img src="{{account.profilePicture}}">
                 <div class="account-name">{{account.username}}</div>
                 <div class="fui-instagram account-icon" ng-if="account.provider === 'instagram'"></div>
+                <button ng-click="feed(account.accessToken)">feed</button>
             </div>
         </a>
         <!--{{account}}-->
+    </div>
+</div>
+<div>
+    <h5>Feed</h5>
+    <div ng-repeat="image in feed">
+        <img style="float: left;" src="{{image.images.low_resolution.url}}" height="100px" width="100px">
     </div>
 </div>
 
