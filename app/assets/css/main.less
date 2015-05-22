@@ -95,6 +95,10 @@ body {
   margin-left: -20px;
 }
 
+.accounts {
+ margin-bottom: 10px;
+}
+
 .account-block {
   width: 200px;
   padding: 5px 5px 5px 10px;
@@ -110,9 +114,14 @@ body {
     border-color: @turquoise;
   }
 
+  &.selected {
+    border-color: @turquoise;
+  }
+
   .wrapper {
     color: black;
     overflow: hidden;
+
     .img-block {
       float: left;
       padding-left: 15px;
@@ -144,6 +153,29 @@ body {
       top: 0;
       left: 6px;
     }
+  }
 
+}
+
+.tags {
+  margin-top: 10px;
+
+  .tag {
+    padding: 4px;
+    background-color: @clouds;
+    border-radius: 6px;
+    margin-right: 5px;
+    display: inline-block;
+    margin-bottom: 5px;
+    font-size: 12px;
+
+    &:hover {
+      background-color: @silver;
+    }
+
+    .tag-counts {
+      font-size: 10px;
+      color: gray;
+    }
   }
 }

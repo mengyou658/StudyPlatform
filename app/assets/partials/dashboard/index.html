@@ -8,8 +8,8 @@
 </div>
 
 <div>
-    <div ng-repeat="account in accounts">
-        <a href="" class="account-block">
+    <div ng-repeat="account in accounts" class="accounts">
+        <a href="" class="account-block" ng-click="selectAccount(account)" ng-class="{selected: selectedAccount === account}">
             <div class="wrapper">
                 <div class="img-block">
                     <img ng-src="{{account.profilePicture}}">
@@ -25,6 +25,16 @@
             <button href="" ng-click="feed(account.accessToken)">feed</button>
         </a>
         <!--{{account}}-->
+    </div>
+</div>
+<div class="search">
+    <input ng-model="searchTags"/>
+    <button ng-click="find()" ng-disabled="selectedAccount === undefined">Search</button>
+    <div class="tags">
+        <a ng-repeat="tag in tagsList" class="tag" href="">
+            <span>#{{tag.name}}</span>
+            <span class="tag-counts">{{tag.media_count}}</span>
+        </a>
     </div>
 </div>
 <div>
