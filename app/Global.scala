@@ -10,7 +10,7 @@ import play.api.{GlobalSettings, Logger}
 import play.filters.gzip.GzipFilter
 import securesocial.core.RuntimeEnvironment
 import securesocial.core.authenticator.{HttpHeaderAuthenticatorBuilder, CookieAuthenticatorBuilder}
-import securesocial.core.providers.{FacebookProvider, UsernamePasswordProvider}
+import securesocial.core.providers.{VkProvider, FacebookProvider, UsernamePasswordProvider}
 import securesocial.core.services.AuthenticatorService
 import services.{SlickAuthenticatorStore, SlickUserService}
 
@@ -40,6 +40,7 @@ object Global extends WithFilters(new GzipFilter(shouldGzip =
       include(new UsernamePasswordProvider[BasicUser](userService, avatarService, viewTemplates, passwordHashers))
       // ... other providers
      ,include(new FacebookProvider(routes, cacheService, oauth2ClientFor(FacebookProvider.Facebook) ))
+     ,include(new VkProvider(routes, cacheService, oauth2ClientFor(VkProvider.Vk)))
     )
   }
 

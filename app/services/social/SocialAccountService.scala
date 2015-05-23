@@ -38,12 +38,13 @@ class SocialAccountService extends WithDefaultSession {
   def save(account: SocialAccount): Future[SocialAccount] = withSession {
     implicit session =>
       Future successful {
-        val exitstsocialAccount = socialAccounts.filter(a => a.accountId === account.accountId).firstOption
+        val exitstsocialAccount = socialAccounts
+          .filter(a => a.accountId === account.accountId && a.userId === account.userId).firstOption
 
         exitstsocialAccount match {
           case Some(ea) =>
             val acc = account.copy(id = ea.id)
-            socialAccounts.filter(_.accountId === account.accountId).update(acc)
+            socialAccounts.filter(a =>  a.accountId === account.accountId && a.userId === account.userId).update(acc)
             acc
           case None =>
             socialAccounts += SocialAccount(

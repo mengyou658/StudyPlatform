@@ -17,25 +17,29 @@ define([], function() {
             return 'JSON_CALLBACK';
         };
 
-        $http.get('/social')
-            .success(function(data) {
-                $scope.accounts = data;
-                $scope.accounts.info = {};
+        var loadSocialAccount = function() {
+            $http.get('/social')
+                .success(function(data) {
+                    $scope.accounts = data;
+                    $scope.accounts.info = {};
 
-                $scope.accounts.forEach(function(entry) {
-                    //console.log(entry);
-                    var url = 'https://api.instagram.com/v1/users/'+entry.accountId+'/?access_token='
-                        +entry.accessToken+'&callback='+callbackName();
-                    $http.jsonp(url).success(function(response) {
-                        //console.log(response.data);
-                        entry.info = response.data.counts;
-                    })
+                    $scope.accounts.forEach(function(entry) {
+                        //console.log(entry);
+                        var url = 'https://api.instagram.com/v1/users/'+entry.accountId+'/?access_token='
+                            +entry.accessToken+'&callback='+callbackName();
+                        $http.jsonp(url).success(function(response) {
+                            //console.log(response.data);
+                            entry.info = response.data.counts;
+                        })
+                    });
+
+                    if ($scope.accounts.length > 0)
+                        $scope.selectedAccount = $scope.accounts[0];
+
                 });
+        };
 
-                if ($scope.accounts.length > 0)
-                    $scope.selectedAccount = $scope.accounts[0];
-
-            });
+        loadSocialAccount();
 
         $scope.linkInstagram = function() {
             $auth.link('instagram')
@@ -45,6 +49,7 @@ define([], function() {
                     //$window.localStorage.currentUser = JSON.stringify(response.data.user);
                     //$rootScope.currentUser = JSON.parse($window.localStorage.currentUser);
                     //$http.jsonp('https://instagram.com/accounts/logout/')
+                    loadSocialAccount();
                 });
         };
 
