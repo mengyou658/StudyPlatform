@@ -1,4 +1,4 @@
-@()(implicit request: RequestHeader, lang: Lang, env: securesocial.core.RuntimeEnvironment[_])
+@(user: securesocial.core.BasicProfile)(implicit request: RequestHeader, lang: Lang, env: securesocial.core.RuntimeEnvironment[_])
 <!DOCTYPE html>
 
 <html>
@@ -7,6 +7,7 @@
         <base href="/">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
         <link rel="stylesheet" href='@routes.Assets.at("lib/bootstrap/css/bootstrap.css")'>
+        <link rel="stylesheet" href='@routes.Assets.at("lib/font-awesome/css/font-awesome.css")'>
 
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("bower_components/flat-ui/dist/css/flat-ui.css")">
         <script type="text/javascript" src="@routes.JavascriptRouters.jsRoutes"></script>
@@ -46,7 +47,13 @@
                 <div class="col-sm-3 col-md-2 sidebar">
                     <ul class="nav nav-sidebar">
                         <li class="active"><a href="#/dashboard">Dashboard</a></li>
+                        <li class="active"><a href="">Accounts</a>
+                        </li>
                         <li><a href="#/profile">Profile</a></li>
+                    </ul>
+                    <ul class="nav nav-sidebar profile-block">
+                        <li class="active"><a href="#/dashboard"><i class="fa fa-cog"></i> Settings</a></li>
+                        <li class="active"><a href="#/dashboard"><i class="fa fa-user"></i> @user.firstName @user.lastName </a></li>
                     </ul>
                 </div>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -54,5 +61,6 @@
                 </div>
             </div>
         </div>
+
     </body>
 </html>

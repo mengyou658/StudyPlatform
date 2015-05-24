@@ -1,10 +1,5 @@
 @(loginForm: Form[(String,String)], errorMsg: Option[String] = None)(implicit request: RequestHeader, lang: Lang, env:securesocial.core.RuntimeEnvironment[_])
 
-    @import securesocial.core.providers.UsernamePasswordProvider
-    @import securesocial.core.AuthenticationMethod._
-    @import play.api.Logger
-    @import helper._
-    @import play.api.Play
 
 <html xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
     <head>

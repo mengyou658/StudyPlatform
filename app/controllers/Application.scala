@@ -1,12 +1,14 @@
 package controllers
 
 import models.user.BasicUser
+
 import play.api.data.Form
 import play.api.i18n.Lang
 import play.twirl.api.Html
 import securesocial.controllers.{ChangeInfo, RegistrationInfo, ViewTemplates}
 import securesocial.core.{RuntimeEnvironment}
 import play.api.mvc.{RequestHeader }
+import services.social.SocialAccountService
 
 import scala.concurrent.Future
 
@@ -14,9 +16,16 @@ import scala.concurrent.Future
 //object Application extends Controller with SecuredConnection {
 class Application(override implicit val env: RuntimeEnvironment[BasicUser]) extends securesocial.core.SecureSocial[BasicUser] {
 
+  private val socialService = new SocialAccountService
+
   def index = SecuredAction {
     implicit request =>
-      Ok(views.html.main())
+//      socialService.findByUserId(request.user.main.userId) map {
+//        list =>
+//          println(list)
+              Ok(views.html.main(request.user.main))
+//      }
+
   }
 
 }

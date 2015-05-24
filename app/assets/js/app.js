@@ -58,6 +58,17 @@ define(['angular', 'home', 'dashboard', 'common', 'profile', 'services', 'auth',
             scopeDelimiter: '+',
             authorizationEndpoint: 'https://api.instagram.com/oauth/authorize'
         });
+        $authProvider.oauth2({
+            name: 'vk',
+            url: '/social/vk',
+            redirectUri: 'http://localhost:9000/',
+            clientId: '4929134',
+            //requiredUrlParams: ['scope'],
+            //scope: ['likes'],
+            //scopeDelimiter: '+',
+            authorizationEndpoint: 'https://oauth.vk.com/authorize'
+        });
+
         //$routeProvider.otherwise({
         //    redirectTo: '/'
         //});
