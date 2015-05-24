@@ -31,8 +31,8 @@ class ProductService  extends WithDefaultSession {
 
         existingProduct match {
           case Some(ep) =>
-            val pr = product.copy(id = ep.id)
-            products.filter(p => p.userId === userId && p.name === product.name).update(pr)
+            val pr = ep.copy(id = ep.id)
+            products.filter(_.name === product.name).update(pr)
             pr
           case None =>
             products += Product(
