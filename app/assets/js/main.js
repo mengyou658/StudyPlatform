@@ -13,6 +13,7 @@
                 ,'common'
                 ,'profile'
                 ,'services'
+                ,'settings'
                 ,'auth'],
         shim: {
             'jsRoutes': {
@@ -24,10 +25,14 @@
                 deps: ['jquery'],
                 exports: 'angular'
             },
-            'flat-ui': ['jquery'],
-            'angular-route': ['angular'],
-            'bootstrap': ['jquery']
+            'flat-ui': ['jquery']
+            , 'angular-route': ['angular']
+            , 'bootstrap': ['jquery']
             , 'satellizer': ['angular']
+            , 'angular-ui-tpls' : {
+                deps: ['angular-ui']
+            }
+            , 'angular-ui' : ['angular']
         },
         paths: {
             'requirejs': ['../lib/requirejs/require'],
@@ -40,6 +45,8 @@
             'jsRoutes': ['/jsroutes']
             ,'flat-ui': ['../bower_components/flat-ui/dist/js/flat-ui']
             ,'satellizer': ['../lib/satellizer/satellizer']
+            ,'angular-ui': ['../lib/angular-ui-bootstrap/ui-bootstrap']
+            ,'angular-ui-tpls': ['../lib/angular-ui-bootstrap/ui-bootstrap-tpls']
         }
     });
 
@@ -48,7 +55,7 @@
     };
 
     // Load the app. This is kept minimal so it doesn't need much updating.
-    require(['angular', 'angular-route', 'jquery', 'flat-ui', './app', 'satellizer'],
+    require(['angular', 'angular-route', 'jquery', 'flat-ui', './app'],
         function (angular) {
             angular.bootstrap(document, ['app']);
         }

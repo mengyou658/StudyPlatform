@@ -36,6 +36,7 @@ libraryDependencies ++= Seq( jdbc , anorm , cache , ws
   , "io.really" %% "jwt-scala" % "1.2.2"
   , "org.webjars" % "satellizer" % "0.10.1"
   , "org.webjars" % "font-awesome" % "4.3.0-2"
+  , "org.webjars" % "angular-ui-bootstrap" % "0.13.0"
 )
 
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )

@@ -5,7 +5,7 @@ body {
 }
 
 .main-body {
-  padding-top: 50px;
+  //padding-top: 50px;
 }
 
 .nav-sidebar > li > a {
@@ -80,17 +80,25 @@ body {
 
 .sidebar {
   position: fixed;
-  top: 51px;
+  top: 0;
   bottom: 0;
   left: 0;
   z-index: 1000;
   display: block;
-  padding: 20px;
+  padding: 0 20px 20px;
   overflow-x: hidden;
   overflow-y: auto;
   background-color: #f5f5f5;
   border-right: 1px solid #eee;
 
+  .sidebar-logo {
+    overflow: hidden;
+
+    a {
+      display: block;
+      font-size: 32px;
+    }
+  }
   .profile-block {
     position: fixed;
     bottom: 0;
@@ -100,8 +108,8 @@ body {
   }
 }
 
-.main {
-  padding: 20px;
+.main-body {
+  padding-top: 53px;
 }
 
 .nav-sidebar {
@@ -172,6 +180,9 @@ body {
 
 }
 
+.topbar {
+}
+
 .tags {
   margin-top: 10px;
 
@@ -193,4 +204,38 @@ body {
       color: gray;
     }
   }
+}
+
+@clouds-yellow: #f2f0ea;
+
+.settings-products {
+  padding-top: 20px;
+
+  .products-action {
+    //background-color: #f2f0ea;
+    background-color: @clouds-yellow;
+    padding: 10px;
+
+  }
+
+  .product-item {
+
+  }
+}
+
+
+// Modals styles
+.modal-header {
+  background-color: @clouds-yellow;
+}
+
+.modal-dialog {
+  .form-group {
+    label {
+      font-weight: bold;
+    }
+  }
+}
+.manage-product-modal {
+
 }

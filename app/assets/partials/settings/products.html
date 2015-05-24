@@ -1,0 +1,11 @@
+<div class="settings-products">
+    <h4>Manage products</h4>
+    <div class="products-list col-xs-12 col-md-8">
+        <div ng-repeat="product in products" class="product-item">
+            {{product.name}}
+        </div>
+    </div>
+    <div class="products-action col-xs-6 col-md-4">
+        <button class="btn btn-sm btn-success btn-block"  ng-click="open()"><i class="fa fa-plus" ></i> Create a product</button>
+    </div>
+</div>

@@ -10,6 +10,8 @@ GET        /                     @controllers.Application.index
 #GET        /current-user         @controllers.Application.currentUser
 POST       /social/:provider         @controllers.SocialAccountController.addSocialAccount(provider)
 GET        /social                  @controllers.SocialAccountController.list()
+POST       /product              @controllers.ProductController.save()
+GET        /product              @controllers.ProductController.list()
 
 #GET        /custom/login         @controllers.CustomLoginController.login
 #GET        /custom/logout        @controllers.CustomLoginController.logout

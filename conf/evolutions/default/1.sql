@@ -74,6 +74,13 @@ create table social_account (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+create table `product` (
+  `id` INT(10) AUTO_INCREMENT NOT NULL,
+  `userId` LONGTEXT NOT NULL,
+  `name` TEXT NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 # --- !Downs
 drop table `token`;
@@ -84,3 +91,4 @@ drop TABLE `oauth2`;
 drop TABLE `password`;
 drop table `authenticator`;
 drop table `social_account`;
+drop table `product`;
