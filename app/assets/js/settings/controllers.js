@@ -4,44 +4,69 @@
 define([  ], function() {
     'use strict';
 
-    var SettingsProductsCtrl = function($scope, $modal, $http, $auth) {
+    var SettingsProductsCtrl = function($scope, $modal, $http, $auth, playRoutes, rpcService) {
 
         $scope.products = {};
+
+        var profileUrl = playRoutes.controllers.ApiController.getMethods("aaa");
+
+        console.log(profileUrl);
+
+        profileUrl.post(rpcService.getRequest("asd", "testRpc")
+            ).
+            success(function(data, status, headers, config) {
+                //$scope.user.name = data;
+                console.log(data);
+            }).
+            error(function(data, status, headers, config) {
+                // called asynchronously if an error occurs
+                // or server returns response with an error status.
+            });
 
         $http.get('/product')
             .success(function(data) {
                 $scope.products = data;
             });
 
-        $scope.open = function (size) {
+        var openModal = function(item) {
+            if (item === undefined)
+                item = {};
 
-            var modalInstance = $modal.open({
+            return  $modal.open({
                 templateUrl: '/assets/partials/settings/modal.html',
                 windowClass: 'manage-product-modal',
                 controller: ModalInstanceCtrl,
-                size: size,
                 resolve: {
                     data: function () {
-                        return {
-                            name: "text"
-                        };
+                        return item;
                     }
                 }
             });
+        };
 
-            modalInstance.result.then(function (product) {
-                console.log(product);
+        $scope.create = function () {
+            openModal().result.then(function (product) {
                 $http.post('/product', product)
                     .success(function(data) {
-
+                        $scope.products.push(data);
                     })
-            }, function () {
-                //$log.info('Modal dismissed at: ' + new Date());
             });
+        };
+
+        $scope.edit = function (item) {
+            openModal(item).result.then(function (product) {
+            });
+        };
+
+        $scope.remove = function (item) {
+            $http.get('/product')
+                .success(function(data) {
+                    $scope.products = data;
+                });
         };
     };
 
-    SettingsProductsCtrl.$inject = [ '$scope', '$modal', '$http', '$auth' ];
+    SettingsProductsCtrl.$inject = [ '$scope', '$modal', '$http', '$auth',  'playRoutes', 'rpcService' ];
 
     var ModalInstanceCtrl = function ($scope, $modalInstance, data) {
         console.log(data);

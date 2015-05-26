@@ -13,7 +13,8 @@ object JavascriptRouters extends Controller {
     Action { implicit request =>
       Ok(
         Routes.javascriptRouter(varName)(
-          routes.javascript.Profile.list
+          routes.javascript.Profile.list,
+          routes.javascript.ApiController.getMethods
 //        routes.AuthController.
 //                    routes.JavascriptRouters
           //          routes.javascript.Cluster.clusterMetricsWebsocket,

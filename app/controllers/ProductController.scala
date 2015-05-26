@@ -1,5 +1,6 @@
 package controllers
 
+import rema7.core.Core
 import models.user.BasicUser
 import play.api.libs.json.{Writes, JsString, Json}
 import securesocial.core.RuntimeEnvironment
@@ -29,6 +30,14 @@ class ProductController(override implicit val env: RuntimeEnvironment[BasicUser]
 
   def list() = SecuredAction.async {
     implicit request =>
+//      val xxx: Core = Class.forName("rema7.core.Core1").newInstance().asInstanceOf[Core]
+//      xxx.hello()
+//      try {
+//        val xxx = Class.forName("rema7.core.Core1")
+//      } catch (ClassNotFoundException) {
+//
+//      }
+
       productService.findByUserId(request.user.main.userId) map {
         list =>
           Ok(Json.toJson(list))

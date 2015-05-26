@@ -82,6 +82,29 @@ create table `product` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
+create table `flipcard_lists` (
+  `id` INT(10) AUTO_INCREMENT NOT NULL,
+  `userId` LONGTEXT NOT NULL,
+  `name` TEXT NOT NULL,
+  `description` TEXT ,
+  `created` TIMESTAMP NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+create table `flip_cards` (
+  `id` INT(10) AUTO_INCREMENT NOT NULL,
+  `userId` LONGTEXT NOT NULL,
+  `original` TEXT NOT NULL,
+  `originalTranscription` TEXT ,
+  `translation` TEXT NOT NULL ,
+  `created` TIMESTAMP NOT NULL,
+  `updated` TIMESTAMP NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
 # --- !Downs
 drop table `token`;
 drop table `profile`;
@@ -92,3 +115,6 @@ drop TABLE `password`;
 drop table `authenticator`;
 drop table `social_account`;
 drop table `product`;
+
+drop TABLE `flip_cards`;
+drop TABLE `flipcard_lists`;

@@ -19,7 +19,9 @@ GET        /product              @controllers.ProductController.list()
 # JavaScript routes object
 GET        /jsroutes.js          controllers.JavascriptRouters.jsRoutes()
 
-POST         /api/profile             @controllers.Profile.list
+POST         /api/profile        @controllers.Profile.list
+
+POST         /api                @controllers.ApiController.getMethods(p: String)
 
 # Registration authentication
 #GET         /login               controllers.Authentication.login

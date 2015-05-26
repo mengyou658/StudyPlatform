@@ -15,7 +15,7 @@ define(['angular'], function(angular) {
 
             getRequest : function(id, method, params) {
                 return JSON.stringify({
-                    id: id,
+                    id: id.toString(),
                     jsonrpc: "2.0",
                     method: method,
                     params: params === undefined ? {} : params

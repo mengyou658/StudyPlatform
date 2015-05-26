@@ -4,6 +4,10 @@ body {
   font-size: 14px;
 }
 
+.btn:focus {
+  outline: none;
+}
+
 .main-body {
   //padding-top: 50px;
 }
@@ -219,7 +223,31 @@ body {
   }
 
   .product-item {
+    border: solid 1px @clouds-yellow;
+    margin-bottom: 10px;
+    .product-header {
+      background-color: @clouds-yellow;
+      display: table;
+      width: 100%;
 
+      .title {
+        padding-left: 14px;
+      }
+      .action {
+        .dropdown {
+          margin-right: 14px;
+          margin-top: 8px;
+
+          .dropdown-menu {
+            min-width: 100px
+          }
+
+          .dropdown-toggle {
+              font-size: 1.3em;
+          }
+        }
+      }
+    }
   }
 }
 
