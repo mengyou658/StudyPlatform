@@ -8,11 +8,11 @@ define([  ], function() {
 
         $scope.products = {};
 
-        var profileUrl = playRoutes.controllers.ApiController.getMethods("aaa");
+        var profileUrl = playRoutes.controllers.ApiController.getMethods("rema7.study.cards.Cards");
 
         console.log(profileUrl);
 
-        profileUrl.post(rpcService.getRequest("asd", "testRpc")
+        profileUrl.post(rpcService.getRequest("asd", "create")
             ).
             success(function(data, status, headers, config) {
                 //$scope.user.name = data;

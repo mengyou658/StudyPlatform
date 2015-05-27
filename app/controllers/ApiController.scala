@@ -1,7 +1,7 @@
 package controllers
 
 import models.user.BasicUser
-import play.api.libs.json.{JsPath, Reads, Json}
+import play.api.libs.json.{JsValue, JsPath, Reads, Json}
 import play.api.mvc.Action
 import securesocial.core.RuntimeEnvironment
 import play.api.libs.functional.syntax._
@@ -14,11 +14,10 @@ import scala.concurrent.Future
 class ApiController(override implicit val env: RuntimeEnvironment[BasicUser])
   extends securesocial.core.SecureSocial[BasicUser] {
 
-  case class JsonRpc(id: String, jsonrpc: String , method: String)
+  case class JsonRpc(id: String, jsonrpc: String , method: String, params: JsValue)
   private implicit val jsonRpcReads = Json.reads[JsonRpc]
 
 /*
-
 code	message	meaning
 -32700	Parse error	Invalid JSON was received by the server.
 An error occurred on the server while parsing the JSON text.
@@ -31,28 +30,35 @@ An error occurred on the server while parsing the JSON text.
  */
   def getMethods(plugin: String) = Action.async(parse.json) {
     implicit request =>
-//      val quieryMethod = request.getQueryString("m")
-//
-//      quieryMethod match {
-//        case None =>
-//          Future(BadRequest(Json.obj("code" -> "-32603",
-//            "message" -> ("Bad request" + request.body))))
-//      }
 
-      val jsonRequest = request.body.asOpt[JsonRpc]
+      try {
+        val instanse = Class.forName(plugin).newInstance()
+        val jsonRequest = request.body.asOpt[JsonRpc]
 
-      jsonRequest match {
-        case Some(r) =>
-          println("Got json: " + r)
-          SecuredAction(Ok)(request).run.map {
-            case Ok =>
-              Ok(Json.obj("message" -> ("Bad request" + request.body)))
-            case r1 =>
-              BadRequest(Json.obj("message" -> ("Bad request" + request.body)))
-          }
-        case None =>
+        jsonRequest match {
+          case Some(r) =>
+
+            val method = instanse.getClass.getMethod(r.method)
+            method.invoke(instanse)
+
+            SecuredAction(Ok)(request).run.map {
+              case Ok =>
+                Ok(Json.obj("message" -> ("Bad request" + request.body)))
+              case r1 =>
+                BadRequest(Json.obj("message" -> ("Bad request" + request.body)))
+            }
+          case None =>
+            Future(BadRequest(Json.obj("code" -> "-32700",
+              "message" -> ("Bad request" + request.body))))
+        }
+      }
+      catch {
+        case e: NoSuchMethodException =>
+          Future(BadRequest(Json.obj("code" -> "-32601",
+            "message" -> ("Bad method: " + request.body))))
+        case e: ClassNotFoundException =>
           Future(BadRequest(Json.obj("code" -> "-32700",
-            "message" -> ("Bad request" + request.body))))
+            "message" -> ("Bad plugin: " + plugin))))
       }
   }
 }
