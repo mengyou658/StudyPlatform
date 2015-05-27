@@ -18,6 +18,7 @@ class SocialAccountService extends WithDefaultSession {
       Future successful {
         logger.info("Find all social accounts for current user")
 
+
         socialAccounts
           .filter(sa => sa.userId === userId)
           .list

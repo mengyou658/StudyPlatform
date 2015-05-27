@@ -1,5 +1,5 @@
 package models
-import scala.slick.driver.MySQLDriver.simple._
+import slick.driver.MySQLDriver.api._
 
 /**
  * Created by m.cherkasov on 22.05.15.

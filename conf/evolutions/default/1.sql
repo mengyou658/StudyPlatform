@@ -95,6 +95,7 @@ create table `flipcard_lists` (
 create table `flip_cards` (
   `id` INT(10) AUTO_INCREMENT NOT NULL,
   `userId` LONGTEXT NOT NULL,
+  `partOfSpeech` TEXT,
   `original` TEXT NOT NULL,
   `originalTranscription` TEXT ,
   `translation` TEXT NOT NULL ,
@@ -103,6 +104,12 @@ create table `flip_cards` (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+create table `cards_lists` (
+  `card_id` INT(10),
+  `list_id` INT(10),
+  FOREIGN KEY (card_id) REFERENCES flip_cards(id),
+  FOREIGN KEY (list_id) REFERENCES flipcard_lists(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 # --- !Downs
