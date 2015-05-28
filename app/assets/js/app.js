@@ -9,7 +9,7 @@ define(['angular',
     'profile',
     'services',
     'settings',
-    'auth'
+    'flipCards'
     ], function(angular) {
     'use strict';
 
@@ -20,13 +20,12 @@ define(['angular',
         ,'rema7.profile'
         ,'rema7.dashboard'
         ,'rema7.common'
+        ,'rema7.flipCards'
         ,'rema7.services'
-        ,'rema7.auth'
         ,'rema7.settings.products'
-
         ]);
 
-    app.config(function ($locationProvider, $routeProvider, $httpProvider, $authProvider) {
+    app.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $authProvider) {
         $httpProvider.interceptors.push(function($q, $window) {
             return {
                 request: function(request) {
@@ -55,6 +54,7 @@ define(['angular',
 
         });
 
+        $urlRouterProvider.otherwise("/dashboard");
         //$httpProvider.defaults.useXDomain = true;
         //delete $httpProvider.defaults.headers.common['X-Requested-With'];
 

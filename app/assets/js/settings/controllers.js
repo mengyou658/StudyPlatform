@@ -5,23 +5,33 @@ define([  ], function() {
     'use strict';
 
     var SettingsProductsCtrl = function($scope, $modal, $http, $auth, playRoutes, rpcService) {
-
         $scope.products = {};
 
-        var profileUrl = playRoutes.controllers.ApiController.getMethods("rema7.study.cards.Cards");
+        $scope.tabData   = [
+            {
+                heading: 'Products',
+                route:   'settings.products'
+            },
+            {
+                heading: 'FlipCard Lists',
+                route:   'settings.flipcards'
+            }
+        ];
 
-        console.log(profileUrl);
-
-        profileUrl.post(rpcService.getRequest("asd", "create")
-            ).
-            success(function(data, status, headers, config) {
-                //$scope.user.name = data;
-                console.log(data);
-            }).
-            error(function(data, status, headers, config) {
-                // called asynchronously if an error occurs
-                // or server returns response with an error status.
-            });
+        //var profileUrl = playRoutes.controllers.ApiController.getMethods("rema7.study.cards.Cards");
+        //
+        //console.log(profileUrl);
+        //
+        //profileUrl.post(rpcService.getRequest("asd", "create")
+        //    ).
+        //    success(function(data, status, headers, config) {
+        //        //$scope.user.name = data;
+        //        console.log(data);
+        //    }).
+        //    error(function(data, status, headers, config) {
+        //        // called asynchronously if an error occurs
+        //        // or server returns response with an error status.
+        //    });
 
         $http.get('/product')
             .success(function(data) {

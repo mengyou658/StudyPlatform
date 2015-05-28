@@ -81,18 +81,35 @@ create table `product` (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+create table `flashcard_category` (
+  `id` INT(10) AUTO_INCREMENT NOT NULL,
+  `name` varchar(255)  NOT NULL,
+  `created` TIMESTAMP NOT NULL,
+  `updated` TIMESTAMP NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-create table `flipcard_lists` (
+create table flashcard_packs (
   `id` INT(10) AUTO_INCREMENT NOT NULL,
   `userId` LONGTEXT NOT NULL,
   `name` TEXT NOT NULL,
+  `shared` BOOL DEFAULT FALSE ,
   `description` TEXT ,
+  `category` TEXT ,
   `created` TIMESTAMP NOT NULL,
+  `updated` TIMESTAMP NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+create table `flashcards_packs_categories` (
+  `pack_id` INT(10),
+  `category_id` INT(10),
+  FOREIGN KEY (pack_id) REFERENCES flashcard_packs(id),
+  FOREIGN KEY (category_id) REFERENCES flashcard_category(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-create table `flip_cards` (
+create table flash_cards (
   `id` INT(10) AUTO_INCREMENT NOT NULL,
   `userId` LONGTEXT NOT NULL,
   `partOfSpeech` TEXT,
@@ -104,11 +121,11 @@ create table `flip_cards` (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-create table `cards_lists` (
+create table `flashcards_packs` (
   `card_id` INT(10),
-  `list_id` INT(10),
-  FOREIGN KEY (card_id) REFERENCES flip_cards(id),
-  FOREIGN KEY (list_id) REFERENCES flipcard_lists(id)
+  `pack_id` INT(10),
+  FOREIGN KEY (card_id) REFERENCES flash_cards(id),
+  FOREIGN KEY (pack_id) REFERENCES flashcard_packs(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -123,5 +140,8 @@ drop table `authenticator`;
 drop table `social_account`;
 drop table `product`;
 
-drop TABLE `flip_cards`;
-drop TABLE `flipcard_lists`;
+drop TABLE `flashcards_packs_categories`;
+drop TABLE `flashcards_packs`;
+drop TABLE `flashcard_packs`;
+drop TABLE `flashcard_category`;
+drop TABLE `flash_cards`;

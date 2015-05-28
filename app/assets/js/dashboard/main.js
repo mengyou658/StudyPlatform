@@ -5,5 +5,5 @@
 define(['angular', './routes', 'satellizer'], function(angular) {
     'use strict';
 
-    return angular.module('rema7.dashboard', ['ngRoute', 'dashboard.routes', 'satellizer']);
+    return angular.module('rema7.dashboard', ['ui.router', 'dashboard.routes', 'satellizer']);
 });

@@ -1,6 +1,5 @@
-package models.study.cards
+package models.study.flashcards
 
-import models.WithDefaultSession
 import org.joda.time.DateTime
 import slick.driver.MySQLDriver.api._
 import com.github.tototoshi.slick.MySQLJodaSupport._
@@ -9,7 +8,7 @@ import scala.language.implicitConversions
 /**
  * Created by m.cherkasov on 26.05.15.
  */
-case class FlipCard(id: Option[Long] = None,
+case class FlashCard(id: Option[Long] = None,
                     userId: String,
                     partOfSpeech: Option[String],
                     original: String,
@@ -18,7 +17,7 @@ case class FlipCard(id: Option[Long] = None,
                     created: DateTime,
                     updated: DateTime)
 
-class FlipCards(tag: Tag) extends Table[FlipCard](tag, "flip_cards") {
+class FlashCards(tag: Tag) extends Table[FlashCard](tag, "flash_cards") {
   def id = column[Long]("id", O.PrimaryKey)
   def userId = column[String]("userId")
   def partOfSpeech = column[String]("partOfSpeech")
@@ -30,10 +29,5 @@ class FlipCards(tag: Tag) extends Table[FlipCard](tag, "flip_cards") {
 
   def * =
     (id.?, userId, partOfSpeech.?, original, originalTranscription.?, translation, created, updated) <>
-    (FlipCard.tupled, FlipCard.unapply)
-}
-
-object FlipCardsTableQueries extends WithDefaultSession {
-
-  object flipCards extends TableQuery(new FlipCards(_))
+    (FlashCard.tupled, FlashCard.unapply)
 }

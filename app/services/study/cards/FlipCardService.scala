@@ -1,8 +1,8 @@
 package services.study.cards
 
 import models.WithDefaultSession
-import models.study.cards.FlipCard
-import models.study.cards.FlipCardsTableQueries.flipCards
+import models.study.flashcards.FlashCard
+import models.study.flashcards.FlashCardsTableQueries.cards
 import org.joda.time.DateTime
 import play.api.Logger
 import scala.slick.driver.MySQLDriver.simple._
@@ -16,17 +16,17 @@ import scala.concurrent.Future
 object FlipCardService extends WithDefaultSession {
   val logger = Logger(this.getClass)
 
-  def findByUserId(userId: String):Future[List[FlipCard]]  = withSession {
+  def findByUserId(userId: String):Future[List[FlashCard]]  = withSession {
     implicit session =>
     Future successful {
-      flipCards.filter(_.userId === userId).list
+      cards.filter(_.userId === userId).list
     }
   }
 
-  def create(userId: String, card: FlipCard):Future[FlipCard]  = withSession {
+  def create(userId: String, card: FlashCard):Future[FlashCard]  = withSession {
     implicit session =>
       Future successful {
-        val id = (flipCards returning flipCards.map(_.id)) += FlipCard(
+        val id = (cards returning cards.map(_.id)) += FlashCard(
           None, userId,
           card.partOfSpeech,
           card.original,
@@ -35,7 +35,7 @@ object FlipCardService extends WithDefaultSession {
           new DateTime(), new DateTime()
         )
 
-        flipCards.filter(_.id === id).first
+        cards.filter(_.id === id).first
       }
   }
 }

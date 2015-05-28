@@ -13,8 +13,9 @@ GET        /social                  @controllers.SocialAccountController.list()
 POST       /product              @controllers.ProductController.save()
 GET        /product              @controllers.ProductController.list()
 
-#GET        /custom/login         @controllers.CustomLoginController.login
-#GET        /custom/logout        @controllers.CustomLoginController.logout
+
+POST       /flip_cards/list      @controllers.FlipCardsListController.save()
+GET        /flip_cards/list      @controllers.FlipCardsListController.list()
 
 # JavaScript routes object
 GET        /jsroutes.js          controllers.JavascriptRouters.jsRoutes()

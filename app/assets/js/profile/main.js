@@ -6,5 +6,5 @@
 define(['angular', './routes'], function(angular) {
     'use strict';
 
-    return angular.module('rema7.profile', ['ngRoute', 'profile.routes']);
+    return angular.module('rema7.profile', ['ui.router', 'profile.routes']);
 });

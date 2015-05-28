@@ -6,9 +6,9 @@ define(['angular', './controllers'], function(angular, controllers) {
     'use strict';
 
     var mod = angular.module('profile.routes', []);
-    mod.config(['$routeProvider', function($routeProvider) {
-        $routeProvider
-            .when('/profile',  {templateUrl: '/assets/partials/profile/index.html',  controller:controllers.ProfileCtrl});
+    mod.config(['$stateProvider', function($stateProvider) {
+        $stateProvider
+            .state('profile', {url: '/profile', templateUrl: '/assets/partials/profile/index.html',  controller:controllers.ProfileCtrl});
     }]);
 
     return mod;

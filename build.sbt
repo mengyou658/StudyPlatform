@@ -27,7 +27,7 @@ libraryDependencies ++= Seq( jdbc , anorm , cache , ws
   , "org.webjars" % "bootstrap" % "3.3.4"
   , "org.webjars" % "angularjs" % "1.3.15"
   , "org.webjars" % "angular-ui-bootstrap" % "0.13.0"
-  , "org.webjars" % "angular-ui-router" % "0.2.14"
+  , "org.webjars.bower" % "angular-ui-router" % "0.2.15"
   , "com.typesafe.play.plugins" %% "play-plugins-mailer" % "2.3.1"
   , "org.webjars.bower" % "jquery" % "2.1.3"
   , "org.webjars" % "requirejs" % "2.1.17"
@@ -37,6 +37,7 @@ libraryDependencies ++= Seq( jdbc , anorm , cache , ws
   , "org.webjars" % "satellizer" % "0.10.1"
   , "org.webjars" % "font-awesome" % "4.3.0-2"
   , "org.webjars" % "angular-ui-bootstrap" % "0.13.0"
+
 )
 
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )

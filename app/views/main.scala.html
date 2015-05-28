@@ -24,13 +24,14 @@
                     </div>
 
                     <ul class="nav nav-sidebar">
+                        <li class="active"><a ui-sref="flipcards">Flip Cards</a></li>
                         <li class="active"><a href="#/dashboard">Dashboard</a></li>
                         <li class="active"><a href="">Accounts</a>
                         </li>
                         <li><a href="#/profile">Profile</a></li>
                     </ul>
                     <ul class="nav nav-sidebar profile-block">
-                        <li class="active"><a href="#/settings"><i class="fa fa-cog"></i> Settings</a></li>
+                        <li class="active"><a ui-sref="settings"><i class="fa fa-cog"></i> Settings</a></li>
                         <li class="active"><a href="#/dashboard"><i class="fa fa-user"></i> @user.firstName @user.lastName </a></li>
                     </ul>
                 </div>
@@ -64,7 +65,7 @@
                             </ul>
                         </div>
                     </nav>
-                    <div data-ng-view class="main-body container-fluid"></div>
+                    <div ui-view class="main-body container-fluid"></div>
                 </div>
             </div>
         </div>
