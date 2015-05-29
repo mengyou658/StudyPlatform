@@ -3,6 +3,7 @@ package services.product
 import models.WithDefaultSession
 import models.product.Product
 import models.product.ProductTableQueries.products
+import models.user.UserTableQueries.users
 import play.api.Logger
 import scala.slick.driver.MySQLDriver.simple._
 

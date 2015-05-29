@@ -5,25 +5,35 @@
 define([], function() {
     'use strict';
 
-    var FlipCardsCtrl = function($scope, $http, $modal) {
+    var FlashCardsCtrl = function($scope, $http, $modal, DTOptionsBuilder, DTColumnDefBuilder) {
         $scope.items = {};
 
-        $http.get('/flip_cards/packs')
+        $http.get('/flash_cards')
             .success(function(data) {
                 $scope.items = data;
             });
 
-        var openModal = function(item) {
-            if (item === undefined)
-                item = {shared: false};
+        $scope.dtOptions = DTOptionsBuilder.newOptions()
+            .withPaginationType('full_numbers').withOption('paging', false);
 
+        $scope.dtColumnDefs = [
+            DTColumnDefBuilder.newColumnDef(0),
+            DTColumnDefBuilder.newColumnDef(1),
+            DTColumnDefBuilder.newColumnDef(2),
+            DTColumnDefBuilder.newColumnDef(2).notSortable()
+        ];
+
+        var openModal = function(item) {
             return  $modal.open({
-                templateUrl: '/assets/partials/flipCards/modal.html',
+                templateUrl: '/assets/partials/flash_cards/modal.html',
                 windowClass: 'manage-cards-modal',
                 controller: ModalInstanceCtrl,
                 resolve: {
                     data: function () {
-                        return item;
+                        return {
+                            editFlag: item !== undefined,
+                            item: item === undefined ? {} : item
+                        };
                     }
                 }
             });
@@ -48,13 +58,16 @@ define([], function() {
         };
     };
 
+    FlashCardsCtrl.$inject = [ '$scope', '$http', '$modal', 'DTOptionsBuilder', 'DTColumnDefBuilder' ];
+
     var ModalInstanceCtrl = function ($scope, $http, $modalInstance, data) {
         console.log(data);
-        $scope.item = data;
+        $scope.item = data.item;
+        $scope.editFlag = data.editFlag;
 
 
         $scope.create = function () {
-            $http.post('/flip_cards/packs', $scope.item)
+            $http.post('/flash_cards', $scope.item)
                 .success(function(data) {
                     $modalInstance.close(data);
                 }).error(function(data, status, headers, config) {
@@ -68,10 +81,9 @@ define([], function() {
     };
     ModalInstanceCtrl.$inject = ['$scope', '$http', '$modalInstance', 'data' ];
 
-    FlipCardsCtrl.$inject = [ '$scope', '$http', '$modal' ];
 
     return {
-        FlipCardsCtrl : FlipCardsCtrl
+        FlashCardsCtrl : FlashCardsCtrl
     };
 
 });

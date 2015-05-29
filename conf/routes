@@ -6,23 +6,28 @@
 #GET        /login                @controllers.Application.login
 #GET        /test-login           @controllers.AuthController.login
 #GET        /link-result          @controllers.Application.linkResult
-GET        /                     @controllers.Application.index
+GET         /                            @controllers.Application.index
 #GET        /current-user         @controllers.Application.currentUser
-POST       /social/:provider         @controllers.SocialAccountController.addSocialAccount(provider)
-GET        /social                  @controllers.SocialAccountController.list()
-POST       /product              @controllers.ProductController.save()
-GET        /product              @controllers.ProductController.list()
+POST        /social/:provider            @controllers.SocialAccountController.addSocialAccount(provider)
+GET         /social                      @controllers.SocialAccountController.list()
+POST        /product                     @controllers.ProductController.save()
+GET         /product                     @controllers.ProductController.list()
 
 
-POST       /flip_cards/list      @controllers.FlipCardsListController.save()
-GET        /flip_cards/list      @controllers.FlipCardsListController.list()
+POST        /flash_cards                  @controllers.FlipCardsController.save()
+GET         /flash_cards/:id              @controllers.FlipCardsController.getFlashCard(id)
+GET         /flash_cards                  @controllers.FlipCardsController.list()
+
+POST        /flip_cards/packs            @controllers.FlipCardsPackController.save()
+GET         /flip_cards/packs/:id        @controllers.FlipCardsPackController.getPack(id)
+GET         /flip_cards/packs            @controllers.FlipCardsPackController.list()
 
 # JavaScript routes object
-GET        /jsroutes.js          controllers.JavascriptRouters.jsRoutes()
+GET         /jsroutes.js                 controllers.JavascriptRouters.jsRoutes()
 
-POST         /api/profile        @controllers.Profile.list
+POST        /api/profile                 @controllers.Profile.list
 
-POST         /api                @controllers.ApiController.getMethods(p: String)
+POST        /api                         @controllers.ApiController.getMethods(p: String)
 
 # Registration authentication
 #GET         /login               controllers.Authentication.login
@@ -32,8 +37,8 @@ POST         /api                @controllers.ApiController.getMethods(p: String
 #GET         /logout              controllers.Authentication.logout
 
 # Map static resources from the /public folder to the /assets URL path
-GET        /assets/*file         controllers.Assets.at(path="/public", file)
+GET         /assets/*file                controllers.Assets.at(path="/public", file)
 
-->         /auth                 securesocial.Routes
+->          /auth                        securesocial.Routes
 
     

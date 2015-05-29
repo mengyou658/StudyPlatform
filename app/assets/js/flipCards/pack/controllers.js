@@ -5,31 +5,46 @@
 define([], function() {
     'use strict';
 
-    var FlipCardsCtrl = function($scope, $http, $modal) {
+    var FlipCardsPackCtrl = function($scope, $http, $stateParams, $modal, DTOptionsBuilder, DTColumnBuilder) {
+
         $scope.items = {};
 
-        $http.get('/flip_cards/packs')
+        $http.get('/flip_cards/packs/'+$stateParams.packId)
             .success(function(data) {
-                $scope.items = data;
+                $scope.pack = data;
             });
+
+
+        $scope.dtOptions = DTOptionsBuilder.fromSource('/flip_cards/packs/'+$stateParams.packId)
+            .withPaginationType('full_numbers');
+        $scope.dtColumns = [
+            DTColumnBuilder.newColumn('original').withTitle('Original'),
+            DTColumnBuilder.newColumn('transcription').withTitle('Transcription'),
+            DTColumnBuilder.newColumn('translation').withTitle('Translation')
+        ];
+
+
 
         var openModal = function(item) {
             if (item === undefined)
-                item = {shared: false};
+                item = {};
 
             return  $modal.open({
-                templateUrl: '/assets/partials/flipCards/modal.html',
+                templateUrl: '/assets/partials/flipCards/pack/modal.html',
                 windowClass: 'manage-cards-modal',
                 controller: ModalInstanceCtrl,
                 resolve: {
                     data: function () {
-                        return item;
+                        return {
+                            pack: $scope.pack,
+                            item: item
+                        };
                     }
                 }
             });
         };
 
-        $scope.create = function () {
+        $scope.addFlashCard = function () {
             openModal().result.then(function (data) {
                  $scope.items.push(data);
             });
@@ -48,13 +63,17 @@ define([], function() {
         };
     };
 
+    FlipCardsPackCtrl.$inject = [ '$scope', '$http', '$stateParams', '$modal', 'DTOptionsBuilder', 'DTColumnBuilder' ];
+
+
     var ModalInstanceCtrl = function ($scope, $http, $modalInstance, data) {
         console.log(data);
-        $scope.item = data;
+        $scope.pack = data.pack;
+        $scope.item = data.item;
 
 
         $scope.create = function () {
-            $http.post('/flip_cards/packs', $scope.item)
+            $http.post('/flip_cards/packs/'+$scope.pack.id+'/flip_cards', $scope.item)
                 .success(function(data) {
                     $modalInstance.close(data);
                 }).error(function(data, status, headers, config) {
@@ -68,10 +87,8 @@ define([], function() {
     };
     ModalInstanceCtrl.$inject = ['$scope', '$http', '$modalInstance', 'data' ];
 
-    FlipCardsCtrl.$inject = [ '$scope', '$http', '$modal' ];
-
     return {
-        FlipCardsCtrl : FlipCardsCtrl
+        FlipCardsPackCtrl : FlipCardsPackCtrl
     };
 
 });

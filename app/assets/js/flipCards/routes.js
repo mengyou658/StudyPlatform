@@ -7,7 +7,7 @@ define(['angular', './controllers', 'common'], function(angular, controllers) {
     var mod = angular.module('flipCards.routes', ['rema7.common']);
     mod.config(['$stateProvider', function($stateProvider) {
         $stateProvider
-            .state('flipcards', {url: '/flipcards',  templateUrl: '/assets/partials/flipCards/index.html',  controller:controllers.FlipCardsCtrl});
+            .state('flipcards', {url: '/flipcards',  templateUrl: '/assets/partials/flipCards/index.html',  controller:controllers.FlipCardsCtrl})
     }]);
     return mod;
 });

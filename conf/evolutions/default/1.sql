@@ -92,7 +92,7 @@ create table `flashcard_category` (
 
 create table flashcard_packs (
   `id` INT(10) AUTO_INCREMENT NOT NULL,
-  `userId` LONGTEXT NOT NULL,
+  `userId` INT(10) NOT NULL,
   `name` TEXT NOT NULL,
   `shared` BOOL DEFAULT FALSE ,
   `description` TEXT ,
@@ -111,10 +111,10 @@ create table `flashcards_packs_categories` (
 
 create table flash_cards (
   `id` INT(10) AUTO_INCREMENT NOT NULL,
-  `userId` LONGTEXT NOT NULL,
+  `userId` INT(10) NOT NULL,
   `partOfSpeech` TEXT,
   `original` TEXT NOT NULL,
-  `originalTranscription` TEXT ,
+  `transcription` TEXT ,
   `translation` TEXT NOT NULL ,
   `created` TIMESTAMP NOT NULL,
   `updated` TIMESTAMP NOT NULL,

@@ -37,6 +37,7 @@ libraryDependencies ++= Seq( jdbc , anorm , cache , ws
   , "org.webjars" % "satellizer" % "0.10.1"
   , "org.webjars" % "font-awesome" % "4.3.0-2"
   , "org.webjars" % "angular-ui-bootstrap" % "0.13.0"
+  , "org.webjars" % "angular-datatables" % "0.4.3"
 
 )
 

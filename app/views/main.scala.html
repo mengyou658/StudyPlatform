@@ -8,10 +8,12 @@
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
         <link rel="stylesheet" href='@routes.Assets.at("lib/bootstrap/css/bootstrap.css")'>
         <link rel="stylesheet" href='@routes.Assets.at("lib/font-awesome/css/font-awesome.css")'>
+        <link rel="stylesheet" href='@routes.Assets.at("lib/angular-datatables/plugins/bootstrap/datatables.bootstrap.css")'>
 
         @*<link rel="stylesheet" media="screen" href="@routes.Assets.at("bower_components/flat-ui/dist/css/flat-ui.css")">*@
         <script type="text/javascript" src="@routes.JavascriptRouters.jsRoutes"></script>
         <script data-main="@routes.Assets.at("js/main.js")" type="text/javascript" src="@routes.Assets.at("lib/requirejs/require.js")"></script>
+        @*<script type="text/javascript" src="@routes.Assets.at("lib/datatables/webjars-requirejs.js")"></script>*@
         @*<script type="text/javascript" src="@routes.Assets.at("bower_components/instajam/dist/instajam.js")"></script>*@
         <link rel="stylesheet" href='@routes.Assets.at("css/main.css")'>
     </head>
@@ -24,7 +26,8 @@
                     </div>
 
                     <ul class="nav nav-sidebar">
-                        <li class="active"><a ui-sref="flipcards">Flip Cards</a></li>
+                        <li class="active" ui-sref-active="active"><a ui-sref="flipcards">Flashcards batch</a></li>
+                        <li class="active" ui-sref-active="active"><a ui-sref="flashcards">Flash Cards</a></li>
                         <li class="active"><a href="#/dashboard">Dashboard</a></li>
                         <li class="active"><a href="">Accounts</a>
                         </li>

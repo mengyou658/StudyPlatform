@@ -2,14 +2,16 @@
  * Created by maximcherkasov on 09.05.15.
  */
 
-define(['angular',
-    'home',
-    'dashboard',
-    'common',
-    'profile',
-    'services',
-    'settings',
-    'flipCards'
+define(['angular'
+    ,'home'
+    ,'dashboard'
+    ,'common'
+    ,'profile'
+    ,'services'
+    ,'settings'
+    ,'flash_cards'
+    ,'flipCards'
+    ,'flipCards.pack'
     ], function(angular) {
     'use strict';
 
@@ -20,7 +22,9 @@ define(['angular',
         ,'rema7.profile'
         ,'rema7.dashboard'
         ,'rema7.common'
+        ,'rema7.flashCards'
         ,'rema7.flipCards'
+        ,'rema7.flipCards.pack'
         ,'rema7.services'
         ,'rema7.settings.products'
         ]);

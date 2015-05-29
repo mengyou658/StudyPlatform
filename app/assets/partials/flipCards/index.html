@@ -1,26 +1,29 @@
-<div class="settings-products">
-    <h3>Manage Flip Card Packs</h3>
-    <div class="products-list col-xs-12 col-md-8">
-        <div ng-repeat="item in products" class="product-item">
-            <div class="product-header">
-                <div class="title pull-left">
-                    <h4>{{item.name}}</h4>
-                </div>
-                <div class="action pull-right">
-                    <div class="dropdown">
-                        <a href="" class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                            <i class="fa fa-cog"></i>
-                        </a>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                            <li role="presentation"><a role="menuitem" href="" ng-click="edit(item)">Edit</a></li>
-                            <li role="presentation"><a role="menuitem" href="" ng-click="remove(item)">Delete</a></li>
-                        </ul>
+<div ui-view="flashCardsView">
+    <div class="settings-products" >
+        <h3>Manage Flip Card Packs</h3>
+        <div class="products-list col-xs-12 col-md-8">
+            <div ng-repeat="item in items" class="product-item">
+                <div class="product-header">
+                    <div class="title pull-left">
+                       <a ui-sref="flipcards.pack({ packId: item.id })"><h5>{{item.name}}</h5></a>
+
+                    </div>
+                    <div class="action pull-right">
+                        <div class="dropdown">
+                            <a href="" class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                                <i class="fa fa-cog"></i>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                <li role="presentation"><a role="menuitem" href="" ng-click="edit(item)">Edit</a></li>
+                                <li role="presentation"><a role="menuitem" href="" ng-click="remove(item)">Delete</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="products-action col-xs-6 col-md-4">
-        <a class="btn btn-sm btn-success btn-block"  ng-click="create()"><i class="fa fa-plus" ></i> Add new FlipCards</a>
+        <div class="products-action col-xs-6 col-md-4">
+            <a class="btn btn-sm btn-success btn-block"  ng-click="create()"><i class="fa fa-plus" ></i> Add new FlipCards</a>
+        </div>
     </div>
 </div>

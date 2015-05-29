@@ -14,7 +14,12 @@
                 ,'profile'
                 ,'services'
                 ,'settings'
+                ,'flash_cards'
                 ,'flipCards'
+                ,{
+                    name: 'flipCards.pack',
+                    location: 'flipCards/pack'
+                }
                 ],
         shim: {
             'jsRoutes': {
@@ -25,8 +30,8 @@
             'angular': {
                 deps: ['jquery'],
                 exports: 'angular'
-            },
-            'flat-ui': ['jquery']
+            }
+            , 'flat-ui': ['jquery']
             , 'angular-route': ['angular']
             , 'bootstrap': ['jquery']
             , 'satellizer': ['angular']
@@ -36,7 +41,10 @@
             , 'angular-ui' : ['angular']
             , 'angular-ui-router' : ['angular-ui']
             , 'angular-ui-router-tabs': ['angular-ui-router']
-        },
+            , 'angular-datatables': {
+                deps: ['jquery', 'angular']
+                }
+            },
         paths: {
             'requirejs': ['../lib/requirejs/require'],
             'jquery': ['../lib/jquery/jquery'],
@@ -51,6 +59,8 @@
             ,'angular-ui-tpls': ['../lib/angular-ui-bootstrap/ui-bootstrap-tpls']
             ,'angular-ui-router': ['../lib/angular-ui-router/angular-ui-router']
             ,'angular-ui-router-tabs': ['../bower_components/angular-ui-router-tabs/src/ui-router-tabs']
+            , 'datatables': ['../lib/datatables/js/jquery.dataTables']
+            ,'angular-datatables': ['../lib/angular-datatables/angular-datatables']
         }
     });
 

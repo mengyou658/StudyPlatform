@@ -1,25 +1,25 @@
 package controllers
 
-import models.study.flashcards.{PackJson, Pack}
+import models.study.flashcards.{FlashCardsPackJson, FlashCardsPack}
 import models.user.BasicUser
 import play.api.libs.json.{JsNumber, JsString, Writes, Json}
 import securesocial.core.RuntimeEnvironment
-import services.study.cards.FlipCardsListService
+import services.study.cards.FlashCardsPackService
 
 import scala.concurrent.Future
 
 /**
  * Created by m.cherkasov on 28.05.15.
  */
-class FlipCardsListController (override implicit val env: RuntimeEnvironment[BasicUser])
+class FlipCardsPackController (override implicit val env: RuntimeEnvironment[BasicUser])
   extends securesocial.core.SecureSocial[BasicUser]{
 
-  private implicit val readsJson2Product = Json.reads[PackJson]
-  implicit object ProductWrites extends Writes[Pack] {
+  private implicit val readsJson2Product = Json.reads[FlashCardsPackJson]
+  implicit object ProductWrites extends Writes[FlashCardsPack] {
 
-    def writes(s: Pack) = Json.obj(
+    def writes(s: FlashCardsPack) = Json.obj(
       "id" -> JsString(s.id.getOrElse(-1).toString),
-      "userId" -> JsString(s.userId),
+      "userId" -> JsNumber(s.userId),
       "name" -> JsString(s.name),
       "description" -> JsString(s.description.getOrElse("")),
       "created" -> JsNumber(s.created.getMillis),
@@ -29,19 +29,26 @@ class FlipCardsListController (override implicit val env: RuntimeEnvironment[Bas
 
   def list() = SecuredAction.async {
     implicit request =>
-      FlipCardsListService.findByUserId(request.user.main.userId) map {
+      FlashCardsPackService.findByUserId(request.user.main.userId) map {
         list =>
           Ok(Json.toJson(list))
       }
   }
 
+  def getPack(packId: String) = SecuredAction.async {
+    implicit request =>
+      FlashCardsPackService.findByPackId(request.user.main.userId, packId.toLong) map {
+        card =>
+          Ok(Json.toJson(card))
+      }
+  }
 
   def save() = SecuredAction.async(parse.json) {
     implicit request =>
 
-      request.body.asOpt[PackJson] match {
+      request.body.asOpt[FlashCardsPackJson] match {
         case Some(c) =>
-          FlipCardsListService.create(request.user.main.userId, c) map {
+          FlashCardsPackService.create(request.user.main.userId, c) map {
             list =>
               println(list)
               Ok(Json.toJson(list))

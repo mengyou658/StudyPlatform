@@ -1,7 +1,7 @@
 package rema7.study.cards
 
-import models.study.flashcards.FlashCard
-import services.study.cards.FlipCardService
+import models.study.flashcards.{FlashCardJson, FlashCard}
+import services.study.cards.FlashCardService
 
 import scala.concurrent.Future
 
@@ -12,7 +12,7 @@ class Cards {
   def create() = {
     println("AAAAAA")
   }
-  def create(userId: String, flipCard: FlashCard): Future[FlashCard] = {
-    FlipCardService.create(userId, flipCard)
+  def create(userId: String, flipCard: FlashCardJson): Future[FlashCard] = {
+    FlashCardService.create(userId, flipCard)
   }
 }
