@@ -43,26 +43,26 @@ object FlashCardService extends WithDefaultSession {
       }
   }
 
-  def create(userId: String, flashCard: FlashCardJson): Future[FlashCard] = withSession {
-    implicit session =>
-      Future successful {
-        val user = users.filter(u => u.id === userId).first
-        cards.filter(_.original === flashCard.original).firstOption match {
-          case None =>
-            val id = (cards returning cards.map(_.id)) +=
-              FlashCard(None,
-                userId = user.mainId,
-                original = flashCard.original,
-                transcription = flashCard.transcription,
-                translation = flashCard.translation,
-                created = new DateTime(),
-                updated = new DateTime(),
-                partOfSpeech = None)
-
-            cards.filter(_.id === id).first
-          case Some(exists) =>
-            exists
-        }
-      }
-  }
+  def create(userId: String, card: FlashCardJson): Future[FlashCard] = ???
+//    withSession {
+//    implicit session =>
+//      Future successful {
+//        val user = users.filter(u => u.id === userId).first
+//        cards.filter(_.term === card.term).firstOption match {
+//          case None =>
+//            val id = (cards returning cards.map(_.id)) +=
+//              FlashCard(None,
+//                userId = user.mainId,
+//                term = card.term,
+//                transcription = card.transcription,
+//                definition = card.definition,
+//                created = new DateTime(),
+//                updated = new DateTime())
+//
+//            cards.filter(_.id === id).first
+//          case Some(exists) =>
+//            exists
+//        }
+//      }
+  //}
 }

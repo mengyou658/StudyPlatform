@@ -8,28 +8,25 @@ import scala.language.implicitConversions
 /**
  * Created by m.cherkasov on 26.05.15.
  */
-case class FlashCardsPack(id: Option[Long] = None,
+case class CardsSet(id: Option[Long] = None,
                          userId: Long,
                          name: String,
-                         shared: Boolean = false,
                          description: Option[String] = None,
                          created: DateTime,
                          updated: DateTime)
 
-class FlashCardsPackTable(tag: Tag) extends Table[FlashCardsPack](tag, "flashcard_packs") {
+class CardsSets(tag: Tag) extends Table[CardsSet](tag, "cards_sets") {
   def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
   def userId = column[Long]("userId")
   def name = column[String]("name")
-  def shared = column[Boolean]("shared")
   def description = column[String]("description")
   def created = column[DateTime]("created")
   def updated = column[DateTime]("updated")
 
-  def * = (id.?, userId, name, shared, description.?, created, updated) <> (FlashCardsPack.tupled, FlashCardsPack.unapply)
+  def * = (id.?, userId, name, description.?, created, updated) <> (CardsSet.tupled, CardsSet.unapply)
 }
 
-case class FlashCardsPackJson(name: String,
-                    shared: Boolean = false,
+case class CardsSetJson(name: String,
                     description: Option[String] = None)
 
 

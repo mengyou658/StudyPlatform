@@ -20,10 +20,9 @@ class FlipCardsController (override implicit val env: RuntimeEnvironment[BasicUs
     def writes(s: FlashCard) = Json.obj(
       "id" -> JsString(s.id.getOrElse(-1).toString),
       "userId" -> JsNumber(s.userId),
-      "original" -> JsString(s.original),
+      "term" -> JsString(s.term),
       "transcription" -> JsString(s.transcription.getOrElse("")),
-      "translation" -> JsString(s.translation),
-      "partOfSpeech" -> JsString(s.partOfSpeech.getOrElse("")),
+      "definition" -> JsString(s.definition),
       "created" -> JsNumber(s.created.getMillis),
       "updated" -> JsNumber(s.updated.getMillis)
     )

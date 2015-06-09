@@ -1,5 +1,6 @@
 package models.study.flashcards
 
+import models.study.flashcards.FlashCardsTableQueries.cardsSets
 import org.joda.time.DateTime
 import slick.driver.MySQLDriver.api._
 import com.github.tototoshi.slick.MySQLJodaSupport._
@@ -10,29 +11,31 @@ import scala.language.implicitConversions
  */
 case class FlashCard(id: Option[Long] = None,
                      userId: Long,
-                     partOfSpeech: Option[String],
-                     original: String,
+                     cardsSetId: Long,
+                     term: String,
                      transcription: Option[String] = None,
-                     translation: String,
+                     definition: String,
                      created: DateTime,
                      updated: DateTime)
 
-class FlashCards(tag: Tag) extends Table[FlashCard](tag, "flash_cards") {
+class FlashCards(tag: Tag) extends Table[FlashCard](tag, "flashcards") {
   def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
   def userId = column[Long]("userId")
-  def partOfSpeech = column[String]("partOfSpeech")
-  def original = column[String]("original")
+  def cardsSetId = column[Long]("cardsSetId")
+  def term = column[String]("original")
   def transcription = column[String]("transcription")
-  def translation = column[String]("translation")
+  def definition = column[String]("definition")
   def created = column[DateTime]("created")
   def updated = column[DateTime]("updated")
 
   def * =
-    (id.?, userId, partOfSpeech.?, original, transcription.?, translation, created, updated) <>
+    (id.?, userId, cardsSetId, term, transcription.?, definition, created, updated) <>
     (FlashCard.tupled, FlashCard.unapply)
+
+  def eventFk = foreignKey("cards_set_fk", cardsSetId, cardsSets)(cs => cs.id)
 }
 
 
-case class FlashCardJson(original: String,
+case class FlashCardJson(term: String,
                          transcription: Option[String] = None,
-                         translation: String)
+                         definition: String)

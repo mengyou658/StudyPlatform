@@ -81,51 +81,27 @@ create table `product` (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-create table `flashcard_category` (
-  `id` INT(10) AUTO_INCREMENT NOT NULL,
-  `name` varchar(255)  NOT NULL,
-  `created` TIMESTAMP NOT NULL,
-  `updated` TIMESTAMP NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-create table flashcard_packs (
+create table cards_sets (
   `id` INT(10) AUTO_INCREMENT NOT NULL,
   `userId` INT(10) NOT NULL,
   `name` TEXT NOT NULL,
-  `shared` BOOL DEFAULT FALSE ,
   `description` TEXT ,
-  `category` TEXT ,
   `created` TIMESTAMP NOT NULL,
   `updated` TIMESTAMP NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-create table `flashcards_packs_categories` (
-  `pack_id` INT(10),
-  `category_id` INT(10),
-  FOREIGN KEY (pack_id) REFERENCES flashcard_packs(id),
-  FOREIGN KEY (category_id) REFERENCES flashcard_category(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-create table flash_cards (
+create table flashcards (
   `id` INT(10) AUTO_INCREMENT NOT NULL,
   `userId` INT(10) NOT NULL,
-  `partOfSpeech` TEXT,
-  `original` TEXT NOT NULL,
+  `cardsSetId` INT(10) NOT NULL,
+  `term` TEXT NOT NULL,
   `transcription` TEXT ,
-  `translation` TEXT NOT NULL ,
+  `definition` TEXT NOT NULL ,
   `created` TIMESTAMP NOT NULL,
   `updated` TIMESTAMP NOT NULL,
+  FOREIGN KEY (cardsSetId) REFERENCES cards_sets(id),
   PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-create table `flashcards_packs` (
-  `card_id` INT(10),
-  `pack_id` INT(10),
-  FOREIGN KEY (card_id) REFERENCES flash_cards(id),
-  FOREIGN KEY (pack_id) REFERENCES flashcard_packs(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -140,8 +116,5 @@ drop table `authenticator`;
 drop table `social_account`;
 drop table `product`;
 
-drop TABLE `flashcards_packs_categories`;
-drop TABLE `flashcards_packs`;
-drop TABLE `flashcard_packs`;
-drop TABLE `flashcard_category`;
-drop TABLE `flash_cards`;
+drop TABLE `cards_sets`;
+drop TABLE `flashcards`;
