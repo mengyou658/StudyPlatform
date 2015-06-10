@@ -6,12 +6,7 @@ lazy val `studyplatform` = (project in file(".")).enablePlugins(PlayScala)
 
 scalaVersion := "2.11.6"
 
-
-//libraryDependencies ++= Seq(
-//  "org.webjars" %% "webjars-play" % "2.3.0",
-//  "org.webjars" % "requirejs" % "2.1.17"
-//)
-
+includeFilter in (Assets, LessKeys.less) := "*.less"
 
 libraryDependencies ++= Seq( jdbc , anorm , cache , ws
   //    ,"com.typesafe.slick" % "slick_2.11" % "3.0.0-RC1"

@@ -1,0 +1,136 @@
+@import "lib/bootstrap/less/variables.less";
+@import "variables";
+
+#wrapper {
+  padding-left: 0;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+  padding-left: 250px;
+}
+
+#sidebar-wrapper {
+  z-index: 1000;
+  position: fixed;
+  left: 250px;
+  width: 0;
+  height: 100%;
+  margin-left: -250px;
+  overflow-y: auto;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  background-color: @sand-color;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  width: 250px;
+}
+
+#page-content-wrapper {
+  width: 100%;
+  position: absolute;
+  padding: 15px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+  position: absolute;
+  margin-right: -250px;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+  position: absolute;
+  top: 0;
+  width: 250px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  height: 100%;
+  margin-left: 40px;
+  background-color: #fff;
+
+  .fa {
+    display: inline;
+  }
+}
+
+.sidebar-nav li {
+  text-indent: 20px;
+  line-height: 30px;
+}
+
+.sidebar-nav li a {
+  display: block;
+  text-decoration: none;
+  border-radius: 2px;
+  margin: 2px 10px
+}
+//
+.sidebar-nav li a:hover {
+  background: @link-color;
+  background-color: rgba(100,120,150,0.1);
+  border-radius: 2px;
+}
+
+.sidebar-nav li.active a {
+  text-decoration: none;
+  color: white;
+  background: @link-color;
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+  text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+  height: 65px;
+  font-size: 18px;
+  line-height: 60px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+  color: #999999;
+}
+
+//.sidebar-nav > .sidebar-brand a:hover {
+//  color: #fff;
+//  background: none;
+//}
+
+@media(min-width:768px) {
+  #wrapper {
+    padding-left: 290px;
+  }
+
+  #wrapper.toggled {
+    padding-left: 0;
+  }
+
+  #sidebar-wrapper {
+    width: 290px;
+    box-shadow: 1px 0 8px rgba(0,0,0,0.1);
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    width: 0;
+  }
+
+  #page-content-wrapper {
+    padding: 20px;
+    position: relative;
+  }
+
+  #wrapper.toggled #page-content-wrapper {
+    position: relative;
+    margin-right: 0;
+  }
+}
+
