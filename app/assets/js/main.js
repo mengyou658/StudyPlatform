@@ -8,7 +8,13 @@
     // -- RequireJS config --
     requirejs.config({
         // Packages = top-level folders; loads a contained file named 'main.js"
-        packages: ['home'
+        packages: [
+                'home'
+                ,{
+                    name: 'home.sets',
+                    location: 'home/sets'
+                }
+                ,'header'
                 ,'dashboard'
                 ,'common'
                 ,'profile'
@@ -39,6 +45,7 @@
                 deps: ['angular-ui']
             }
             , 'angular-ui' : ['angular']
+            , 'ui-select' : ['angular']
             , 'angular-ui-router' : ['angular-ui']
             , 'angular-ui-router-tabs': ['angular-ui-router']
             , 'angular-datatables': {
@@ -59,6 +66,7 @@
             ,'angular-ui-tpls': ['../lib/angular-ui-bootstrap/ui-bootstrap-tpls']
             ,'angular-ui-router': ['../lib/angular-ui-router/angular-ui-router']
             ,'angular-ui-router-tabs': ['../bower_components/angular-ui-router-tabs/src/ui-router-tabs']
+            ,'ui-select': ['../lib/ui-select/dist/select']
             ,'datatables': ['../lib/datatables/js/jquery.dataTables']
             ,'angular-datatables': ['../lib/angular-datatables/angular-datatables']
         }
@@ -69,7 +77,7 @@
     };
 
     // Load the app. This is kept minimal so it doesn't need much updating.'angular-route',
-    require(['angular',  'jquery', 'flat-ui', 'angular-ui-router', './app'],
+    require(['angular',  'jquery', 'flat-ui', 'ui-select', 'angular-ui-router', './app'],
         function (angular) {
             angular.bootstrap(document, ['app']);
         }

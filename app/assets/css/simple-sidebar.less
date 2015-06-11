@@ -7,6 +7,7 @@
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
+  padding-top: 51px;
 }
 
 #wrapper.toggled {
@@ -26,6 +27,12 @@
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
   background-color: @sand-color;
+
+  .wrapper {
+    height: 100%;
+    background-color: #fff;
+    margin-left: 40px;
+  }
 }
 
 #wrapper.toggled #sidebar-wrapper {
@@ -50,11 +57,11 @@
   top: 0;
   width: 250px;
   margin: 0;
-  padding: 0;
+  padding: 0 0 10px;
   list-style: none;
-  height: 100%;
-  margin-left: 40px;
   background-color: #fff;
+  border-bottom: 1px solid #f1f1f1;
+  letter-spacing: 0.7px;
 
   .fa {
     display: inline;
@@ -74,8 +81,7 @@
 }
 //
 .sidebar-nav li a:hover {
-  background: @link-color;
-  background-color: rgba(100,120,150,0.1);
+  background: rgba(100, 120, 150, 0.1);
   border-radius: 2px;
 }
 
@@ -91,9 +97,11 @@
 }
 
 .sidebar-nav > .sidebar-brand {
-  height: 65px;
-  font-size: 18px;
-  line-height: 60px;
+  //height: 65px;
+  color: #7792a9;
+  //line-height: 60px;
+  font: 400 12px/16px "lucida grande","lucida sans unicode",arial,sans-serif;
+  padding: 14px 8px 6px 8px;
 }
 
 .sidebar-nav > .sidebar-brand a {

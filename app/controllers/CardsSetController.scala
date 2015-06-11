@@ -11,10 +11,10 @@ import scala.concurrent.Future
 /**
  * Created by m.cherkasov on 28.05.15.
  */
-class FlipCardsPackController (override implicit val env: RuntimeEnvironment[BasicUser])
+class CardsSetController (override implicit val env: RuntimeEnvironment[BasicUser])
   extends securesocial.core.SecureSocial[BasicUser]{
 
-  private implicit val readsJson2Product = Json.reads[CardsSetJson]
+  private implicit val readsJson2CardSet = Json.reads[CardsSetJson]
   implicit object ProductWrites extends Writes[CardsSet] {
 
     def writes(s: CardsSet) = Json.obj(
@@ -35,7 +35,7 @@ class FlipCardsPackController (override implicit val env: RuntimeEnvironment[Bas
       }
   }
 
-  def getPack(packId: String) = SecuredAction.async {
+  def getCard(packId: String) = SecuredAction.async {
     implicit request =>
       CardsSetService.findById(request.user.main.userId, packId.toLong) map {
         card =>

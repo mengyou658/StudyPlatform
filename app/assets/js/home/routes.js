@@ -8,7 +8,7 @@ define(['angular', './controllers'], function(angular, controllers) {
     var mod = angular.module('home.routes', []);
     mod.config(['$stateProvider', function($stateProvider) {
         $stateProvider
-            .state('/', {url: '/', templateUrl: '/assets/partials/index.html',  controller:controllers.HomeCtrl});
+            .state('root', {url: '/', templateUrl: '/assets/partials/index.html',  controller:controllers.HomeCtrl});
     }]);
     return mod;
 });

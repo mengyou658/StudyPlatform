@@ -1,0 +1,24 @@
+    <div class="modal-header">
+        <h4 class="modal-title" ng-if="!editFlag">Create a new study set</h4>
+        <h4 class="modal-title" ng-if="editFlag">Edit study set</h4>
+    </div>
+    <div class="modal-body">
+        <form ng-submit="saveApp()" >
+            <div class="form-group">
+                <label for="titleInput">Title</label>
+                <input type="text" class="form-control" id="titleInput" placeholder="Enter study set tile" ng-model="item.name">
+            </div>
+            <div class="form-group">
+                <label for="termInput">Terms language</label>
+                <input type="text" class="form-control" id="termInput" placeholder="Enter transcription" ng-model="item.termsLang">
+            </div>
+            <div class="form-group">
+                <label for="definitionsInput">Definitions language</label>
+                <input type="text" class="form-control" id="definitionsInput" placeholder="Enter translation" ng-model="item.definitionsLang">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="create()">Create</button>
+        <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+    </div>

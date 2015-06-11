@@ -4,6 +4,8 @@
 
 define(['angular'
     ,'home'
+    ,'home.sets'
+    ,'header'
     ,'dashboard'
     ,'common'
     ,'profile'
@@ -19,6 +21,8 @@ define(['angular'
     // will not be resolved
     var app = angular.module('app', [
         'rema7.home'
+        ,'rema7.home.sets'
+        ,'rema7.header'
         ,'rema7.profile'
         ,'rema7.dashboard'
         ,'rema7.common'

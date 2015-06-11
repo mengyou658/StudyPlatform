@@ -18,9 +18,9 @@ POST        /flash_cards                  @controllers.FlipCardsController.save(
 GET         /flash_cards/:id              @controllers.FlipCardsController.getFlashCard(id)
 GET         /flash_cards                  @controllers.FlipCardsController.list()
 
-POST        /flip_cards/packs            @controllers.FlipCardsPackController.save()
-GET         /flip_cards/packs/:id        @controllers.FlipCardsPackController.getPack(id)
-GET         /flip_cards/packs            @controllers.FlipCardsPackController.list()
+POST        /sets            @controllers.CardsSetController.save()
+GET         /sets/:id        @controllers.CardsSetController.getCard(id)
+GET         /sets            @controllers.CardsSetController.list()
 
 # JavaScript routes object
 GET         /jsroutes.js                 controllers.JavascriptRouters.jsRoutes()

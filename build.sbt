@@ -33,7 +33,7 @@ libraryDependencies ++= Seq( jdbc , anorm , cache , ws
   , "org.webjars" % "font-awesome" % "4.3.0-2"
   , "org.webjars" % "angular-ui-bootstrap" % "0.13.0"
   , "org.webjars" % "angular-datatables" % "0.4.3"
-
+  , "org.webjars.bower" % "ui-select" % "0.11.2"
 )
 
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )

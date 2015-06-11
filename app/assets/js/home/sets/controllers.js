@@ -4,17 +4,17 @@
 define([], function() {
     'use strict';
 
-    var HomeCtrl = function($scope, $http) {
+    var CardsSetCtrl = function($scope, $http) {
         $scope.sets = [];
 
         $http.get('/sets') .success(function(data) {
             $scope.sets = data;
         });
     };
-    HomeCtrl.$inject = [ '$scope', '$http' ];
+    CardsSetCtrl.$inject = [ '$scope', '$http' ];
 
     return {
-        HomeCtrl : HomeCtrl
+        CardsSetCtrl : CardsSetCtrl
     };
 
 });
