@@ -37,9 +37,15 @@ class CardsSetController (override implicit val env: RuntimeEnvironment[BasicUse
 
   def getCard(packId: String) = SecuredAction.async {
     implicit request =>
-      CardsSetService.findById(request.user.main.userId, packId.toLong) map {
-        card =>
-          Ok(Json.toJson(card))
+      try {
+        CardsSetService.findById(request.user.main.userId, packId.toLong) map {
+          card =>
+            Ok(Json.toJson(card))
+
+        }
+      } catch {
+        case  e: NumberFormatException =>
+          Future(BadRequest("packId is not number"))
       }
   }
 

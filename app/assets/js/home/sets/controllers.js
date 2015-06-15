@@ -4,17 +4,30 @@
 define([], function() {
     'use strict';
 
-    var CardsSetCtrl = function($scope, $http) {
-        $scope.sets = [];
+    var CardsSetCtrl = function($scope, $http, $stateParams) {
+        $scope.set = {};
 
-        $http.get('/sets') .success(function(data) {
-            $scope.sets = data;
+        $http.get('/sets/'+$stateParams.setId) .success(function(data) {
+            $scope.set = data;
         });
     };
-    CardsSetCtrl.$inject = [ '$scope', '$http' ];
+    CardsSetCtrl.$inject = [ '$scope', '$http', '$stateParams' ];
+
+
+    var CardsSetEditCtrl = function($scope, $http, $stateParams) {
+        $scope.set = {};
+
+        console.log('asd');
+
+        $http.get('/sets/'+$stateParams.setId) .success(function(data) {
+            $scope.set = data;
+        });
+    };
+    CardsSetEditCtrl.$inject = [ '$scope', '$http', '$stateParams' ];
 
     return {
-        CardsSetCtrl : CardsSetCtrl
+        CardsSetCtrl : CardsSetCtrl,
+        CardsSetEditCtrl : CardsSetEditCtrl
     };
 
 });

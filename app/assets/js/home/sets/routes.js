@@ -8,11 +8,17 @@ define(['angular', './controllers'], function(angular, controllers) {
     var mod = angular.module('home.sets.routes', []);
     mod.config(['$stateProvider', function($stateProvider) {
         $stateProvider
-            .state('sets',
+            .state('sets.set',
             {
-                url: 'sets/:setId',
+                url: '/:setId',
                 templateUrl: '/assets/partials/sets/index.html',
                 controller:controllers.CardsSetCtrl
+            })
+            .state('sets.set.edit',
+            {
+                url: '/edit',
+                templateUrl: '/assets/partials/sets/edit.html',
+                controller:controllers.CardsSetEditCtrl
             }
         );
     }]);
