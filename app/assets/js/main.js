@@ -19,7 +19,6 @@
                 ,'common'
                 ,'profile'
                 ,'services'
-                ,'settings'
                 ],
         shim: {
             'jsRoutes': {
@@ -41,6 +40,7 @@
             , 'angular-ui' : ['angular']
             , 'ui-select' : ['angular']
             , 'angular-ui-router' : ['angular-ui']
+            , 'angular-breadcrumb' : ['angular-ui-router']
             //, 'angular-datatables': {
             //    deps: ['jquery', 'angular']
             //    }
@@ -58,6 +58,7 @@
             ,'angular-ui-tpls': ['../lib/angular-ui-bootstrap/ui-bootstrap-tpls']
             ,'angular-ui-router': ['../lib/angular-ui-router/release/angular-ui-router']
             ,'ui-select': ['../lib/ui-select/dist/select']
+            ,'angular-breadcrumb': ['../lib/angular-breadcrumb/dist/angular-breadcrumb']
             //,'datatables': ['../lib/datatables/js/jquery.dataTables']
             //,'angular-datatables': ['../lib/angular-datatables/angular-datatables']
         }
@@ -68,9 +69,9 @@
     };
 
     // Load the app. This is kept minimal so it doesn't need much updating.'angular-route',
-    require(['angular',  'jquery', 'ui-select', 'angular-ui-router', 'angular-ui-tpls', './app'],
+    require(['angular',  'jquery', 'ui-select', 'angular-ui-router', 'angular-ui-tpls', 'angular-breadcrumb', './app'],
         function (angular) {
-            angular.bootstrap(document, ['app']);
+            angular.bootstrap(document, ['app', 'ncy-angular-breadcrumb']);
         }
     );
 })(requirejs);

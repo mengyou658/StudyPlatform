@@ -9,6 +9,9 @@ define([], function() {
 
         $http.get('/sets/'+$stateParams.setId) .success(function(data) {
             $scope.set = data;
+            $http.get('/sets/'+$stateParams.setId+'/cards').success(function(data) {
+                $scope.set.cards = data;
+            });
         });
     };
     CardsSetCtrl.$inject = [ '$scope', '$http', '$stateParams' ];
@@ -16,12 +19,44 @@ define([], function() {
 
     var CardsSetEditCtrl = function($scope, $http, $stateParams) {
         $scope.set = {};
+        $scope.newCard = {};
 
-        console.log('asd');
+        console.log($stateParams.setId);
 
-        $http.get('/sets/'+$stateParams.setId) .success(function(data) {
+        $http.get('/sets/'+$stateParams.setId).success(function(data) {
             $scope.set = data;
+            $http.get('/sets/'+$stateParams.setId+'/cards').success(function(data) {
+                $scope.set.cards = data;
+            });
         });
+
+
+        $scope.addRow = function() {
+            var card = $scope.newCard;
+            if (card.term && card.definition) {
+                $http.post('/sets/'+$stateParams.setId, card).success(function(data) {
+                    console.log(data);
+                    $scope.newCard = {};
+
+                    $scope.set.cards.push(data);
+                }).error(function(data, status, headers, config) {
+                    console.log(data);
+                });
+            }
+        };
+
+        $scope.removeRow = function(card) {
+            $http.delete('/sets/'+$stateParams.setId + '/cards/'+card.id).success(function(data) {
+                console.log(data);
+                var index = $scope.set.cards.indexOf(card);
+
+                if (index > -1) {
+                    $scope.set.cards.splice(index, 1);
+                }
+            }).error(function(data, status, headers, config) {
+                console.log(data);
+            });
+        };
     };
     CardsSetEditCtrl.$inject = [ '$scope', '$http', '$stateParams' ];
 

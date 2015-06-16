@@ -1,12 +1,75 @@
 <div id="cards-set">
-    <a ui-sref="sets.set({setId: set.id})">Back</a>
-    <div class="header">
-        <input value="set.name"/>
+    <div ncy-breadcrumb></div>
+    <div class="cards container-fluid">
+        <div class="row">
+            <table class="table">
+                <tbody>
+                <tr class="new-card-row">
+                    <td>
+                        <div class="input-group">
+                            <input ng-enter="addRow()" type="text" class="form-control" placeholder="Input {{set.termLang}} term" ng-model="newCard.term">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input ng-enter="addRow()" type="text" class="form-control" placeholder="Input {{set.transcription}} transcription" ng-model="newCard.transcription">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input ng-enter="addRow()" type="text" class="form-control" placeholder="Input {{set.definitionsLang}} definition" ng-model="newCard.definition">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="button" class="btn btn-default" ng-click="addRow()"><i class="fa fa-plus"></i></button>
+                        </div>
+                    </td>
+                </tr>
 
-    </div>
-    <div class="cards">
-        <div ng-repeat="car in set.cards">
-
+                <tr ng-repeat="card in set.cards">
+                    <td>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Input {{set.termLang}} term" ng-model="card.term">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Input {{set.transcription}} transcription" ng-model="card.transcription">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Input {{set.definitionsLang}} definition" ng-model="card.definition">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="button" class="btn btn-danger" ng-click="removeRow(card)"><i class="fa fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
+    <!--<div class="header">-->
+        <!--<div class="input-group-lg">-->
+            <!--<h5 class="title">Title</h5>-->
+            <!--<input type="text" class="form-control" placeholder="Username" ng-model="set.name">-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="preferences contaniner-fluid">-->
+        <!--<div class="terms col-xs-6">-->
+            <!--<span>Terms</span>-->
+        <!--</div>-->
+        <!--<div class="definitions col-xs-6">-->
+            <!--<span>Definitions</span>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="cards">-->
+        <!--<div ng-repeat="car in set.cards">-->
+
+        <!--</div>-->
+    <!--</div>-->
 </div>

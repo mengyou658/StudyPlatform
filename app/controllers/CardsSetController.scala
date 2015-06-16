@@ -4,7 +4,7 @@ import models.study.flashcards.{CardsSetJson, CardsSet}
 import models.user.BasicUser
 import play.api.libs.json.{JsNumber, JsString, Writes, Json}
 import securesocial.core.RuntimeEnvironment
-import services.study.cards.CardsSetService
+import services.study.cards.{FlashCardService, CardsSetService}
 
 import scala.concurrent.Future
 
@@ -35,17 +35,19 @@ class CardsSetController (override implicit val env: RuntimeEnvironment[BasicUse
       }
   }
 
-  def getCard(packId: String) = SecuredAction.async {
+  def getSet(setId: String) = SecuredAction.async {
     implicit request =>
       try {
-        CardsSetService.findById(request.user.main.userId, packId.toLong) map {
+        CardsSetService.findById(request.user.main.userId, setId.toLong) map {
           card =>
+            FlashCardService.findBySet(request.user.main.userId, setId.toLong)
+
             Ok(Json.toJson(card))
 
         }
       } catch {
         case  e: NumberFormatException =>
-          Future(BadRequest("packId is not number"))
+          Future(BadRequest("setId is not number"))
       }
   }
 

@@ -8,7 +8,14 @@ define(['angular', './controllers'], function(angular, controllers) {
     var mod = angular.module('profile.routes', []);
     mod.config(['$stateProvider', function($stateProvider) {
         $stateProvider
-            .state('profile', {url: '/profile', templateUrl: '/assets/partials/profile/index.html',  controller:controllers.ProfileCtrl});
+            .state('profile', {
+                url: '/profile',
+                templateUrl: '/assets/partials/profile/index.html',
+                controller:controllers.ProfileCtrl,
+                ncyBreadcrumb: {
+                    label: 'Profile'
+                }
+            });
     }]);
 
     return mod;

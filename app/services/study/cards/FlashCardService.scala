@@ -2,7 +2,7 @@ package services.study.cards
 
 import models.WithDefaultSession
 import models.study.flashcards.{FlashCardJson, FlashCard}
-import models.study.flashcards.FlashCardsTableQueries.cards
+import models.study.flashcards.FlashCardsTableQueries.{cardsSets, cards}
 import models.user.UserTableQueries.users
 import org.joda.time.DateTime
 import play.api.Logger
@@ -43,26 +43,57 @@ object FlashCardService extends WithDefaultSession {
       }
   }
 
-  def create(userId: String, card: FlashCardJson): Future[FlashCard] = ???
-//    withSession {
-//    implicit session =>
-//      Future successful {
-//        val user = users.filter(u => u.id === userId).first
-//        cards.filter(_.term === card.term).firstOption match {
-//          case None =>
-//            val id = (cards returning cards.map(_.id)) +=
-//              FlashCard(None,
-//                userId = user.mainId,
-//                term = card.term,
-//                transcription = card.transcription,
-//                definition = card.definition,
-//                created = new DateTime(),
-//                updated = new DateTime())
-//
-//            cards.filter(_.id === id).first
-//          case Some(exists) =>
-//            exists
-//        }
-//      }
-  //}
+  def findBySet(userId: String, setId: Long): Future[List[FlashCard]] = withSession {
+    implicit session =>
+      Future successful {
+        users.filter(u => u.id === userId).firstOption match {
+          case Some(u) =>
+            cards
+              .filter (c => c.cardsSetId === setId && (c.userId === u.mainId))
+              .list
+        }
+      }
+  }
+
+  def create(userId: String, setId: Long, card: FlashCardJson): Future[Option[FlashCard]] =
+    withSession {
+      implicit session =>
+        Future successful {
+          val user = users.filter(u => u.id === userId).first
+          val set = cardsSets.filter(s => s.id === setId && s.userId === user.mainId).first
+          set.id match {
+            case Some(xSetId) =>
+              val id = (cards returning cards.map(_.id)) +=
+                FlashCard(
+                  None,
+                  user.mainId,
+                  xSetId,
+                  card.term,
+                  card.transcription,
+                  card.definition,
+                  created = new DateTime(),
+                  updated = new DateTime()
+                )
+              Some(cards.filter(_.id === id).first)
+            case None =>
+              None
+          }
+        }
+    }
+
+  def removeFromSet(userId: String, setId: Long, cardId: Long): Future[Boolean] =
+    withSession {
+      implicit session =>
+        Future successful {
+          val user = users.filter(u => u.id === userId).first
+          val set = cardsSets.filter(s => s.id === setId && s.userId === user.mainId).first
+          set.id match {
+            case Some(xSetId) =>
+              cards.filter(c => c.id === cardId && c.cardsSetId === set.id).delete
+              true
+            case None =>
+              false
+          }
+        }
+    }
 }

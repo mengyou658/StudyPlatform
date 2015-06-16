@@ -8,7 +8,14 @@ define(['angular', './controllers'], function(angular, controllers) {
     var mod = angular.module('home.routes', []);
     mod.config(['$stateProvider', function($stateProvider) {
         $stateProvider
-            .state('sets', {url: '/sets', templateUrl: '/assets/partials/index.html',  controller:controllers.HomeCtrl});
+            .state('sets', {
+                url: '/sets',
+                templateUrl: '/assets/partials/index.html',
+                controller:controllers.HomeCtrl,
+                ncyBreadcrumb: {
+                    label: 'Your Sets'
+                }
+            });
     }]);
     return mod;
 });

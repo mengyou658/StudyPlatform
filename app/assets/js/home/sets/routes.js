@@ -12,13 +12,19 @@ define(['angular', './controllers'], function(angular, controllers) {
             {
                 url: '/:setId',
                 templateUrl: '/assets/partials/sets/index.html',
-                controller:controllers.CardsSetCtrl
+                controller:controllers.CardsSetCtrl,
+                ncyBreadcrumb: {
+                    label: 'Set {{set.name}}'
+                }
             })
             .state('sets.set.edit',
             {
                 url: '/edit',
                 templateUrl: '/assets/partials/sets/edit.html',
-                controller:controllers.CardsSetEditCtrl
+                controller:controllers.CardsSetEditCtrl,
+                ncyBreadcrumb: {
+                    label: 'Edit'
+                }
             }
         );
     }]);

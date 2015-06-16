@@ -10,7 +10,6 @@ define(['angular'
     ,'common'
     ,'profile'
     ,'services'
-    ,'settings'
     ], function(angular) {
     'use strict';
 
@@ -24,7 +23,6 @@ define(['angular'
         ,'rema7.dashboard'
         ,'rema7.common'
         ,'rema7.services'
-        ,'rema7.settings.products'
         ]);
 
     app.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $authProvider) {
@@ -81,6 +79,20 @@ define(['angular'
             authorizationEndpoint: 'https://oauth.vk.com/authorize'
         });
 
+    });
+
+    app.directive('ngEnter', function () {
+        return function (scope, element, attrs) {
+            element.bind("keydown keypress", function (event) {
+                if(event.which === 13) {
+                    scope.$apply(function (){
+                        scope.$eval(attrs.ngEnter);
+                    });
+
+                    event.preventDefault();
+                }
+            });
+        };
     });
 
     return app;

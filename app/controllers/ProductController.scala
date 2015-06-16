@@ -1,6 +1,5 @@
 package controllers
 
-import rema7.core.Core
 import models.user.BasicUser
 import play.api.libs.json.{Writes, JsString, Json}
 import securesocial.core.RuntimeEnvironment

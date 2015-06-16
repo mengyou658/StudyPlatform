@@ -22,7 +22,7 @@ class FlashCards(tag: Tag) extends Table[FlashCard](tag, "flashcards") {
   def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
   def userId = column[Long]("userId")
   def cardsSetId = column[Long]("cardsSetId")
-  def term = column[String]("original")
+  def term = column[String]("term")
   def transcription = column[String]("transcription")
   def definition = column[String]("definition")
   def created = column[DateTime]("created")

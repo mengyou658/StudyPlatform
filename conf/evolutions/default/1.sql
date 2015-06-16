@@ -85,6 +85,8 @@ create table cards_sets (
   `id` INT(10) AUTO_INCREMENT NOT NULL,
   `userId` INT(10) NOT NULL,
   `name` TEXT NOT NULL,
+  `termLang` INT(10),
+  `definitionLang` INT(10),
   `description` TEXT ,
   `created` TIMESTAMP NOT NULL,
   `updated` TIMESTAMP NOT NULL,

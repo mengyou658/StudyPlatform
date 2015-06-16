@@ -13,14 +13,12 @@ GET         /social                      @controllers.SocialAccountController.li
 POST        /product                     @controllers.ProductController.save()
 GET         /product                     @controllers.ProductController.list()
 
-
-POST        /flash_cards                  @controllers.FlipCardsController.save()
-GET         /flash_cards/:id              @controllers.FlipCardsController.getFlashCard(id)
-GET         /flash_cards                  @controllers.FlipCardsController.list()
-
-POST        /sets            @controllers.CardsSetController.save()
-GET         /sets/:id        @controllers.CardsSetController.getCard(id)
-GET         /sets            @controllers.CardsSetController.list()
+POST        /sets/:id                       @controllers.FlashCardsController.save(id)
+POST        /sets                           @controllers.CardsSetController.save()
+GET         /sets/:id                       @controllers.CardsSetController.getSet(id)
+GET         /sets/:id/cards                 @controllers.FlashCardsController.getFlashCardBySet(id)
+DELETE      /sets/:id/cards/:cardId         @controllers.FlashCardsController.getFlashCardFromSet(id, cardId)
+GET         /sets                           @controllers.CardsSetController.list()
 
 # JavaScript routes object
 GET         /jsroutes.js                 controllers.JavascriptRouters.jsRoutes()
