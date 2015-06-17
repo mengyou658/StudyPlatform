@@ -36,6 +36,7 @@ class FlashCards(tag: Tag) extends Table[FlashCard](tag, "flashcards") {
 }
 
 
-case class FlashCardJson(term: String,
+case class FlashCardJson(id: Option[Long] = None,
+                         term: String,
                          transcription: Option[String] = None,
                          definition: String)

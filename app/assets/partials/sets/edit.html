@@ -28,19 +28,19 @@
                 </tr>
 
                 <tr ng-repeat="card in set.cards">
-                    <td>
+                    <td class="">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Input {{set.termLang}} term" ng-model="card.term">
+                            <input ng-enter="saveRow(card)" type="text" class="form-control" placeholder="Input {{set.termLang}} term" ng-model="card.term">
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Input {{set.transcription}} transcription" ng-model="card.transcription">
+                            <input ng-enter="saveRow(card)" type="text" class="form-control" placeholder="Input {{set.transcription}} transcription" ng-model="card.transcription">
                         </div>
                     </td>
                     <td>
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Input {{set.definitionsLang}} definition" ng-model="card.definition">
+                            <input ng-enter="saveRow(card)" type="text" class="form-control" placeholder="Input {{set.definitionsLang}} definition" ng-model="card.definition">
                         </div>
                     </td>
                     <td>

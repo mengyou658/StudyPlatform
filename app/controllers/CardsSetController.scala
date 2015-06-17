@@ -56,7 +56,7 @@ class CardsSetController (override implicit val env: RuntimeEnvironment[BasicUse
 
       request.body.asOpt[CardsSetJson] match {
         case Some(c) =>
-          CardsSetService.create(request.user.main.userId, c) map {
+          CardsSetService.save(request.user.main.userId, c) map {
             list =>
               println(list)
               Ok(Json.toJson(list))

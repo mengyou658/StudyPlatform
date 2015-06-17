@@ -7,6 +7,7 @@ import models.user.UserTableQueries.users
 import org.joda.time.DateTime
 import play.api.Logger
 import scala.slick.driver.MySQLDriver.simple._
+import com.github.tototoshi.slick.MySQLJodaSupport._
 
 
 import scala.concurrent.Future
@@ -43,21 +44,33 @@ object CardsSetService extends WithDefaultSession {
       }
   }
 
-  def create(userId: String, set: CardsSetJson): Future[CardsSet] = withSession {
+  def save(userId: String, set: CardsSetJson): Future[Option[CardsSet]] = withSession {
     implicit session =>
       Future successful {
         val user = users.filter(u => u.id === userId).first
-
-        cardsSets.filter(_.name === set.name).firstOption match {
+        set.id match {
+          case Some(id) =>
+            cardsSets.filter(s => s.id === id && s.userId === user.mainId)
+              .map(s => (s.name, s.description, s.updated))
+              .update((set.name, set.description.getOrElse(""), new DateTime()))
+            Some(cardsSets.filter(s => s.id === id && s.userId === user.mainId).first)
           case None =>
             val id = (cardsSets returning cardsSets.map(_.id)) +=
               CardsSet(None, user.mainId, set.name, set.description,
                 new DateTime(), new DateTime())
 
-            cardsSets.filter(_.id === id).first
-          case Some(existsSet) =>
-            existsSet
-      }
+            Some(cardsSets.filter(_.id === id).first)
+        }
+//        cardsSets.filter(_.name === set.name).firstOption match {
+//          case None =>
+//            val id = (cardsSets returning cardsSets.map(_.id)) +=
+//              CardsSet(None, user.mainId, set.name, set.description,
+//                new DateTime(), new DateTime())
+//
+//            cardsSets.filter(_.id === id).first
+//          case Some(existsSet) =>
+//            existsSet
+//      }
     }
   }
 }

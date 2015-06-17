@@ -1,6 +1,6 @@
     <div class="modal-header">
         <h4 class="modal-title" ng-if="!editFlag">Create a new study set</h4>
-        <h4 class="modal-title" ng-if="editFlag">Edit study set</h4>
+        <h4 class="modal-title" ng-if="editFlag">Edit Card Set </h4>
     </div>
     <div class="modal-body">
         <form ng-submit="saveApp()" >
@@ -19,6 +19,8 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-primary" ng-click="create()">Create</button>
+        <button class="btn btn-primary" ng-click="create()" ng-if="!editFlag">Create</button>
+        <button class="btn btn-primary" ng-click="save()" ng-if="editFlag">Save</button>
         <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        <button class="btn btn-danger pull-left" ng-click="remove()" ng-if="editFlag"><i class="fa fa-fw fa-trash"></i>Remove</button>
     </div>

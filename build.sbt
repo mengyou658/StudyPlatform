@@ -20,8 +20,9 @@ libraryDependencies ++= Seq( jdbc , anorm , cache , ws
   , "org.json4s" %% "json4s-native" % "3.2.11"
   , "org.webjars" %% "webjars-play" % "2.3.0-2"
   , "org.webjars" % "bootstrap" % "3.3.4"
-  , "org.webjars" % "angularjs" % "1.3.15"
-  , "org.webjars" % "angular-ui-bootstrap" % "0.13.0"
+  , "org.webjars" % "angularjs" % "1.4.0"
+  , "org.webjars.bower" % "angular-animate" % "1.4.0"
+  , "org.webjars.bower" % "angular-ui-bootstrap-bower" % "0.13.0"
   , "org.webjars.bower" % "angular-ui-router" % "0.2.15"
   , "com.typesafe.play.plugins" %% "play-plugins-mailer" % "2.3.1"
   , "org.webjars.bower" % "jquery" % "2.1.3"
@@ -35,6 +36,7 @@ libraryDependencies ++= Seq( jdbc , anorm , cache , ws
 //  , "org.webjars" % "angular-datatables" % "0.4.3"
   , "org.webjars.bower" % "ui-select" % "0.11.2"
   , "org.webjars.bower" % "angular-breadcrumb" % "0.3.3"
+  , "org.webjars.bower" % "angular-xeditable" % "0.1.9"
 )
 
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )

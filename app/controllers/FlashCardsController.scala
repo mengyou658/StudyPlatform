@@ -76,7 +76,7 @@ class FlashCardsController (override implicit val env: RuntimeEnvironment[BasicU
       request.body.asOpt[FlashCardJson] match {
         case Some(c) =>
           try {
-            FlashCardService.create(request.user.main.userId, setId.toLong, c) map {
+            FlashCardService.save(request.user.main.userId, setId.toLong, c) map {
               card =>
                 println(card)
                 Ok(Json.toJson(card))
@@ -85,7 +85,7 @@ class FlashCardsController (override implicit val env: RuntimeEnvironment[BasicU
             case  e: NumberFormatException =>
               Future(BadRequest("setId is not number"))
             case  e: NoSuchElementException =>
-              Future(NotFound("Cards set not found"))
+              Future(NotFound("Cards set or card in set not found"))
           }
         case None =>
           Future(BadRequest(Json.obj("message" -> ("Bad request" + request.body))))

@@ -4,12 +4,14 @@
 define([], function() {
     'use strict';
 
-    var HomeCtrl = function($scope, $http) {
+    var HomeCtrl = function($scope, $http, modalService) {
         $scope.sets = [];
 
         $http.get('/sets') .success(function(data) {
             $scope.sets = data;
         });
+
+
     };
     HomeCtrl.$inject = [ '$scope', '$http' ];
 

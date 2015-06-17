@@ -8,10 +8,10 @@
 #GET        /link-result          @controllers.Application.linkResult
 GET         /                            @controllers.Application.index
 #GET        /current-user         @controllers.Application.currentUser
-POST        /social/:provider            @controllers.SocialAccountController.addSocialAccount(provider)
-GET         /social                      @controllers.SocialAccountController.list()
-POST        /product                     @controllers.ProductController.save()
-GET         /product                     @controllers.ProductController.list()
+POST        /social/:provider               @controllers.SocialAccountController.addSocialAccount(provider)
+GET         /social                         @controllers.SocialAccountController.list()
+POST        /product                        @controllers.ProductController.save()
+GET         /product                        @controllers.ProductController.list()
 
 POST        /sets/:id                       @controllers.FlashCardsController.save(id)
 POST        /sets                           @controllers.CardsSetController.save()

@@ -55,7 +55,7 @@ object FlashCardService extends WithDefaultSession {
       }
   }
 
-  def create(userId: String, setId: Long, card: FlashCardJson): Future[Option[FlashCard]] =
+  def save(userId: String, setId: Long, card: FlashCardJson): Future[Option[FlashCard]] =
     withSession {
       implicit session =>
         Future successful {
@@ -63,18 +63,27 @@ object FlashCardService extends WithDefaultSession {
           val set = cardsSets.filter(s => s.id === setId && s.userId === user.mainId).first
           set.id match {
             case Some(xSetId) =>
-              val id = (cards returning cards.map(_.id)) +=
-                FlashCard(
-                  None,
-                  user.mainId,
-                  xSetId,
-                  card.term,
-                  card.transcription,
-                  card.definition,
-                  created = new DateTime(),
-                  updated = new DateTime()
-                )
-              Some(cards.filter(_.id === id).first)
+              card.id match {
+                case Some(id) =>
+                  cards.filter(c => c.id === id && c.cardsSetId === setId)
+                      .map(c => (c.term, c.transcription, c.definition, c.updated))
+                      .update((card.term, card.transcription.getOrElse(""), card.definition, new DateTime()))
+                  Some(cards.filter(c => c.id === id && c.cardsSetId === setId).first)
+                case None =>
+                  val id = (cards returning cards.map(_.id)) +=
+                    FlashCard(
+                      None,
+                      user.mainId,
+                      xSetId,
+                      card.term,
+                      card.transcription,
+                      card.definition,
+                      created = new DateTime(),
+                      updated = new DateTime()
+                    )
+                  Some(cards.filter(_.id === id).first)
+              }
+
             case None =>
               None
           }

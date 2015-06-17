@@ -45,11 +45,18 @@ define(['angular'], function(angular) {
         };
 
         var ModalCardsSetCtrl = function ($scope, $http, $modalInstance, data) {
-            console.log(data);
-            $scope.item = data.item;
+            //console.log(data);
+            if (data.item !== undefined) {
+                $scope.item = {
+                    id: parseInt(data.item.id),
+                    name: data.item.name,
+                    description: data.item.description
+                };
+            }
+            //console.log($scope.item);
             $scope.editFlag = data.editFlag;
 
-            $scope.create = function () {
+            $scope.save = function () {
                 $http.post('/sets', $scope.item)
                     .success(function(data) {
                         $modalInstance.close(data);

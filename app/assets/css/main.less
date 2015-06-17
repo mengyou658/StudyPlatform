@@ -270,10 +270,31 @@ h2, h3 {
 
 
 #cards-set {
-  h3 {
-    border-bottom: 1px solid #d6d2cb;
-    padding-bottom: 15px;
-    margin-bottom: 0;
+  .header {
+    h3 {
+      border-bottom: 1px solid #d6d2cb;
+      padding-bottom: 15px;
+      margin-bottom: 0;
+
+      a {
+        font-size: 12px;
+        font-weight: normal;
+        color: @gray-light;
+
+        &:hover {
+          color: @link-hover-color;
+          text-decoration: none;
+        }
+      }
+
+      button {
+        float: right;
+      }
+    }
+
+    .tools {
+      padding: 10px 0;
+    }
   }
 
   .item {
@@ -296,8 +317,12 @@ h2, h3 {
     margin-top: 10px;
     background-color: @gray-lighter;
   }
+
+
   td {
     width: 30%;
+    vertical-align: middle;
+
     .input-group {
       width: 100%;
     }
@@ -306,3 +331,4 @@ h2, h3 {
     }
   }
 }
+

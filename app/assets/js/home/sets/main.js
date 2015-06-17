@@ -5,7 +5,8 @@
 define(['angular', './routes', './controllers'], function(angular, routes, controllers) {
     'use strict';
 
-    var mod = angular.module('rema7.home.sets', ['ui.router', 'home.sets.routes']);
+    var mod = angular.module('rema7.home.sets', ['ui.router', 'home.sets.routes', 'ngAnimate']);
+
     mod.controller("CardsSetCtrl", controllers.CardsSetCtrl);
 
     return mod;

@@ -26,8 +26,9 @@ class CardsSets(tag: Tag) extends Table[CardsSet](tag, "cards_sets") {
   def * = (id.?, userId, name, description.?, created, updated) <> (CardsSet.tupled, CardsSet.unapply)
 }
 
-case class CardsSetJson(name: String,
-                    description: Option[String] = None)
+case class CardsSetJson(id: Option[Long] = None,
+                        name: String,
+                        description: Option[String] = None)
 
 
 
