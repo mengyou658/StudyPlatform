@@ -102,7 +102,7 @@ create table flashcards (
   `definition` TEXT NOT NULL ,
   `created` TIMESTAMP NOT NULL,
   `updated` TIMESTAMP NOT NULL,
-  FOREIGN KEY (cardsSetId) REFERENCES cards_sets(id),
+  FOREIGN KEY (cardsSetId) REFERENCES cards_sets(id) ON DELETE CASCADE,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

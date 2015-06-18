@@ -26,8 +26,6 @@ define([], function() {
         $scope.search = function (row) {
             if (!$scope.query.text) return true;
 
-            console.log($scope.query.text);
-
             return (angular.lowercase(row.term).indexOf($scope.query.text || '') !== -1
                     || angular.lowercase(row.transcription).indexOf($scope.query.text || '') !== -1
                     || angular.lowercase(row.definition).indexOf($scope.query.text || '') !== -1);

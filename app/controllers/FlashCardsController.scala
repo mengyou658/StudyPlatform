@@ -57,7 +57,7 @@ class FlashCardsController (override implicit val env: RuntimeEnvironment[BasicU
       }
   }
 
-  def getFlashCardFromSet(setId: String, cardId: String) = SecuredAction.async {
+  def removeFlashCardFromSet(setId: String, cardId: String) = SecuredAction.async {
     implicit request =>
       try {
         FlashCardService.removeFromSet(request.user.main.userId, setId.toLong, cardId.toLong) map {

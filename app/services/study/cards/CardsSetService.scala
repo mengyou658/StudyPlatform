@@ -1,7 +1,7 @@
 package services.study.cards
 
 import models.WithDefaultSession
-import models.study.flashcards.FlashCardsTableQueries.cardsSets
+import models.study.flashcards.FlashCardsTableQueries.{cards, cardsSets}
 import models.study.flashcards.{CardsSetJson, CardsSet}
 import models.user.UserTableQueries.users
 import org.joda.time.DateTime
@@ -21,26 +21,36 @@ object CardsSetService extends WithDefaultSession {
   def findByUserId(userId: String): Future[List[CardsSet]] = withSession {
     implicit session =>
       Future successful {
-        users.filter(u => u.id === userId).firstOption match {
-          case Some(u) =>
-            cardsSets
-              .filter(p => p.userId === u.mainId )
-              .list
-          case None =>
-            List.empty[CardsSet]
-        }
+        (for {
+          u <- users if u.id === userId
+          s <- cardsSets if s.userId === u.mainId
+        } yield s).list
+
       }
   }
 
   def findById(userId: String, setId: Long): Future[Option[CardsSet]] = withSession {
     implicit session =>
       Future successful {
-        users.filter(u => u.id === userId).firstOption match {
-          case Some(u) =>
-            cardsSets
-            .filter (s => s.id === setId && s.userId === u.mainId)
-            .firstOption
-        }
+        (for {
+          u <- users if u.id === userId
+          s <- cardsSets if s.id === setId && s.userId === u.mainId
+        } yield s).firstOption
+      }
+  }
+
+  def remove(userId: String, setId: Long): Future[Boolean] = withSession {
+    implicit session =>
+      Future successful {
+
+        val q1 = for {
+          u <- users if u.id === userId
+          s <- cardsSets if s.id === setId && s.userId === u.mainId
+        } yield s
+
+        q1.list.foreach(s => cardsSets.filter(s1=> s1.id === s.id).delete)
+
+        true
       }
   }
 
@@ -61,16 +71,6 @@ object CardsSetService extends WithDefaultSession {
 
             Some(cardsSets.filter(_.id === id).first)
         }
-//        cardsSets.filter(_.name === set.name).firstOption match {
-//          case None =>
-//            val id = (cardsSets returning cardsSets.map(_.id)) +=
-//              CardsSet(None, user.mainId, set.name, set.description,
-//                new DateTime(), new DateTime())
-//
-//            cardsSets.filter(_.id === id).first
-//          case Some(existsSet) =>
-//            existsSet
-//      }
     }
   }
 }

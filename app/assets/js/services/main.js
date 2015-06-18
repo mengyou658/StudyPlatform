@@ -53,11 +53,22 @@ define(['angular'], function(angular) {
                     description: data.item.description
                 };
             }
-            //console.log($scope.item);
+
             $scope.editFlag = data.editFlag;
 
             $scope.save = function () {
                 $http.post('/sets', $scope.item)
+                    .success(function(data) {
+                        $modalInstance.close(data);
+                    }).error(function(data, status, headers, config) {
+                        console.log(data)
+                    });
+            };
+
+            $scope.remove = function () {
+                console.log($scope.item);
+
+                $http.delete('/sets/'+$scope.item.id)
                     .success(function(data) {
                         $modalInstance.close(data);
                     }).error(function(data, status, headers, config) {

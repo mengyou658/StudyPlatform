@@ -51,6 +51,19 @@ class CardsSetController (override implicit val env: RuntimeEnvironment[BasicUse
       }
   }
 
+  def removeSet(setId: String) = SecuredAction.async {
+    implicit request =>
+      try {
+        CardsSetService.remove(request.user.main.userId, setId.toLong) map {
+          card =>
+            Ok(Json.toJson(card))
+        }
+      } catch {
+        case  e: NumberFormatException =>
+          Future(BadRequest("setId is not number"))
+      }
+  }
+
   def save() = SecuredAction.async(parse.json) {
     implicit request =>
 
