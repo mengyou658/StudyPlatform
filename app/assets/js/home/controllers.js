@@ -4,7 +4,7 @@
 define([], function() {
     'use strict';
 
-    var HomeCtrl = function($scope, $http, modalService) {
+    var HomeCtrl = function($scope, $http) {
         $scope.sets = [];
 
         $http.get('/sets') .success(function(data) {

@@ -1,7 +1,14 @@
 <ui-view id="cards-set">
     <div ncy-breadcrumb></div>
-    <h3>You have {{sets.length}} sets</h3>
-    <div ng-repeat="set in sets">
+    <div class="header">
+        <h3>You have {{sets.length}} sets</h3>
+        <div class="tools">
+            <div class="container-fluid" style="  padding: 0;">
+                <input type="text" class="form-control" placeholder="Search for..." ng-model="search.name">
+            </div>
+        </div>
+    </div>
+    <div class="repeat-item" ng-repeat="set in sets | filter:search">
         <div class="item">
         <span class="title">
             <a href="#" ui-sref="sets.set({setId: set.id})">{{set.name}}</a>

@@ -74,7 +74,8 @@
 
     // Load the app. This is kept minimal so it doesn't need much updating.'angular-route',
     require(['angular',  'jquery', 'ui-select', 'angular-ui-router',
-             'angular-ui-tpls', 'angular-breadcrumb', 'angular-animate', 'angular-xeditable', './app'],
+             'angular-ui-tpls', 'angular-breadcrumb', 'angular-animate',
+            'angular-xeditable','angular-animate', './app'],
         function (angular) {
             angular.bootstrap(document, ['app', 'ncy-angular-breadcrumb']);
         }
