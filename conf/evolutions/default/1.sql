@@ -85,11 +85,13 @@ create table cards_sets (
   `id` INT(10) AUTO_INCREMENT NOT NULL,
   `userId` INT(10) NOT NULL,
   `name` TEXT NOT NULL,
-  `termLang` INT(10),
-  `definitionLang` INT(10),
+  `termsLangId` INT(10),
+  `definitionsLangId` INT(10),
   `description` TEXT ,
   `created` TIMESTAMP NOT NULL,
   `updated` TIMESTAMP NOT NULL,
+  FOREIGN KEY (termsLangId) REFERENCES languages(id),
+  FOREIGN KEY (definitionsLangId) REFERENCES languages(id),
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -103,6 +105,16 @@ create table flashcards (
   `created` TIMESTAMP NOT NULL,
   `updated` TIMESTAMP NOT NULL,
   FOREIGN KEY (cardsSetId) REFERENCES cards_sets(id) ON DELETE CASCADE,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table languages (
+  `id` INT(10) AUTO_INCREMENT NOT NULL,
+  `userId` INT(10) NOT NULL,
+  `name` TEXT NOT NULL,
+  `prefix` TEXT NOT NULL,
+  `created` TIMESTAMP NOT NULL,
+  `updated` TIMESTAMP NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

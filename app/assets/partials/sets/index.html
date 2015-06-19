@@ -5,15 +5,29 @@
             <a href="" ng-click="editCardSet()">edit</a>
             <button ui-sref="sets.set.edit({setId: set.id})" class="btn btn-primary"><i class="fa fa-pencil"></i>&nbsp;Add or Remove terms </button>
         </h3>
-        <div class="tools">
-            <div class="container-fluid" style="  padding: 0;">
-                <input type="text" class="form-control" placeholder="Search for..." ng-model="query.text">
-            </div>
+        <div class="lang">
+            <span>{{set.termsLang.name}} <i class="fa fa-arrows-h"></i> {{set.definitionsLang.name}}</span>
+            <span></span>
         </div>
     </div>
+
+    <div class="tools">
+        <div class="container-fluid" style="  padding: 0;">
+            <input type="text" class="form-control" placeholder="Search for..." ng-model="query.text">
+        </div>
+    </div>
+
     <div class="cards container-fluid">
         <div class="row">
             <table class="table table-bordered table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th>Term</th>
+                        <th>Transcription</th>
+                        <th>Definition</th>
+                        <th></th>
+                    </tr>
+                </thead>
                 <tbody>
                 <tr ng-repeat="card in cards | filter:search" class="repeat-item">
                     <td>
@@ -26,7 +40,7 @@
                         <span editable-text="card.definition" e-name="definition" e-form="rowform" e-required>{{card.definition  || 'empty'}}</span>
                     </td>
                     <td  align="center">
-                        <form editable-form onbeforesave="save($data, card.id)"name="rowform"  ng-show="rowform.$visible" class="form-buttons form-inline">
+                        <form editable-form onbeforesave="save($data, card.id)" name="rowform"  ng-show="rowform.$visible" class="form-buttons form-inline">
                             <div class="btn-group" role="group">
                                 <button type="submit" ng-disabled="rowform.$waiting" class="btn btn-success">
                                     <i class="fa fa-check"></i>

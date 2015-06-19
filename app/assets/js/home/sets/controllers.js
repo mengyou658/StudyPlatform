@@ -4,7 +4,7 @@
 define([], function() {
     'use strict';
 
-    var CardsSetCtrl = function($scope, $http, $stateParams, modalService) {
+    var CardsSetCtrl = function($scope, $http, $state, $stateParams, modalService) {
         $scope.set = {};
         $scope.query = {};
 
@@ -16,10 +16,8 @@ define([], function() {
         });
 
         $scope.save = function(data, id) {
-            //$scope.user not updated yet
             angular.extend(data, {id: parseInt(id)});
 
-            console.log(data);
             return $http.post('/sets/'+$stateParams.setId, data);
         };
 
@@ -46,7 +44,7 @@ define([], function() {
 
 
     };
-    CardsSetCtrl.$inject = [ '$scope', '$http', '$stateParams', 'modalService' ];
+    CardsSetCtrl.$inject = [ '$scope', '$http', '$state', '$stateParams', 'modalService' ];
 
 
     var CardsSetEditCtrl = function($scope, $http, $stateParams) {

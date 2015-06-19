@@ -10,6 +10,7 @@ define(['angular', './controllers'], function(angular, controllers) {
         $stateProvider
             .state('sets', {
                 url: '/sets',
+                reload: true,
                 templateUrl: '/assets/partials/index.html',
                 controller:controllers.HomeCtrl,
                 ncyBreadcrumb: {

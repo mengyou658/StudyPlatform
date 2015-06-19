@@ -8,5 +8,4 @@ import slick.lifted.TableQuery
 object FlashCardsTableQueries {
   object cards extends TableQuery(new FlashCards(_))
   object cardsSets extends TableQuery(new CardsSets(_))
-
 }

@@ -3,6 +3,8 @@ package services.study.cards
 import models.WithDefaultSession
 import models.study.flashcards.FlashCardsTableQueries.{cards, cardsSets}
 import models.study.flashcards.{CardsSetJson, CardsSet}
+import models.system.Lang
+import models.system.SystemTableQueries.langs
 import models.user.UserTableQueries.users
 import org.joda.time.DateTime
 import play.api.Logger
@@ -18,24 +20,27 @@ import scala.concurrent.Future
 object CardsSetService extends WithDefaultSession {
   val logger = Logger(this.getClass)
 
-  def findByUserId(userId: String): Future[List[CardsSet]] = withSession {
+  def findByUserId(userId: String): Future[List[(CardsSet, (Lang, Lang))]] = withSession {
     implicit session =>
       Future successful {
         (for {
           u <- users if u.id === userId
           s <- cardsSets if s.userId === u.mainId
-        } yield s).list
-
+          lt <- langs if lt.id === s.termsLangId
+          ld <- langs if ld.id === s.definitionsLangId
+        } yield (s, (lt,ld))).list
       }
   }
 
-  def findById(userId: String, setId: Long): Future[Option[CardsSet]] = withSession {
+  def findById(userId: String, setId: Long): Future[Option[(CardsSet, (Lang, Lang))]] = withSession {
     implicit session =>
       Future successful {
         (for {
           u <- users if u.id === userId
           s <- cardsSets if s.id === setId && s.userId === u.mainId
-        } yield s).firstOption
+          lt <- langs if lt.id === s.termsLangId
+          ld <- langs if ld.id === s.definitionsLangId
+        } yield (s, (lt,ld))).firstOption
       }
   }
 
@@ -54,22 +59,34 @@ object CardsSetService extends WithDefaultSession {
       }
   }
 
-  def save(userId: String, set: CardsSetJson): Future[Option[CardsSet]] = withSession {
+  def save(userId: String, set: CardsSetJson): Future[Option[(CardsSet, (Lang, Lang))]] = withSession {
     implicit session =>
       Future successful {
         val user = users.filter(u => u.id === userId).first
         set.id match {
           case Some(id) =>
+            val termLang = langs.filter(_.id === set.termsLang.id.get).first
+            val definitionLang = langs.filter(_.id === set.definitionsLang.id.get).first
+
             cardsSets.filter(s => s.id === id && s.userId === user.mainId)
-              .map(s => (s.name, s.description, s.updated))
-              .update((set.name, set.description.getOrElse(""), new DateTime()))
-            Some(cardsSets.filter(s => s.id === id && s.userId === user.mainId).first)
+              .map(s => (s.name, s.description, s.termsLangId, s.definitionsLangId, s.updated))
+              .update((set.name, set.description.getOrElse(""), termLang.id.get, definitionLang.id.get, new DateTime()))
+            Some(
+                cardsSets.filter(s => s.id === id && s.userId === user.mainId).first,
+                (termLang, definitionLang)
+            )
           case None =>
+
+            val termLang = langs.filter(_.id === set.termsLang.id.get).first
+            val definitionLang = langs.filter(_.id === set.definitionsLang.id.get).first
+
             val id = (cardsSets returning cardsSets.map(_.id)) +=
               CardsSet(None, user.mainId, set.name, set.description,
+                termLang.id.get,
+                definitionLang.id.get,
                 new DateTime(), new DateTime())
 
-            Some(cardsSets.filter(_.id === id).first)
+            Some(cardsSets.filter(_.id === id).first,(termLang, definitionLang))
         }
     }
   }
