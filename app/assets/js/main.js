@@ -43,6 +43,7 @@
             , 'angular-breadcrumb' : ['angular-ui-router']
             , 'angular-animate' : ['angular']
             , 'angular-xeditable' : ['angular-ui']
+            , 'angular-sanitize' : ['angular']
             //, 'angular-datatables': {
             //    deps: ['jquery', 'angular']
             //    }
@@ -63,6 +64,7 @@
             ,'angular-breadcrumb': ['../lib/angular-breadcrumb/dist/angular-breadcrumb']
             ,'angular-xeditable': ['../lib/angular-xeditable/dist/js/xeditable']
             ,'angular-animate': ['../lib/angular-animate/angular-animate']
+            ,'angular-sanitize': ['../lib/angular-sanitize/angular-sanitize']
             //,'datatables': ['../lib/datatables/js/jquery.dataTables']
             //,'angular-datatables': ['../lib/angular-datatables/angular-datatables']
         }
@@ -75,7 +77,7 @@
     // Load the app. This is kept minimal so it doesn't need much updating.'angular-route',
     require(['angular',  'jquery', 'ui-select', 'angular-ui-router',
              'angular-ui-tpls', 'angular-breadcrumb', 'angular-animate',
-            'angular-xeditable','angular-animate', './app'],
+            'angular-xeditable','angular-animate','angular-sanitize', './app'],
         function (angular) {
             angular.bootstrap(document, ['app', 'ncy-angular-breadcrumb']);
         }

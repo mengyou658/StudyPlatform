@@ -50,13 +50,23 @@ define(['angular'], function(angular) {
                 $scope.item = {
                     id: parseInt(data.item.id),
                     name: data.item.name,
-                    description: data.item.description
+                    description: data.item.description,
+                    termsLang: data.item.termsLang,
+                    definitionsLang: data.item.definitionsLang
                 };
             }
+
+            $scope.langs = [];
+
+            $http.get('/langs').success(function(data) {
+                $scope.langs = data;
+                console.log($scope.langs)
+            });
 
             $scope.editFlag = data.editFlag;
 
             $scope.save = function () {
+                console.log($scope.item)
                 $http.post('/sets', $scope.item)
                     .success(function(data) {
                         $modalInstance.close(data);

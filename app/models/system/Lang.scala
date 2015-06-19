@@ -7,7 +7,7 @@ import slick.driver.MySQLDriver.api._
 import scala.language.implicitConversions
 
 
-case class Lang(id: Option[Long] = None,
+case class Lang(id: Long,
                     userId: Long,
                     name: String,
                     code: String,
@@ -22,10 +22,10 @@ class Langs(tag: Tag) extends Table[Lang](tag, "languages") {
   def created = column[DateTime]("created")
   def updated = column[DateTime]("updated")
 
-  def * = (id.?, userId, name, code, created, updated) <> (Lang.tupled, Lang.unapply)
+  def * = (id, userId, name, code, created, updated) <> (Lang.tupled, Lang.unapply)
 }
 
-case class LangJson(id: Option[Long] = None,
+case class LangJson(id: Long,
                     name: String,
                     code: String
                      )

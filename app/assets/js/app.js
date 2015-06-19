@@ -10,6 +10,7 @@ define(['angular'
     ,'common'
     ,'profile'
     ,'services'
+    ,'ui-select'
     ], function(angular) {
     'use strict';
 
@@ -23,6 +24,8 @@ define(['angular'
         ,'rema7.dashboard'
         ,'rema7.common'
         ,'rema7.services'
+        ,'ui.select'
+        ,'ngSanitize'
         ]);
 
     app.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $authProvider) {
@@ -79,6 +82,39 @@ define(['angular'
             authorizationEndpoint: 'https://oauth.vk.com/authorize'
         });
 
+    }).config(function(uiSelectConfig) {
+        uiSelectConfig.theme = 'bootstrap';
+        uiSelectConfig.resetSearchInput = true;
+        uiSelectConfig.appendToBody = true;
+    }).filter('propsFilter', function() {
+        return function(items, props) {
+            var out = [];
+
+            if (angular.isArray(items)) {
+                items.forEach(function(item) {
+                    var itemMatches = false;
+
+                    var keys = Object.keys(props);
+                    for (var i = 0; i < keys.length; i++) {
+                        var prop = keys[i];
+                        var text = props[prop].toLowerCase();
+                        if (item[prop].toString().toLowerCase().indexOf(text) !== -1) {
+                            itemMatches = true;
+                            break;
+                        }
+                    }
+
+                    if (itemMatches) {
+                        out.push(item);
+                    }
+                });
+            } else {
+                // Let the output be the input untouched
+                out = items;
+            }
+
+            return out;
+        }
     });
 
     app.directive('ngEnter', function () {

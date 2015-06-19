@@ -34,6 +34,7 @@ class CardsSetController (override implicit val env: RuntimeEnvironment[BasicUse
 
   implicit val langWrites = new Writes[Lang] {
     def writes(lang: Lang) = Json.obj(
+      "id" -> lang.id,
       "name" -> lang.name,
       "code" -> lang.code
     )

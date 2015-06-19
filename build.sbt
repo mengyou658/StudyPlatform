@@ -36,6 +36,7 @@ libraryDependencies ++= Seq( jdbc , anorm , cache , ws
   , "org.webjars.bower" % "ui-select" % "0.11.2"
   , "org.webjars.bower" % "angular-breadcrumb" % "0.3.3"
   , "org.webjars.bower" % "angular-xeditable" % "0.1.9"
+  , "org.webjars.bower" % "angular-sanitize" % "1.3.15"
 )
 
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )

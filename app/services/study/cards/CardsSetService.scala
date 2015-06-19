@@ -65,25 +65,25 @@ object CardsSetService extends WithDefaultSession {
         val user = users.filter(u => u.id === userId).first
         set.id match {
           case Some(id) =>
-            val termLang = langs.filter(_.id === set.termsLang.id.get).first
-            val definitionLang = langs.filter(_.id === set.definitionsLang.id.get).first
+            val termLang = langs.filter(_.id === set.termsLang.id).first
+            val definitionLang = langs.filter(_.id === set.definitionsLang.id).first
 
             cardsSets.filter(s => s.id === id && s.userId === user.mainId)
               .map(s => (s.name, s.description, s.termsLangId, s.definitionsLangId, s.updated))
-              .update((set.name, set.description.getOrElse(""), termLang.id.get, definitionLang.id.get, new DateTime()))
+              .update((set.name, set.description.getOrElse(""), termLang.id, definitionLang.id, new DateTime()))
             Some(
                 cardsSets.filter(s => s.id === id && s.userId === user.mainId).first,
                 (termLang, definitionLang)
             )
           case None =>
 
-            val termLang = langs.filter(_.id === set.termsLang.id.get).first
-            val definitionLang = langs.filter(_.id === set.definitionsLang.id.get).first
+            val termLang = langs.filter(_.id === set.termsLang.id).first
+            val definitionLang = langs.filter(_.id === set.definitionsLang.id).first
 
             val id = (cardsSets returning cardsSets.map(_.id)) +=
               CardsSet(None, user.mainId, set.name, set.description,
-                termLang.id.get,
-                definitionLang.id.get,
+                termLang.id,
+                definitionLang.id,
                 new DateTime(), new DateTime())
 
             Some(cardsSets.filter(_.id === id).first,(termLang, definitionLang))

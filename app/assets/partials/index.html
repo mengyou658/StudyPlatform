@@ -10,9 +10,12 @@
     </div>
     <div class="repeat-item" ng-repeat="set in sets | filter:search">
         <div class="item">
-        <span class="title">
-            <a href="#" ui-sref="sets.set({setId: set.id})">{{set.name}}</a>
-        </span>
+            <div class="title">
+                <a href="#" ui-sref="sets.set({setId: set.id})">{{set.name}}
+                </a>
+                <div>{{set.termsLang.name}} <i class="fa fa-arrows-h"></i> {{set.definitionsLang.name}}</div>
+
+            </div>
         </div>
     </div>
 </ui-view>

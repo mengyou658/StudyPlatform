@@ -22,8 +22,14 @@ GET         /sets/:id/cards                 @controllers.FlashCardsController.ge
 POST        /sets/:id                       @controllers.FlashCardsController.save(id)
 DELETE      /sets/:id/cards/:cardId         @controllers.FlashCardsController.removeFlashCardFromSet(id, cardId)
 
+# Languages controller
+GET         /langs                          @controllers.system.LanguagesController.list()
+
 # JavaScript routes object
 GET         /jsroutes.js                 controllers.JavascriptRouters.jsRoutes()
+
+
+
 
 POST        /api/profile                 @controllers.Profile.list
 
