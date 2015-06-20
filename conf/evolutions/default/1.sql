@@ -81,6 +81,16 @@ create table `product` (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+create table languages (
+  `id` INT(10) AUTO_INCREMENT NOT NULL,
+  `userId` INT(10) NOT NULL,
+  `name` TEXT NOT NULL,
+  `code` TEXT NOT NULL,
+  `created` TIMESTAMP NOT NULL,
+  `updated` TIMESTAMP NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 create table cards_sets (
   `id` INT(10) AUTO_INCREMENT NOT NULL,
   `userId` INT(10) NOT NULL,
@@ -108,15 +118,6 @@ create table flashcards (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-create table languages (
-  `id` INT(10) AUTO_INCREMENT NOT NULL,
-  `userId` INT(10) NOT NULL,
-  `name` TEXT NOT NULL,
-  `prefix` TEXT NOT NULL,
-  `created` TIMESTAMP NOT NULL,
-  `updated` TIMESTAMP NOT NULL,
-  PRIMARY KEY (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 # --- !Downs
@@ -132,3 +133,4 @@ drop table `product`;
 
 drop TABLE `cards_sets`;
 drop TABLE `flashcards`;
+drop TABLE `languages`;
