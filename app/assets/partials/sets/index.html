@@ -33,7 +33,7 @@
                         <span editable-text="card.term" e-name="term" e-form="rowform" e-required>{{card.term  || 'empty'}}</span>
                     </td>
                     <td>
-                        <span editable-text="card.transcription" e-name="transcription" e-form="rowform" e-required>{{card.transcription  || 'empty'}}</span>
+                        <span editable-text="card.transcription" e-name="transcription" e-form="rowform" e-required>{{card.transcription || 'empty'   | pinyin}}</span>
                     </td>
                     <td>
                         <span editable-text="card.definition" e-name="definition" e-form="rowform" e-required>{{card.definition  || 'empty'}}</span>

@@ -12,7 +12,7 @@
                     </td>
                     <td>
                         <div class="input-group">
-                            <input ng-enter="addRow()" type="text" class="form-control" placeholder="Input {{set.transcription}} transcription" ng-model="newCard.transcription">
+                            <input ng-pinyin ng-enter="addRow()" type="text" class="form-control" placeholder="Input {{set.transcription}} transcription" ng-model="newCard.transcription">
                         </div>
                     </td>
                     <td>
@@ -35,7 +35,8 @@
                     </td>
                     <td>
                         <div class="input-group">
-                            <input ng-enter="saveRow(card)" type="text" class="form-control" placeholder="Input {{set.transcription}} transcription" ng-model="card.transcription">
+                            <input ng-if="set.termLang !== zh" ng-enter="saveRow(card)" type="text" class="form-control" placeholder="Input {{set.transcription}} transcription" ng-model="card.transcription">
+                            <input ng-if="set.termLang == zh" ng-pinyin ng-enter="saveRow(card)" type="text" class="form-control" placeholder="Input {{set.transcription}} transcription" ng-model="card.transcription">
                         </div>
                     </td>
                     <td>
