@@ -7,6 +7,7 @@ define([], function() {
     var CardsSetCtrl = function($scope, $http, $state, $stateParams, modalService) {
         $scope.set = {};
         $scope.query = {};
+        $scope.cards = [];
 
         $http.get('/sets/'+$stateParams.setId) .success(function(data) {
             $scope.set = data;
@@ -21,8 +22,12 @@ define([], function() {
             return $http.post('/sets/'+$stateParams.setId, data);
         };
 
-        $scope.search = function (row) {
+        $scope.searchCard = function (row) {
             if (!$scope.query.text) return true;
+
+            console.log(row);
+            console.log(row.term);
+            console.log(angular.lowercase(row.term));
 
             return (angular.lowercase(row.term).indexOf($scope.query.text || '') !== -1
                     || angular.lowercase(row.transcription).indexOf($scope.query.text || '') !== -1

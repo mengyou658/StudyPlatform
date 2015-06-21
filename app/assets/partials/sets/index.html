@@ -12,7 +12,8 @@
 
     <div class="tools">
         <div class="container-fluid" style="  padding: 0;">
-            <input type="text" class="form-control" placeholder="Search for..." ng-model="query.text">
+            <input ng-if="set.termLang !== zh" type="text" class="form-control" placeholder="Search for..." ng-model="query.text">
+            <input ng-if="set.termLang === zh" ng-pinyin type="text" class="form-control" placeholder="Search for..." ng-model="query.text">
         </div>
     </div>
 
@@ -28,12 +29,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="card in cards | filter:search" class="repeat-item">
+                <tr ng-repeat="card in cards | filter:searchCard" class="repeat-item">
                     <td>
                         <span editable-text="card.term" e-name="term" e-form="rowform" e-required>{{card.term  || 'empty'}}</span>
                     </td>
                     <td>
-                        <span editable-text="card.transcription" e-name="transcription" e-form="rowform" e-required>{{card.transcription || 'empty'   | pinyin}}</span>
+                        <span ng-if="set.termLang !== zh" editable-text="card.transcription" e-name="transcription" e-form="rowform" e-required>{{card.transcription || 'empty'}}</span>
+                        <span ng-if="set.termLang === zh" editable-text="card.transcription" e-name="transcription" e-form="rowform" e-required>{{card.transcription || 'empty' | pinyin}}</span>
                     </td>
                     <td>
                         <span editable-text="card.definition" e-name="definition" e-form="rowform" e-required>{{card.definition  || 'empty'}}</span>
