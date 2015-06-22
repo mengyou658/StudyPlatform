@@ -28,7 +28,7 @@ object CardsSetService extends WithDefaultSession {
           s <- cardsSets if s.userId === u.mainId
           lt <- langs if lt.id === s.termsLangId
           ld <- langs if ld.id === s.definitionsLangId
-        } yield (s, (lt,ld))).list
+        } yield (s, (lt,ld))).list.sortBy(_._1.name)
       }
   }
 

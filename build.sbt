@@ -1,6 +1,9 @@
+
 name := "StudyPlatform"
 
 version := "1.0"
+
+enablePlugins(JavaServerAppPackaging)
 
 lazy val `studyplatform` = (project in file(".")).enablePlugins(PlayScala)
 
@@ -56,3 +59,11 @@ scalacOptions in ThisBuild ++= Seq(
   "-Ywarn-dead-code",
   "-language:reflectiveCalls"
 )
+
+
+
+maintainer in Debian := "Maxim Cherkasov <maxim.cherkasov@gmail.com>"
+
+packageSummary in Debian := "A small package summary"
+
+packageDescription in Debian:= "A longer description of your application"

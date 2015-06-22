@@ -2,7 +2,7 @@ package controllers
 
 import models.study.flashcards.{FlashCard, FlashCardJson}
 import models.user.BasicUser
-import play.api.libs.json.{JsNumber, JsString, Json, Writes}
+import play.api.libs.json._
 import securesocial.core.RuntimeEnvironment
 import services.study.cards.FlashCardService
 
@@ -23,6 +23,9 @@ class FlashCardsController (override implicit val env: RuntimeEnvironment[BasicU
       "term" -> JsString(s.term),
       "transcription" -> JsString(s.transcription.getOrElse("")),
       "definition" -> JsString(s.definition),
+      "studied" -> JsBoolean(s.studied),
+      "rightCount" -> JsNumber(s.rightCount),
+      "wrongCount" -> JsNumber(s.wrongCount),
       "created" -> JsNumber(s.created.getMillis),
       "updated" -> JsNumber(s.updated.getMillis)
     )

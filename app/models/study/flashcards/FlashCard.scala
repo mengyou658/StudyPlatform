@@ -15,6 +15,9 @@ case class FlashCard(id: Option[Long] = None,
                      term: String,
                      transcription: Option[String] = None,
                      definition: String,
+                     studied: Boolean = false,
+                     rightCount: Int = 0,
+                     wrongCount: Int = 0,
                      created: DateTime,
                      updated: DateTime)
 
@@ -25,11 +28,14 @@ class FlashCards(tag: Tag) extends Table[FlashCard](tag, "flashcards") {
   def term = column[String]("term")
   def transcription = column[String]("transcription")
   def definition = column[String]("definition")
+  def studied = column[Boolean]("studied")
+  def rightCount = column[Int]("rightCount")
+  def wrongCount = column[Int]("wrongCount")
   def created = column[DateTime]("created")
   def updated = column[DateTime]("updated")
 
   def * =
-    (id.?, userId, cardsSetId, term, transcription.?, definition, created, updated) <>
+    (id.?, userId, cardsSetId, term, transcription.?, definition, studied, rightCount, wrongCount, created, updated) <>
     (FlashCard.tupled, FlashCard.unapply)
 
   def eventFk = foreignKey("cards_set_fk", cardsSetId, cardsSets)(cs => cs.id)
@@ -39,4 +45,8 @@ class FlashCards(tag: Tag) extends Table[FlashCard](tag, "flashcards") {
 case class FlashCardJson(id: Option[Long] = None,
                          term: String,
                          transcription: Option[String] = None,
-                         definition: String)
+                         definition: String,
+                         studied: Option[Boolean] = None,
+                         rightCount: Option[Int] = None,
+                         wrongCount: Option[Int] = None
+                          )

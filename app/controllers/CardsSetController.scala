@@ -56,7 +56,6 @@ class CardsSetController (override implicit val env: RuntimeEnvironment[BasicUse
             FlashCardService.findBySet(request.user.main.userId, setId.toLong)
 
             Ok(Json.toJson(cardSet.get))
-
         }
       } catch {
         case  e: NumberFormatException =>
