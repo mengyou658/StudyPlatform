@@ -57,7 +57,7 @@
             'domReady': '../lib/requirejs-domready/domReady',
             'jsRoutes': ['/jsroutes']
             ,'satellizer': ['../lib/satellizer/satellizer']
-            ,'angular-ui': ['../lib/angular-ui-bootstrap/ui-bootstrap']
+            ,'angular-ui': ['../lib/angular-ui-bootstrap-bower/ui-bootstrap']
             ,'angular-ui-tpls': ['../lib/angular-ui-bootstrap/ui-bootstrap-tpls']
             ,'angular-ui-router': ['../lib/angular-ui-router/release/angular-ui-router']
             ,'ui-select': ['../lib/ui-select/dist/select']
