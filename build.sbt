@@ -3,9 +3,7 @@ name := "StudyPlatform"
 
 version := "1.0"
 
-enablePlugins(JavaServerAppPackaging)
-
-lazy val `studyplatform` = (project in file(".")).enablePlugins(PlayScala)
+lazy val `studyplatform` = (project in file(".")).enablePlugins(PlayScala, JavaServerAppPackaging)
 
 scalaVersion := "2.11.6"
 
