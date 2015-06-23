@@ -5,27 +5,11 @@
 <div class="modal-body">
     <form ng-submit="saveApp()" >
         <div class="form-group">
-            <label for="titleInput">Title</label>
-            <input type="text" class="form-control" id="titleInput" placeholder="Enter study set tile" ng-model="item.name">
-        </div>
-        <div class="form-group">
-            <label>Terms language</label>
-            <ui-select ng-model="item.termsLang" theme="bootstrap" ng-disabled="disabled" style="  z-index: 111000; min-width: 300px;">
-                <ui-select-match placeholder="Select term language">{{$select.selected.name}}</ui-select-match>
-                <ui-select-choices repeat="lang in langs | propsFilter: {name: $select.search, code: $select.search}">
-                    <div ng-bind-html="lang.name |  highlight: $select.search"></div>
-                    <small>
-                        code: {{lang.code}}
-                    </small>
-                </ui-select-choices>
-            </ui-select>
-        </div>
-        <div class="form-group">
-            <label>Definitions language</label>
-            <ui-select ng-model="item.definitionsLang" theme="bootstrap" ng-disabled="disabled" style="  z-index: 111000; min-width: 300px;">
-                <ui-select-match placeholder="Select definition language">{{$select.selected.name}}</ui-select-match>
-                <ui-select-choices repeat="lang in langs | propsFilter: {name: $select.search, code: $select.search}">
-                    <div ng-bind-html="lang.name |  highlight: $select.search"></div>
+            <label>Title</label>
+            <ui-select ng-model="class.title" theme="bootstrap" ng-disabled="disabled" style="  z-index: 111000; min-width: 300px;">
+                <ui-select-match placeholder="Enter class name">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="class in classes | propsFilter: {name: $select.search}">
+                    <div ng-bind-html="class.name |  highlight: $select.search"></div>
                     <small>
                         code: {{lang.code}}
                     </small>

@@ -229,13 +229,25 @@ define(['angular'
         };
     }]);
 
-    app.controller('sidebarController', [ '$scope', 'playRoutes', 'rpcService', function($scope, playRoutes, rpcService) {
+    app.controller('sidebarController', [ '$scope', 'playRoutes', 'modalService', function($scope, playRoutes, modalService) {
         $scope.classes = [];
         var url = playRoutes.controllers.ClassesController.list();
 
         url.get().success(function(data) {
             $scope.classes = data;
         });
+
+        modalService.initAsClasses({
+            templateUrl: '/assets/partials/modals/manageClass.html',
+            windowClass: 'classes-modal'
+        });
+
+        $scope.create = function(){
+            modalService.create().result.then(function (data) {
+
+            });
+        };
+
 
     }]);
     return app;

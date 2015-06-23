@@ -66,8 +66,6 @@
             ,'angular-xeditable': ['../lib/angular-xeditable/dist/js/xeditable']
             ,'angular-animate': ['../lib/angular-animate/angular-animate']
             ,'angular-sanitize': ['../lib/angular-sanitize/angular-sanitize']
-            //,'datatables': ['../lib/datatables/js/jquery.dataTables']
-            //,'angular-datatables': ['../lib/angular-datatables/angular-datatables']
         }
     });
 
