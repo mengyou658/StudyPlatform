@@ -3,11 +3,8 @@
 # ~~~~
 
 # Home page
-#GET        /login                @controllers.Application.login
-#GET        /test-login           @controllers.AuthController.login
-#GET        /link-result          @controllers.Application.linkResult
-GET         /                            @controllers.Application.index
-#GET        /current-user         @controllers.Application.currentUser
+GET         /                               @controllers.Application.index
+
 POST        /social/:provider               @controllers.SocialAccountController.addSocialAccount(provider)
 GET         /social                         @controllers.SocialAccountController.list()
 POST        /product                        @controllers.ProductController.save()
@@ -21,6 +18,12 @@ DELETE      /sets/:id                       @controllers.CardsSetController.remo
 GET         /sets/:id/cards                 @controllers.FlashCardsController.getFlashCardBySet(id)
 POST        /sets/:id                       @controllers.FlashCardsController.save(id)
 DELETE      /sets/:id/cards/:cardId         @controllers.FlashCardsController.removeFlashCardFromSet(id, cardId)
+
+# Classes controller
+GET         /classes                        @controllers.ClassesController.list()
+
+# Groups controller
+GET         /groups                         @controllers.GroupController.list()
 
 # Languages controller
 GET         /langs                          @controllers.system.LanguagesController.list()

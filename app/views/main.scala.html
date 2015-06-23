@@ -46,7 +46,7 @@
             </div>
         </header>
         <div id="wrapper">
-            <div id="sidebar-wrapper">
+            <div id="sidebar-wrapper" ng-controller="sidebarController">
                 <div class="wrapper">
                     <ul class="sidebar-nav left-sidebar">
                         <li class="sidebar-brand">
@@ -59,10 +59,10 @@
                             <a ui-sref="sets"><i class="fa fa-archive"></i>&nbsp;&nbsp;Your Sets</a>
                         </li>
                         <li class="sidebar-brand" style="border-top: 1px solid #f1f1f1;">
-                            Classes
+                            <a ui-sref="classes">YOUR CLASSES</a>
                         </li>
-                        <li ui-sref-active="active" ng-repeat="class in classes1">
-                            <a href="#"><i class="fa fa-clock-o"></i>&nbsp;&nbsp;{{class.name}}</a>
+                        <li ui-sref-active="active" ng-repeat="class in classes">
+                            <a ui-sref="classes.class({classId : class.id})"><i class="fa fa-users"></i>&nbsp;&nbsp;{{class.name}}</a>
                         </li>
                         <li class="action">
                             <a href="">&nbsp;&nbsp;+ Join or create a class</a>
@@ -74,9 +74,6 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
-
-
-
                             <div ui-view class="main-body container-fluid"></div>
                         </div>
                     </div>

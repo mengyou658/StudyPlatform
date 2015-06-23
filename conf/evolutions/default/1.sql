@@ -121,6 +121,26 @@ create table flashcards (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+create table study_classes(
+  `id` INT(10) AUTO_INCREMENT NOT NULL,
+  `userId` INT(10) NOT NULL,
+  `name` TEXT NOT NULL,
+  `description` TEXT ,
+  `created` TIMESTAMP NOT NULL,
+  `updated` TIMESTAMP NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table `study_group` (
+  `id` INT(10) AUTO_INCREMENT NOT NULL,
+  `userId` INT(10) NOT NULL,
+  `name` TEXT NOT NULL,
+  `description` TEXT ,
+  `created` TIMESTAMP NOT NULL,
+  `updated` TIMESTAMP NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 # --- !Downs
@@ -137,3 +157,5 @@ drop table `product`;
 drop TABLE `cards_sets`;
 drop TABLE `flashcards`;
 drop TABLE `languages`;
+
+drop TABLE `classes`;

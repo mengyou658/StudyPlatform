@@ -14,7 +14,8 @@ object JavascriptRouters extends Controller {
       Ok(
         Routes.javascriptRouter(varName)(
           routes.javascript.Profile.list,
-          routes.javascript.ApiController.getMethods
+          routes.javascript.ApiController.getMethods,
+          routes.javascript.ClassesController.list
 //        routes.AuthController.
 //                    routes.JavascriptRouters
           //          routes.javascript.Cluster.clusterMetricsWebsocket,

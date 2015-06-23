@@ -6,6 +6,7 @@ define(['angular'
     ,'home'
     ,'home.sets'
     ,'header'
+    ,'classes'
     ,'dashboard'
     ,'common'
     ,'profile'
@@ -18,6 +19,7 @@ define(['angular'
     // will not be resolved
     var app = angular.module('app', [
         'rema7.home'
+        ,'rema7.classes'
         ,'rema7.home.sets'
         ,'rema7.header'
         ,'rema7.profile'
@@ -227,5 +229,14 @@ define(['angular'
         };
     }]);
 
+    app.controller('sidebarController', [ '$scope', 'playRoutes', 'rpcService', function($scope, playRoutes, rpcService) {
+        $scope.classes = [];
+        var url = playRoutes.controllers.ClassesController.list();
+
+        url.get().success(function(data) {
+            $scope.classes = data;
+        });
+
+    }]);
     return app;
 });
