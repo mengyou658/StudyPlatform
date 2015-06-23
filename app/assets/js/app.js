@@ -57,7 +57,7 @@ define(['angular'
 
         });
 
-        $urlRouterProvider.otherwise("/dashboard");
+        $urlRouterProvider.otherwise("/sets");
         //$httpProvider.defaults.useXDomain = true;
         //delete $httpProvider.defaults.headers.common['X-Requested-With'];
 
@@ -71,6 +71,7 @@ define(['angular'
             scopeDelimiter: '+',
             authorizationEndpoint: 'https://api.instagram.com/oauth/authorize'
         });
+
         $authProvider.oauth2({
             name: 'vk',
             url: '/social/vk',

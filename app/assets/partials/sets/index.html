@@ -38,7 +38,7 @@
                         <span ng-if="set.termLang === zh" editable-text="card.transcription" e-name="transcription" e-form="rowform" e-required>{{card.transcription || 'empty' | pinyin}}</span>
                     </td>
                     <td>
-                        <span editable-text="card.definition" e-name="definition" e-form="rowform" e-required>{{card.definition  || 'empty'}}</span>
+                        <span editable-textarea="card.definition" e-name="definition" e-form="rowform" e-required>{{card.definition  || 'empty'}}</span>
                     </td>
                     <td  align="center">
                         <form editable-form onbeforesave="save($data, card.id)" name="rowform"  ng-show="rowform.$visible" class="form-buttons form-inline">

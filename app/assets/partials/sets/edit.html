@@ -1,5 +1,19 @@
 <div id="cards-set">
     <div ncy-breadcrumb></div>
+    <div class="header" style="border: none;">
+        <div class="tools">
+            <table class="table">
+                <tbody>
+                <tr class="new-card-row">
+                    <td>Term</td>
+                    <td>Transcription</td>
+                    <td>Definition</td>
+                    <td><button href="" ng-click="importCards()" class="btn btn-primary pull-right btn-xs">Import</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
     <div class="cards container-fluid">
         <div class="row">
             <table class="table">
@@ -22,6 +36,7 @@
                     </td>
                     <td>
                         <div class="btn-group" role="group" aria-label="...">
+                            <button type="button" class="btn btn-default" ng-click="addImage()"><i class="fa fa-image"></i></button>
                             <button type="button" class="btn btn-default" ng-click="addRow()"><i class="fa fa-plus"></i></button>
                         </div>
                     </td>
@@ -45,7 +60,8 @@
                         </div>
                     </td>
                     <td>
-                        <div class="btn-group" role="group" aria-label="...">
+                        <div class="btn-group pull-right" role="group" aria-label="...">
+                            <button type="button" class="btn btn-default" ng-click="addImage()"><i class="fa fa-image"></i></button>
                             <button type="button" class="btn btn-danger" ng-click="removeRow(card)"><i class="fa fa-trash"></i></button>
                         </div>
                     </td>

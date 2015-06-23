@@ -28,6 +28,8 @@ define(['angular'], function(angular) {
         var templateUrl;
         var windowClass;
         var controller;
+        var url;
+
         var openModal = function(item) {
             return $modal.open({
                 templateUrl: templateUrl,
@@ -66,7 +68,7 @@ define(['angular'], function(angular) {
             $scope.editFlag = data.editFlag;
 
             $scope.save = function () {
-                console.log($scope.item)
+                console.log($scope.item);
                 $http.post('/sets', $scope.item)
                     .success(function(data) {
                         $modalInstance.close(data);
