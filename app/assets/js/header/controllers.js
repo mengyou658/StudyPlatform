@@ -5,11 +5,17 @@ define([], function() {
     'use strict';
 
     var HeaderCtrl = function($scope, $modal, modalService) {
-        modalService.initAsCardsSet({
-            templateUrl: '/assets/partials/modals/manageCardsSet.html',
-            windowClass: 'cards-set-modal'
-        });
+        var initModal = function() {
+            modalService.initAsCardsSet({
+                templateUrl: '/assets/partials/modals/manageCardsSet.html',
+                windowClass: 'cards-set-modal'
+            });
+        };
+
+        initModal();
+
         $scope.createCardSet = function(){
+            initModal();
             modalService.create().result.then(function (data) {
 
             });

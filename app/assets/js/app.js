@@ -237,12 +237,17 @@ define(['angular'
             $scope.classes = data;
         });
 
-        modalService.initAsClasses({
-            templateUrl: '/assets/partials/modals/manageClass.html',
-            windowClass: 'classes-modal'
-        });
+        var initModal = function() {
+            modalService.initAsClasses({
+                templateUrl: '/assets/partials/modals/manageClass.html',
+                windowClass: 'classes-modal'
+            });
+        };
+
+        initModal();
 
         $scope.create = function(){
+            initModal();
             modalService.create().result.then(function (data) {
 
             });

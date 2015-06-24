@@ -34,12 +34,17 @@ define([], function() {
                     || angular.lowercase(row.definition).indexOf($scope.query.text || '') !== -1);
         };
 
-        modalService.initAsCardsSet({
-            templateUrl: '/assets/partials/modals/manageCardsSet.html',
-            windowClass: 'cards-set-modal'
-        });
+        var initModal = function() {
+            modalService.initAsCardsSet({
+                templateUrl: '/assets/partials/modals/manageCardsSet.html',
+                windowClass: 'cards-set-modal'
+            });
+        };
+
+        initModal();
 
         $scope.editCardSet = function(){
+            initModal();
             modalService.edit($scope.set).result.then(function (data) {
                 $scope.set.name = data.name;
                 $scope.set.updated = data.updated;
