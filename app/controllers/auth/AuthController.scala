@@ -32,17 +32,18 @@ class AuthController(override implicit val env: RuntimeEnvironment[BasicUser])
 
     env.providers.get(providerName).get match {
       case provider : FacebookProvider =>
-        Future(NotFound(Json.obj("error" -> "!!!!")))
 
-      //        provider.fillProfile(oauth2Info.get) flatMap {
-//          profile =>
-//          env.userService.find(profile.providerId,profile.userId) flatMap {
-//            user =>
+        provider.fillProfile(oauth2Info.get) flatMap {
+          profile =>
+
+            env.userService.find(profile.providerId,profile.userId) flatMap {
+              user =>
+                Future(NotFound(Json.obj("error" -> "!!!!")))
 //              val newSession = Events.fire(new LoginEvent(user)).getOrElse(request.session)
 ////              builder().fromUser()
 //              Future(NotFound(Json.obj("error" -> "!!!!")))
-//          }
-//        }
+          }
+        }
     }
 //    val basicProfile = FacebookProvider.
 //    val filledUser = provider.fillProfile(
