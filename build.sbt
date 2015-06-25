@@ -12,6 +12,7 @@ includeFilter in (Assets, LessKeys.less) := "*.less"
 libraryDependencies ++= Seq( jdbc , anorm , cache , ws
   //    ,"com.typesafe.slick" % "slick_2.11" % "3.0.0-RC1"
   , "com.typesafe.slick" %% "slick" % "3.0.0"
+  , "com.mohiva" %% "play-silhouette" % "3.0.0"
   , "mysql" % "mysql-connector-java" % "5.1.34"
   , "joda-time" % "joda-time" % "2.7"
   , "org.joda" % "joda-convert" % "1.7"

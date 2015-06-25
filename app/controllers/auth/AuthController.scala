@@ -1,11 +1,14 @@
 package controllers.auth
 
 import models.user.BasicUser
+import play.api.Logger
+import play.api.i18n.Messages
 import play.api.libs.json.Json
 import play.api.mvc._
 import securesocial.core._
 import securesocial.core.authenticator.{CookieAuthenticator, AuthenticatorStore}
 import securesocial.core.providers.FacebookProvider
+import securesocial.core.services.SaveMode
 
 import scala.concurrent.Future
 
@@ -14,37 +17,54 @@ import scala.concurrent.Future
  */
 class AuthController(override implicit val env: RuntimeEnvironment[BasicUser])
   extends securesocial.core.SecureSocial[BasicUser] {
+
+  val logger = Logger(this.getClass)
   private implicit val readsOAuth2Info = Json.reads[OAuth2Info]
 
   private def builder() = {
     //todo: this should be configurable maybe
     env.authenticatorService.find(CookieAuthenticator.Id).getOrElse {
-//      logger.error(s"[securesocial] missing CookieAuthenticatorBuilder")
+      logger.error(s"[securesocial] missing CookieAuthenticatorBuilder")
       throw new AuthenticationException()
     }
   }
 
-  def authenticateMobile(providerName: String) = Action.async(parse.json) {
+  def authenticateMobile(provider: String) = UserAwareAction.async {
     implicit request =>
 
+      env.providers.get(provider).get.authenticate() flatMap  {
+        maybeExisting =>
+          println(maybeExisting)
+          Future(NotFound(Json.obj("error" -> "!!!!")))
+      }
+
+  }
+//      env.providers.get(providerName).get.authenticate() flatMap  {
+//        maybeExisting =>
+//          println(maybeExisting)
+//          Future(NotFound(Json.obj("error" -> "!!!!")))
+//      }
+
     // format: { "accessToken": "..." }
-    val oauth2Info = request.body.asOpt[OAuth2Info]
-
-    env.providers.get(providerName).get match {
-      case provider : FacebookProvider =>
-
-        provider.fillProfile(oauth2Info.get) flatMap {
-          profile =>
-
-            env.userService.find(profile.providerId,profile.userId) flatMap {
-              user =>
-                Future(NotFound(Json.obj("error" -> "!!!!")))
-//              val newSession = Events.fire(new LoginEvent(user)).getOrElse(request.session)
-////              builder().fromUser()
-//              Future(NotFound(Json.obj("error" -> "!!!!")))
-          }
-        }
-    }
+//    val oauth2Info = request.body.asOpt[OAuth2Info]
+//    env.providers.get(providerName).get match {
+//      case provider : FacebookProvider =>
+//
+//        provider.fillProfile(oauth2Info.get) flatMap {
+//          profile =>
+//
+//            env.userService.find(profile.providerId,profile.userId) flatMap {
+//              maybeExisting =>
+//                val mode = if (maybeExisting.isDefined) SaveMode.LoggedIn else SaveMode.SignUp
+//                env.userService.save(profile, mode).flatMap { userForAction =>
+//                }
+//
+////                val newSession = Events.fire(new LoginEvent(user)).getOrElse(request.session)
+////                builder().fromUser(user.get.)
+////              Future(NotFound(Json.obj("error" -> "!!!!")))
+//          }
+//        }
+//    }
 //    val basicProfile = FacebookProvider.
 //    val filledUser = provider.fillProfile(
 //      SocialUser(IdentityId("", provider.id), "", "", "", None, None, provider.authMethod, oAuth2Info = oauth2Info))
@@ -58,8 +78,8 @@ class AuthController(override implicit val env: RuntimeEnvironment[BasicUser])
 //      )
 //    } getOrElse NotFound(Json.obj("error" -> "user not found"))
 
-      Future(NotFound(Json.obj("error" -> "!!!!")))
-  }
+
+ // }
 }
 
 /*
