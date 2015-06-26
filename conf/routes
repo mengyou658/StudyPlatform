@@ -5,7 +5,7 @@
 # Home page
 GET           /                              @controllers.Application.index
 
-POST           /mobile/auth/:provider         @controllers.auth.AuthController.authenticateMobile(provider)
+POST          /mobile/auth/:provider         @controllers.auth.AuthController.authenticateMobile(provider)
 
 POST          /social/:provider              @controllers.SocialAccountController.addSocialAccount(provider)
 GET           /social                        @controllers.SocialAccountController.list()
@@ -49,6 +49,7 @@ POST          /api                           @controllers.ApiController.getMetho
 
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file                  controllers.Assets.at(path="/public", file)
+GET           /lib/*file                     controllers.WebJarAssets.at(file)
 
 ->            /auth                          securesocial.Routes
 

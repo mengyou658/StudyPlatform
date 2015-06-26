@@ -29,15 +29,56 @@ class AuthController(override implicit val env: RuntimeEnvironment[BasicUser])
     }
   }
 
-  def authenticateMobile(provider: String) = UserAwareAction.async {
+  def authenticateMobile(provider: String) = UserAwareAction.async(parse.json) {
     implicit request =>
 
-      env.providers.get(provider).get.authenticate() flatMap  {
-        maybeExisting =>
-          println(maybeExisting)
-          Future(NotFound(Json.obj("error" -> "!!!!")))
-      }
+//      env.providers.get(provider).get.authenticate() flatMap  {
+//        maybeExisting =>
+//          println(maybeExisting)
+//          Future(NotFound(Json.obj("error" -> "!!!!")))
+//      }
 
+      val oauth2Info = request.body.asOpt[OAuth2Info]
+      env.providers.get(provider).get match {
+        case provider : FacebookProvider =>
+          provider.fillProfile(oauth2Info.get) flatMap {
+            profile =>
+              env.userService.find(profile.providerId,profile.userId) flatMap  {
+                maybeExisting =>
+                  val mode = if (maybeExisting.isDefined) SaveMode.LoggedIn else SaveMode.SignUp
+                  env.userService.save(profile, mode) flatMap {
+                    userForAction =>
+                      logger.debug(s"!!! - [securesocial] user completed authentication: provider = ${profile.providerId}, userId: ${profile.userId}, mode = $mode")
+                      val evt = if (mode == SaveMode.LoggedIn) new LoginEvent(userForAction) else new SignUpEvent(userForAction)
+                      val sessionAfterEvents = Events.fire(evt).getOrElse(request.session)
+
+                      builder().fromUser(userForAction).flatMap { authenticator =>
+//                        logger.error(sessionAfterEvents -
+//                                                    IdentityProvider.SessionId -
+//                                                    IdentityProvider.SessionId -
+//                                                    OAuth1Provider.CacheKey)
+
+                        Future.successful(
+                          Ok(Json.obj("sessionId" -> authenticator.id))
+                            .withSession(sessionAfterEvents - SecureSocial.OriginalUrlKey - IdentityProvider.SessionId - OAuth1Provider.CacheKey)
+                            .withCookies(new Cookie("id", authenticator.id))
+                        )
+
+//                        authenticator.starting()
+//                        Future.successful(Ok(Json.obj(
+//                          "urlKey" -> "!!!!", IdentityProvider.SessionId
+//                          "sessionId" -> IdentityProvider.SessionId
+//                          )
+//                        ))
+//                        Redirect(toUrl(sessionAfterEvents)).withSession(sessionAfterEvents -
+//                          IdentityProvider.SessionId -
+//                          IdentityProvider.SessionId -
+//                          OAuth1Provider.CacheKey).startingAuthenticator(authenticator)
+                      }
+                  }
+              }
+          }
+      }
   }
 //      env.providers.get(providerName).get.authenticate() flatMap  {
 //        maybeExisting =>
