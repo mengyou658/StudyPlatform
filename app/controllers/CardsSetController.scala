@@ -21,7 +21,7 @@ class CardsSetController (override implicit val env: RuntimeEnvironment[BasicUse
   implicit object ProductWrites extends Writes[(CardsSet, (Lang, Lang))] {
 
     def writes(s: (CardsSet, (Lang, Lang))) = Json.obj(
-      "id" -> JsString(s._1.id.getOrElse(-1).toString),
+      "id" -> s._1.id,
       "userId" -> JsNumber(s._1.userId),
       "name" -> JsString(s._1.name),
       "description" -> JsString(s._1.description.getOrElse("")),
