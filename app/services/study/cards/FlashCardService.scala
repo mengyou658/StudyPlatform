@@ -68,6 +68,9 @@ object FlashCardService extends WithDefaultSession {
                   cards.filter(c => c.id === id && c.cardsSetId === setId)
                       .map(c => (c.term, c.transcription, c.definition, c.updated))
                       .update((card.term, card.transcription.getOrElse(""), card.definition, new DateTime()))
+
+                  val updateSet = set.copy(id = set.id, updated = new DateTime())
+                  cardsSets.update(updateSet)
                   Some(cards.filter(c => c.id === id && c.cardsSetId === setId).first)
                 case None =>
                   val id = (cards returning cards.map(_.id)) +=
@@ -81,6 +84,9 @@ object FlashCardService extends WithDefaultSession {
                       created = new DateTime(),
                       updated = new DateTime()
                     )
+
+                  val updateSet = set.copy(id = set.id, updated = new DateTime())
+                  cardsSets.update(updateSet)
                   Some(cards.filter(_.id === id).first)
               }
 

@@ -2,7 +2,7 @@ package services.study.cards
 
 import models.WithDefaultSession
 import models.study.flashcards.FlashCardsTableQueries.{cards, cardsSets}
-import models.study.flashcards.{CardsSetJson, CardsSet}
+import models.study.flashcards.{FlashCard, CardsSetJson, CardsSet}
 import models.system.Lang
 import models.system.SystemTableQueries.langs
 import models.user.UserTableQueries.users
@@ -29,6 +29,7 @@ object CardsSetService extends WithDefaultSession {
           lt <- langs if lt.id === s.termsLangId
           ld <- langs if ld.id === s.definitionsLangId
         } yield (s, (lt,ld))).list.sortBy(_._1.name)
+
       }
   }
 
