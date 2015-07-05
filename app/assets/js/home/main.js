@@ -9,7 +9,7 @@ define(['angular', './routes', './controllers'], function(angular, routes, contr
     mod.run(function(editableOptions) {
         editableOptions.theme = 'bs3';
     });
-    mod.controller("HeaderCtrl", controllers.HeaderCtrl);
+    mod.controller("HomeCtrl", controllers.HomeCtrl);
 
     return mod;
 });
