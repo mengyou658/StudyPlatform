@@ -15,6 +15,7 @@
                     location: 'home/sets'
                 }
                 ,'header'
+                ,'sidebar'
                 ,'classes'
                 ,'dashboard'
                 ,'common'
