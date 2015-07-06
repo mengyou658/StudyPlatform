@@ -85,6 +85,7 @@ object CardsSetService extends WithDefaultSession {
               CardsSet(None, user.mainId, set.name, set.description,
                 termLang.id,
                 definitionLang.id,
+                false,
                 new DateTime(), new DateTime())
 
             Some(cardsSets.filter(_.id === id).first,(termLang, definitionLang))

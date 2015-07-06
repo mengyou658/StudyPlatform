@@ -98,6 +98,7 @@ create table cards_sets (
   `termsLangId` INT(10),
   `definitionsLangId` INT(10),
   `description` TEXT ,
+  `studying` tinyint(1) NOT NULL DEFAULT '0',
   `created` TIMESTAMP NOT NULL,
   `updated` TIMESTAMP NOT NULL,
   FOREIGN KEY (termsLangId) REFERENCES languages(id),
@@ -141,7 +142,19 @@ create table `study_group` (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+create table `chinese_dictionary` (
+  `id` INT(10) AUTO_INCREMENT NOT NULL,
+  `traditional` TEXT NOT NULL,
+  `simplified` TEXT ,
+  `pinyin` TEXT,
+  PRIMARY KEY (id),
+  INDEX (simplified(64))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+INSERT INTO study_platform.languages (id, name, code, created, updated, userId) VALUES (1, 'English', 'en', '2015-06-19 12:37:03', '2015-06-19 13:04:50', 1);
+INSERT INTO study_platform.languages (id, name, code, created, updated, userId) VALUES (2, 'Russian', 'ru', '2015-06-19 12:37:04', '2015-06-19 13:05:16', 1);
+INSERT INTO study_platform.languages (id, name, code, created, updated, userId) VALUES (3, 'Chinese', 'zh', '2015-06-19 12:37:05', '2015-06-19 13:13:45', 1);
 
 # --- !Downs
 drop table `token`;
@@ -158,4 +171,4 @@ drop TABLE `cards_sets`;
 drop TABLE `flashcards`;
 drop TABLE `languages`;
 
-drop TABLE `classes`;
+drop TABLE `study_classes`;

@@ -16,6 +16,7 @@ case class CardsSet(id: Option[Long] = None,
                          description: Option[String] = None,
                          termsLangId: Long,
                          definitionsLangId: Long,
+                         studying: Boolean = false,
                          created: DateTime,
                          updated: DateTime)
 
@@ -26,10 +27,11 @@ class CardsSets(tag: Tag) extends Table[CardsSet](tag, "cards_sets") {
   def description = column[String]("description")
   def termsLangId = column[Long]("termsLangId")
   def definitionsLangId = column[Long]("definitionsLangId")
+  def studying = column[Boolean]("studying")
   def created = column[DateTime]("created")
   def updated = column[DateTime]("updated")
 
-  def * = (id.?, userId, name, description.?, termsLangId, definitionsLangId,created, updated) <> (CardsSet.tupled, CardsSet.unapply)
+  def * = (id.?, userId, name, description.?, termsLangId, definitionsLangId, studying, created, updated) <> (CardsSet.tupled, CardsSet.unapply)
 
   def termsLangFk = foreignKey("term_lang_fk", termsLangId, langs)(l => l.id)
   def definitionsLangFk = foreignKey("definition_lang_fk", definitionsLangId, langs)(l => l.id)
