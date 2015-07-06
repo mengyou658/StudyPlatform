@@ -6,6 +6,7 @@ define(['angular'
     ,'home'
     ,'home.sets'
     ,'header'
+    ,'sidebar'
     ,'classes'
     ,'dashboard'
     ,'common'
@@ -22,6 +23,7 @@ define(['angular'
         ,'rema7.classes'
         ,'rema7.home.sets'
         ,'rema7.header'
+        ,'rema7.sidebar'
         ,'rema7.profile'
         ,'rema7.dashboard'
         ,'rema7.common'
@@ -229,31 +231,6 @@ define(['angular'
         };
     }]);
 
-    app.controller('sidebarController', [ '$scope', 'playRoutes', 'modalService', function($scope, playRoutes, modalService) {
-        $scope.classes = [];
-        var url = playRoutes.controllers.ClassesController.list();
 
-        url.get().success(function(data) {
-            $scope.classes = data;
-        });
-
-        var initModal = function() {
-            modalService.initAsClasses({
-                templateUrl: '/assets/partials/modals/manageClass.html',
-                windowClass: 'classes-modal'
-            });
-        };
-
-        initModal();
-
-        $scope.create = function(){
-            initModal();
-            modalService.create().result.then(function (data) {
-
-            });
-        };
-
-
-    }]);
     return app;
 });

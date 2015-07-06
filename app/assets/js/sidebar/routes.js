@@ -5,5 +5,5 @@
 define(['angular', './controllers'], function(angular, controllers) {
     'use strict';
 
-    return angular.module('header.routes', []);
+    return angular.module('sidebar.routes', []);;
 });
