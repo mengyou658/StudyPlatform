@@ -105,6 +105,21 @@ define([], function() {
                 console.log(data);
             });
         };
+
+        $scope.getTerms = function(val) {
+            return $http.get('/dict/'+val).then(function(response){
+                console.log(response.data);
+                return response.data
+            });
+        };
+
+        $scope.selectTerm = function(item, model, label) {
+            $scope.newCard.term = model.simplified;
+            $scope.newCard.transcription = model.pinyin;
+            console.log(item);
+            console.log(model);
+            console.log(label)
+        }
     };
     CardsSetEditCtrl.$inject = [ '$scope', '$http', '$stateParams' ];
 

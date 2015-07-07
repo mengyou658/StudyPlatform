@@ -147,8 +147,9 @@ create table `chinese_dictionary` (
   `traditional` TEXT NOT NULL,
   `simplified` TEXT ,
   `pinyin` TEXT,
+  `pinyin_search` TEXT,
   PRIMARY KEY (id),
-  INDEX (simplified(64))
+  INDEX (pinyin_search(64))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

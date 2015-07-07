@@ -21,7 +21,11 @@
                 <tr class="new-card-row">
                     <td>
                         <div class="input-group">
-                            <input ng-enter="addRow()" type="text" class="form-control" placeholder="Input {{set.termsLang.name}} term" ng-model="newCard.term">
+                            <input ng-enter="addRow()" type="text"  typeahead="term as term.simplified for term in getTerms($viewValue)"
+                                   typeahead-wait-ms="0"
+                                   typeahead-template-url="/assets/partials/sets/customTemplate.html"
+                                   typeahead-on-select="selectTerm($item, $model, $label)"
+                                   class="form-control" placeholder="Input {{set.termsLang.name}} term" ng-model="newCard.term">
                         </div>
                     </td>
                     <td>

@@ -29,6 +29,7 @@ GET           /groups                        @controllers.GroupController.list()
 
 # Languages controller
 GET           /langs                         @controllers.system.LanguagesController.list()
+GET           /dict/:str                     @controllers.system.ChineseDictionaryController.search(str)
 
 # JavaScript routes object
 GET           /jsroutes.js                   controllers.JavascriptRouters.jsRoutes()

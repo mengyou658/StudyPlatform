@@ -8,11 +8,11 @@ import scala.language.implicitConversions
 
 
 case class Lang(id: Long,
-                    userId: Long,
-                    name: String,
-                    code: String,
-                    created: DateTime,
-                    updated: DateTime)
+                userId: Long,
+                name: String,
+                code: String,
+                created: DateTime,
+                updated: DateTime)
 
 class Langs(tag: Tag) extends Table[Lang](tag, "languages") {
   def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
