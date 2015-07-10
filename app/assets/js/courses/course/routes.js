@@ -5,16 +5,16 @@
 define(['angular', './controllers'], function(angular, controllers) {
     'use strict';
 
-    var mod = angular.module('classes.routes', []);
+    var mod = angular.module('courses.course.routes', []);
     mod.config(['$stateProvider', function($stateProvider) {
         $stateProvider
-            .state('classes',
+            .state('courses.course',
             {
-                url: '/classes',
-                templateUrl: '/assets/partials/classes/index.html',
-                controller:controllers.ClassesCtrl,
+                url: '/:courseId',
+                templateUrl: '/assets/partials/courses/course/index.html',
+                controller:controllers.CourseCtrl,
                 ncyBreadcrumb: {
-                    label: 'Classes'
+                    label: 'Course {{course.name}}'
                 }
             });
     }]);

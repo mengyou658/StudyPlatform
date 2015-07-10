@@ -8,7 +8,7 @@ import play.twirl.api.Html
 import securesocial.controllers.{ChangeInfo, RegistrationInfo, ViewTemplates}
 import securesocial.core.{RuntimeEnvironment}
 import play.api.mvc.{RequestHeader }
-import services.classes.ClassService
+import services.course.CourseService
 import services.social.SocialAccountService
 
 import scala.concurrent.Future

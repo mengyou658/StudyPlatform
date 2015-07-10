@@ -11,7 +11,7 @@ create table `token` (
 
 
 create table `profile` (
-  `id` INT(10) AUTO_INCREMENT NOT NULL,
+    `id` INT(10) AUTO_INCREMENT NOT NULL,
     `userId` TEXT NOT NULL,
     `providerId` TEXT NOT NULL,
     `firstName` TEXT,
@@ -25,6 +25,14 @@ create table `profile` (
     `passwordId` LONG,
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table `account` (
+  `id` INT(10) AUTO_INCREMENT NOT NULL,
+  `userId` TEXT NOT NULL,
+  `business` BOOLEAN NOT NULL DEFAULT false,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 create table `authenticator` (
   `id` TEXT NOT NULL,
@@ -122,17 +130,19 @@ create table flashcards (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-create table study_classes(
+create table courses (
   `id` INT(10) AUTO_INCREMENT NOT NULL,
   `userId` INT(10) NOT NULL,
   `name` TEXT NOT NULL,
+  `shortname` VARCHAR(128) NOT NULL UNIQUE,
   `description` TEXT ,
   `created` TIMESTAMP NOT NULL,
   `updated` TIMESTAMP NOT NULL,
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  INDEX (shortname(64))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-create table `study_group` (
+create table `student_groups` (
   `id` INT(10) AUTO_INCREMENT NOT NULL,
   `userId` INT(10) NOT NULL,
   `name` TEXT NOT NULL,
@@ -152,6 +162,16 @@ create table `chinese_dictionary` (
   INDEX (pinyin_search(64))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+create table courses_teachers (
+  `id` INT(10) AUTO_INCREMENT NOT NULL,
+  `userId` INT(10) NOT NULL,
+  `courseId` INT(10) NOT NULL,
+  `created` TIMESTAMP NOT NULL,
+  `updated` TIMESTAMP NOT NULL,
+  FOREIGN KEY (userId) REFERENCES user(id) ON DELETE CASCADE,
+  FOREIGN KEY (courseId) REFERENCES courses(id) ON DELETE CASCADE,
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO study_platform.languages (id, name, code, created, updated, userId) VALUES (1, 'English', 'en', '2015-06-19 12:37:03', '2015-06-19 13:04:50', 1);
 INSERT INTO study_platform.languages (id, name, code, created, updated, userId) VALUES (2, 'Russian', 'ru', '2015-06-19 12:37:04', '2015-06-19 13:05:16', 1);
@@ -167,6 +187,7 @@ drop TABLE `password`;
 drop table `authenticator`;
 drop table `social_account`;
 drop table `product`;
+drop table `account`;
 
 drop TABLE `cards_sets`;
 drop TABLE `flashcards`;

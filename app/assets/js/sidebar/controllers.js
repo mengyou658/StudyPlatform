@@ -5,11 +5,11 @@ define([], function() {
     'use strict';
 
     var SidebarCtrl = function($scope, playRoutes, modalService) {
-        $scope.classes = [];
-        var url = playRoutes.controllers.ClassesController.list();
+        $scope.courses = [];
+        var url = playRoutes.controllers.CoursesController.list();
 
         url.get().success(function(data) {
-            $scope.classes = data;
+            $scope.courses = data;
         });
 
         var initModal = function() {
@@ -18,8 +18,6 @@ define([], function() {
                 windowClass: 'classes-modal'
             });
         };
-
-        initModal();
 
         $scope.create = function(){
             initModal();

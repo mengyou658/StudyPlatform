@@ -4,7 +4,7 @@ import models.group.{StudyGroup, StudyGroupJson}
 import models.user.BasicUser
 import play.api.libs.json.{JsNumber, JsString, Writes, Json}
 import securesocial.core.RuntimeEnvironment
-import services.classes.ClassService
+import services.course.CourseService
 import services.group.GroupService
 
 /**

@@ -9,19 +9,23 @@
     requirejs.config({
         // Packages = top-level folders; loads a contained file named 'main.js"
         packages: [
-                'home'
-                ,{
-                    name: 'home.sets',
-                    location: 'home/sets'
-                }
-                ,'header'
-                ,'sidebar'
-                ,'classes'
-                ,'dashboard'
-                ,'common'
-                ,'profile'
-                ,'services'
-                ],
+            'home'
+            ,{
+                name: 'home.sets',
+                location: 'home/sets'
+            }
+            ,'header'
+            ,'sidebar'
+            ,'courses'
+            ,{
+                name: 'courses.course',
+                location: 'courses/course'
+            }
+            ,'dashboard'
+            ,'common'
+            ,'profile'
+            ,'services'
+        ],
         shim: {
             'jsRoutes': {
                 deps: [],

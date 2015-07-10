@@ -1,0 +1,35 @@
+<ui-view id="classes">
+    <div ncy-breadcrumb></div>
+    <tabset>
+        <tab heading="Static title">
+            <div class="header">
+                <h3>Course {{course.name}}</h3>
+                <div class="tools">
+                    <div class="container-fluid" style="  padding: 0;">
+                        <input type="text" class="form-control" placeholder="Search for..." ng-model="search.name">
+                    </div>
+                </div>
+            </div>
+            <div class="courses" ng-repeat="course in courses | filter:search">
+                <div class="item">
+                    <div class="title">
+                        <a class="course-item" href="#" ui-sref="courses.course({courseId : course.id})">
+                            <div class="wrapper">
+                                <div class="item-image" style="background-image: url(//icons.iconarchive.com/icons/gcds/chinese-new-year/128/red-envelope-icon.png)"></div>
+                                <div>
+                                    <h5><span>{{course.name}}</span></h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </tab>
+        <tab select="alertMe()">
+            <tab-heading>
+                <i class="fa fa-users"></i> Groups
+            </tab-heading>
+            I've got an HTML heading, and a select callback. Pretty cool!
+        </tab>
+    </tabset>
+</ui-view>

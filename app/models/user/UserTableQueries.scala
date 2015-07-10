@@ -17,4 +17,5 @@ object UserTableQueries extends WithDefaultSession {
   object oauth1s extends TableQuery(new OAuth1s(_))
   object oauth2s extends TableQuery(new OAuth2s(_))
   object passwords extends TableQuery(new Passwords(_))
+  object accounts extends TableQuery(new Accounts(_))
 }

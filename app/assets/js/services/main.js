@@ -34,7 +34,7 @@ define(['angular'], function(angular) {
             return $modal.open({
                 templateUrl: templateUrl,
                 windowClass: windowClass,
-                controller: ModalCardsSetCtrl,
+                controller: controller,
                 resolve: {
                     data: function () {
                         return {
@@ -102,28 +102,18 @@ define(['angular'], function(angular) {
             if (data.item !== undefined) {
                 $scope.item = {
                     id: parseInt(data.item.id),
-                    name: data.item.name,
-                    description: data.item.description,
-                    termsLang: data.item.termsLang,
-                    definitionsLang: data.item.definitionsLang
+                    name: data.item.name
                 };
             }
-
-            $scope.langs = [];
-
-            var urlLangs = playRoutes.controllers.system.LanguagesController.list();
-
-            urlLangs.get().success(function(data) {
-                $scope.langs = data;
-                console.log($scope.langs)
-            });
 
             $scope.editFlag = data.editFlag;
 
             $scope.save = function () {
-                console.log($scope.item);
-                $http.post('/sets', $scope.item)
-                    .success(function(data) {
+                console.log('!!! + ' + $scope.item);
+
+                var url = playRoutes.controllers.CoursesController.save();
+
+                url.post($scope.item).success(function(data) {
                         $modalInstance.close(data);
                     }).error(function(data, status, headers, config) {
                         console.log(data)
@@ -131,7 +121,7 @@ define(['angular'], function(angular) {
             };
 
             $scope.remove = function () {
-                console.log($scope.item);
+                console.log('!!! + ' + $scope.item);
 
                 $http.delete('/sets/'+$scope.item.id)
                     .success(function(data) {

@@ -4,8 +4,13 @@
 define([], function() {
     'use strict';
 
-    var ClassesCtrl = function($scope, $http, $state, $stateParams, modalService) {
-        $scope.classes = [];
+    var CourseCtrl = function($scope, $http, $state, $stateParams, modalService, playRoutes) {
+        $scope.course = {};
+
+        playRoutes.controllers.CoursesController.getCourse($stateParams.courseId).get().success(function(data) {
+            $scope.course = data;
+        });
+
         //$scope.query = {};
         //$scope.cards = [];
 
@@ -49,10 +54,10 @@ define([], function() {
 
 
     };
-    ClassesCtrl.$inject = [ '$scope', '$http', '$state', '$stateParams', 'modalService' ];
+    CourseCtrl.$inject = [ '$scope', '$http', '$state', '$stateParams', 'modalService', 'playRoutes' ];
 
     return {
-        ClassesCtrl : ClassesCtrl
+        CourseCtrl : CourseCtrl
     };
 
 });

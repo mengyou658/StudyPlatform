@@ -14,6 +14,7 @@
         <script data-main="@routes.Assets.at("js/main.js")" type="text/javascript" src="@routes.Assets.at("lib/requirejs/require.js")"></script>
         <link rel="stylesheet" href='@routes.Assets.at("css/main.css")'>
         <link rel="stylesheet" href='@routes.Assets.at("css/header.css")'>
+        <link rel="stylesheet" href='@routes.Assets.at("css/courses.css")'>
         <link rel="stylesheet" href='@routes.Assets.at("css/simple-sidebar.css")'>
     </head>
     <body>
@@ -59,13 +60,13 @@
                             <a ui-sref="sets"><i class="fa fa-archive"></i>&nbsp;&nbsp;Your Sets</a>
                         </li>
                         <li class="sidebar-brand" style="border-top: 1px solid #f1f1f1;">
-                            <a ui-sref="classes">YOUR CLASSES</a>
+                            <a ui-sref="courses">YOUR COURSES</a>
                         </li>
-                        <li ui-sref-active="active" ng-repeat="class in classes">
-                            <a ui-sref="classes.class({classId : class.id})"><i class="fa fa-users"></i>&nbsp;&nbsp;{{class.name}}</a>
+                        <li ui-sref-active="active" ng-repeat="course in courses">
+                            <a ui-sref="courses.course({courseId : course.id})"><i class="fa fa-users"></i>&nbsp;&nbsp;{{course.name}}</a>
                         </li>
                         <li class="action">
-                            <a href="" ng-click="create()">&nbsp;&nbsp;+ Join or create a class</a>
+                            <a href="" ng-click="create()">&nbsp;&nbsp;+ Create a course</a>
                         </li>
                     </ul>
                 </div>

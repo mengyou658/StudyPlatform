@@ -1,6 +1,7 @@
 package models.user
 
 import models.user.UserTableQueries.profiles
+import models.user.UserTableQueries.accounts
 
 import scala.language.implicitConversions
 import scala.slick.driver.MySQLDriver.simple._
@@ -11,9 +12,10 @@ import scala.slick.driver.MySQLDriver.simple._
 case class User(id: String, mainId: Long) {
   def basicUser(implicit session: Session): BasicUser = {
     val main = profiles.filter(_.id === mainId).first
+    val account = accounts.filter(_.id === mainId).first
     val identities = profiles.filter(p => p.userId === id && p.id =!= mainId).list
 
-    BasicUser(main.basicProfile, identities.map(i => i.basicProfile))
+    BasicUser(main.basicProfile, account, identities.map(i => i.basicProfile))
   }
 }
 

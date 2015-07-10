@@ -5,9 +5,9 @@
 define(['angular', './routes', './controllers'], function(angular, routes, controllers) {
     'use strict';
 
-    var mod = angular.module('rema7.classes', ['ui.router', 'classes.routes', 'ngAnimate']);
+    var mod = angular.module('rema7.courses.course', ['ui.router', 'courses.course.routes', 'ngAnimate']);
 
-    mod.controller("ClassesCtrl", controllers.ClassesCtrl);
+    mod.controller("CourseCtrl", controllers.CourseCtrl);
 
     return mod;
 });

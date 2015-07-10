@@ -22,7 +22,9 @@ POST          /sets/:id                      @controllers.FlashCardsController.s
 DELETE        /sets/:id/cards/:cardId        @controllers.FlashCardsController.removeFlashCardFromSet(id, cardId)
 
 # Classes controller
-GET           /classes                       @controllers.ClassesController.list()
+GET           /courses                       @controllers.CoursesController.list()
+GET           /courses/:id                   @controllers.CoursesController.getCourse(id)
+POST          /courses/                      @controllers.CoursesController.save()
 
 # Groups controller
 GET           /groups                        @controllers.GroupController.list()
