@@ -85,8 +85,7 @@ object FlashCardService extends WithDefaultSession {
                       updated = new DateTime()
                     )
 
-                  val updateSet = set.copy(id = set.id, updated = new DateTime())
-                  cardsSets.update(updateSet)
+
                   Some(cards.filter(_.id === id).first)
               }
 
