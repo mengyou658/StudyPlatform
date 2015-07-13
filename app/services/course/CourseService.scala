@@ -1,64 +1,72 @@
 package services.course
 
-import com.github.tototoshi.slick.MySQLJodaSupport._
-import models.WithDefaultSession
-import models.courses.CoursesTableQueries.courses
 import models.courses.{CourseJson, Course}
-import models.study.flashcards.FlashCardsTableQueries.cardsSets
+import models.courses.CoursesTableQueries.courses
 import models.user.UserTableQueries.users
 import org.joda.time.DateTime
 import play.api.Logger
+import slick.backend.DatabaseConfig
+import slick.driver.JdbcProfile
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, Future}
+import com.github.tototoshi.slick.MySQLJodaSupport._
+import scala.concurrent.ExecutionContext.Implicits.global
 
-import scala.concurrent.Future
-import slick.driver.MySQLDriver.api._
+
 //import scala.slick.driver.MySQLDriver.simple._
 
 /**
  * Created by m.cherkasov on 27.05.15.
  */
-object CourseService extends WithDefaultSession {
+
+object CourseService  {
   val logger = Logger(this.getClass)
 
-  def findByUserId(userId: String): Future[List[Course]] = withSession {
-    implicit session =>
+  val dbConfig = DatabaseConfig.forConfig[JdbcProfile]("mysql")
+  val db = dbConfig.db // all database interactions are realised through this object
+  import slick.driver.MySQLDriver.api._
+
+  def findByUserId(userId: String): Future[List[Course]] = {
       Future successful {
-        var aaa = (for {
+        val res = (for {
           u <- users if u.id === userId
           s <- courses if s.userId === u.mainId
         } yield s).result
-        List.empty
+
+        Await.result(db.run(res), Duration.Inf).toList
       }
   }
 
-  def findById(userId: String, courseId: Long): Future[Option[Course]] = withSession {
-    implicit session =>
+  def findById(userId: String, courseId: Long): Future[Option[Course]] = {
       Future successful {
-        (for {
+        val res = (for {
           u <- users if u.id === userId
           s <- courses if s.id === courseId && s.userId === u.mainId
-        } yield s).result._2
+        } yield s).result
+
+        Await.result(db.run(res), Duration.Inf).headOption
       }
   }
 
-  def remove(userId: String, courseId: Long): Future[Boolean] = withSession {
-    implicit session =>
-      Future successful {
+  def remove(userId: String, courseId: Long): Future[Boolean] = {
+        val user = Await.result(db.run({
+          users.filter(u => u.id === userId).result
+        }), Duration.Inf).head
 
-        val q1 = for {
-          u <- users if u.id === userId
-          s <- courses if s.id === courseId && s.userId === u.mainId
-        } yield s
-
-//        q1.list.foreach(s => cardsSets.filter(s1=> s1.id === s.id).delete)
-
-        true
-      }
+        db.run({
+          courses.filter(s=> s.id === courseId && s.userId === user.mainId).delete
+        }) map {
+          case 0 => false
+          case _ => true
+        }
   }
 
-  def save(userId: String, course: CourseJson): Future[Option[Course]] = withSession {
-    implicit session =>
+  def save(userId: String, course: CourseJson): Future[Option[Course]] = {
       Future successful {
-        val user = users.filter(u => u.id === userId).result.head
+
+        val user = Await.result(db.run({
+          users.filter(u => u.id === userId).result
+        }), Duration.Inf).head
 
         course.id match {
           case Some(id) =>
@@ -67,13 +75,17 @@ object CourseService extends WithDefaultSession {
               .map(s => (s.name, s.description, s.updated))
               .update((course.name, course.description.getOrElse(""), new DateTime()))
 
-            Some(courses.filter(s => s.id === id && s.userId === user.mainId).first)
+            Await.result(db.run({
+              courses.filter(s => s.id === id && s.userId === user.mainId).result
+            }), Duration.Inf).headOption
+
           case None =>
+            var courseNew = Course(None, user.mainId, course.name, course.shortName, course.description, new DateTime(), new DateTime())
+            val id = (courses returning courses.map(_.id)) += courseNew
 
-            val id = (courses returning courses.map(_.id)) +=
-              Course(None, user.mainId, course.name, course.shortName, course.description, new DateTime(), new DateTime())
+//            courseNew.id = id
 
-            Some(courses.filter(_.id === id).first)
+            Some(courseNew)
         }
     }
   }

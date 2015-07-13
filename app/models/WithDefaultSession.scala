@@ -24,4 +24,22 @@ trait WithDefaultSession {
         block(session)
     }
   }
+
+  def withBlock[R](block: (DBIOAction[R, NoStream, Nothing])) = {
+    val a = _root_.play.api.Configuration.empty
+    val conf = play.api.Play.maybeApplication.map(_.configuration).getOrElse(a)
+    val databaseURL = conf.getString("db.default.url").get
+    val databaseDriver = conf.getString("db.default.driver").get
+    val databaseUser = conf.getString("db.default.user").getOrElse("")
+    val databasePassword = conf.getString("db.default.password").getOrElse("")
+
+    val database = Database.forURL(url = databaseURL,
+      driver = databaseDriver,
+      user = databaseUser,
+      password = databasePassword)
+
+    database run  {
+      block
+    }
+  }
 }
