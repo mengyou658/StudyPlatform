@@ -8,87 +8,119 @@ import models.system.SystemTableQueries.langs
 import models.user.UserTableQueries.users
 import org.joda.time.DateTime
 import play.api.Logger
-import scala.slick.driver.MySQLDriver.simple._
+import scala.concurrent.ExecutionContext.Implicits.global
+import slick.backend.DatabaseConfig
+import slick.driver.JdbcProfile
 import com.github.tototoshi.slick.MySQLJodaSupport._
 
 
-import scala.concurrent.Future
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, Future}
 
 /**
  * Created by m.cherkasov on 27.05.15.
  */
-object CardsSetService extends WithDefaultSession {
+object CardsSetService {
   val logger = Logger(this.getClass)
 
-  def findByUserId(userId: String): Future[List[(CardsSet, (Lang, Lang))]] = withSession {
-    implicit session =>
+  val dbConfig = DatabaseConfig.forConfig[JdbcProfile]("mysql")
+  val db = dbConfig.db // all database interactions are realised through this object
+  import slick.driver.MySQLDriver.api._
+
+
+  def findByUserId(userId: String): Future[List[(CardsSet, (Lang, Lang))]] =  {
       Future successful {
-        (for {
+        val res = (for {
           u <- users if u.id === userId
           s <- cardsSets if s.userId === u.mainId
           lt <- langs if lt.id === s.termsLangId
           ld <- langs if ld.id === s.definitionsLangId
-        } yield (s, (lt,ld))).list.sortBy(_._1.name)
+        } yield (s, (lt,ld))).result
 
+        Await.result(db.run(res), Duration.Inf).sortBy(_._1.name).toList
       }
   }
 
-  def findById(userId: String, setId: Long): Future[Option[(CardsSet, (Lang, Lang))]] = withSession {
-    implicit session =>
+  def findById(userId: String, setId: Long): Future[Option[(CardsSet, (Lang, Lang))]] =  {
       Future successful {
-        (for {
+        val res =(for {
           u <- users if u.id === userId
           s <- cardsSets if s.id === setId && s.userId === u.mainId
           lt <- langs if lt.id === s.termsLangId
           ld <- langs if ld.id === s.definitionsLangId
-        } yield (s, (lt,ld))).firstOption
+        } yield (s, (lt,ld))).result
+
+        Await.result(db.run(res), Duration.Inf).headOption
       }
   }
 
-  def remove(userId: String, setId: Long): Future[Boolean] = withSession {
-    implicit session =>
-      Future successful {
+  def remove(userId: String, setId: Long): Future[Boolean] =  {
 
         val q1 = for {
           u <- users if u.id === userId
           s <- cardsSets if s.id === setId && s.userId === u.mainId
+          x <- cardsSets.result
         } yield s
 
-        q1.list.foreach(s => cardsSets.filter(s1=> s1.id === s.id).delete)
+//        q1.list.foreach(s => cardsSets.filter(s1=> s1.id === s.id).delete)
+      val user = Await.result(db.run({
+        users.filter(u => u.id === userId).result
+      }), Duration.Inf).head
 
-        true
+      db.run({
+        q1.delete
+      }) map {
+        case 0 => false
+        case _ => true
       }
   }
 
-  def save(userId: String, set: CardsSetJson): Future[Option[(CardsSet, (Lang, Lang))]] = withSession {
-    implicit session =>
+  def save(userId: String, set: CardsSetJson): Future[Option[(CardsSet, (Lang, Lang))]] = {
       Future successful {
-        val user = users.filter(u => u.id === userId).first
+//        val user = users.filter(u => u.id === userId).first
+        val user = Await.result(db.run({
+          users.filter(u => u.id === userId).result
+        }), Duration.Inf).head
+
+        val termLang = Await.result(db.run({
+          langs.filter(_.id === set.termsLang.id).result
+        }), Duration.Inf).head
+
+        val definitionLang = Await.result(db.run({
+          langs.filter(_.id === set.definitionsLang.id).result
+        }), Duration.Inf).head
+
         set.id match {
           case Some(id) =>
-            val termLang = langs.filter(_.id === set.termsLang.id).first
-            val definitionLang = langs.filter(_.id === set.definitionsLang.id).first
 
             cardsSets.filter(s => s.id === id && s.userId === user.mainId)
               .map(s => (s.name, s.description, s.termsLangId, s.definitionsLangId, s.updated))
               .update((set.name, set.description.getOrElse(""), termLang.id, definitionLang.id, new DateTime()))
+
             Some(
-                cardsSets.filter(s => s.id === id && s.userId === user.mainId).first,
+                Await.result(db.run({
+                  cardsSets.filter(s => s.id === id && s.userId === user.mainId).result
+                }), Duration.Inf).head,
                 (termLang, definitionLang)
             )
           case None =>
+            val newCardsSet = CardsSet(None, user.mainId, set.name, set.description,
+              termLang.id,
+              definitionLang.id,
+              studying = false,
+              new DateTime(), new DateTime())
 
-            val termLang = langs.filter(_.id === set.termsLang.id).first
-            val definitionLang = langs.filter(_.id === set.definitionsLang.id).first
+            val action = for {
+              _     <- cardsSets += newCardsSet
+              cards <- cardsSets.result
+            } yield cards
 
-            val id = (cardsSets returning cardsSets.map(_.id)) +=
-              CardsSet(None, user.mainId, set.name, set.description,
-                termLang.id,
-                definitionLang.id,
-                false,
-                new DateTime(), new DateTime())
-
-            Some(cardsSets.filter(_.id === id).first,(termLang, definitionLang))
+            Some(
+              Await.result(db.run({
+                action
+              }), Duration.Inf).head,
+              (termLang, definitionLang)
+            )
         }
     }
   }

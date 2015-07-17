@@ -83,9 +83,17 @@ object CourseService  {
             var courseNew = Course(None, user.mainId, course.name, course.shortName, course.description, new DateTime(), new DateTime())
             val id = (courses returning courses.map(_.id)) += courseNew
 
-//            courseNew.id = id
+            val action = for {
+              _     <- courses += courseNew
+              films <- courses.result
+            } yield films
 
-            Some(courseNew)
+//            courseNew.id = id
+            Await.result(db.run({
+              action
+            }), Duration.Inf).headOption
+
+//            Some(courseNew)
         }
     }
   }

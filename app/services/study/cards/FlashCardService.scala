@@ -85,7 +85,6 @@ object FlashCardService extends WithDefaultSession {
                       updated = new DateTime()
                     )
 
-
                   Some(cards.filter(_.id === id).first)
               }
 

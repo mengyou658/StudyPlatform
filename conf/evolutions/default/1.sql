@@ -173,6 +173,27 @@ create table courses_teachers (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+create table studying_sets (
+  `id` INT(10) AUTO_INCREMENT NOT NULL,
+  `userId` INT(10) NOT NULL,
+  `setId` INT(10) NOT NULL,
+  `created` TIMESTAMP NOT NULL,
+  `updated` TIMESTAMP NOT NULL,
+  FOREIGN KEY (userId) REFERENCES user(id),
+  FOREIGN KEY (setId) REFERENCES cards_sets(id),
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table flashcards_in_studying_sets (
+  `fcId` INT(10) AUTO_INCREMENT NOT NULL,
+  `ssId` INT(10) NOT NULL,
+  `status` BOOLEAN,
+  `created` TIMESTAMP NOT NULL,
+  `updated` TIMESTAMP NOT NULL,
+  FOREIGN KEY (fcId) REFERENCES flashcards(id),
+  FOREIGN KEY (ssId) REFERENCES studying_sets(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 INSERT INTO study_platform.languages (id, name, code, created, updated, userId) VALUES (1, 'English', 'en', '2015-06-19 12:37:03', '2015-06-19 13:04:50', 1);
 INSERT INTO study_platform.languages (id, name, code, created, updated, userId) VALUES (2, 'Russian', 'ru', '2015-06-19 12:37:04', '2015-06-19 13:05:16', 1);
 INSERT INTO study_platform.languages (id, name, code, created, updated, userId) VALUES (3, 'Chinese', 'zh', '2015-06-19 12:37:05', '2015-06-19 13:13:45', 1);
