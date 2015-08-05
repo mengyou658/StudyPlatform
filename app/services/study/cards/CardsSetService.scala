@@ -56,19 +56,16 @@ object CardsSetService {
 
   def remove(userId: String, setId: Long): Future[Boolean] =  {
 
-        val q1 = for {
-          u <- users if u.id === userId
-          s <- cardsSets if s.id === setId && s.userId === u.mainId
-          x <- cardsSets.result
-        } yield s
-
-//        q1.list.foreach(s => cardsSets.filter(s1=> s1.id === s.id).delete)
-      val user = Await.result(db.run({
-        users.filter(u => u.id === userId).result
-      }), Duration.Inf).head
+        val q1 = (for {
+          usr <- users.filter(_.id === userId).result
+          s <- usr match {
+            case u =>
+              cardsSets.filter(s => s.id === setId && s.userId === u.head.mainId).delete
+          }
+        } yield s).transactionally
 
       db.run({
-        q1.delete
+        q1
       }) map {
         case 0 => false
         case _ => true
@@ -77,7 +74,7 @@ object CardsSetService {
 
   def save(userId: String, set: CardsSetJson): Future[Option[(CardsSet, (Lang, Lang))]] = {
       Future successful {
-//        val user = users.filter(u => u.id === userId).first
+
         val user = Await.result(db.run({
           users.filter(u => u.id === userId).result
         }), Duration.Inf).head

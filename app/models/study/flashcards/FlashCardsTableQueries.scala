@@ -1,7 +1,6 @@
 package models.study.flashcards
 
-import slick.lifted.TableQuery
-
+import slick.driver.MySQLDriver.api._
 /**
  * Created by m.cherkasov on 28.05.15.
  */
